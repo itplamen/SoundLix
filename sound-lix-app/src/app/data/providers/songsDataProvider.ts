@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import Song from "../models/entities";
+import { Song } from "../models/entities";
 
 const success: number = 200;
 
@@ -36,6 +36,7 @@ const getSongDetails = async (id: string): Promise<Song> => {
   return {
     id,
     title: $("h1.song_head_song").text(),
+    artist: $("div.top40_h1title_sub").text().trim(),
     lyrics: $("div.translate").text(),
     url: $("div#v_player").attr("data-plyr-embed-id")?.toString() ?? "",
   };
