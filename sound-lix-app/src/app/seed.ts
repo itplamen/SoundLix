@@ -1,31 +1,11 @@
-import { FirebaseOptions, initializeApp } from "firebase/app";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  doc,
-  setDoc,
-  Firestore,
-} from "firebase/firestore";
-import { getInitialData } from "./data/providers/songsDataProvider";
+import { collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { getInitialData } from "./data/providers/seedDataProvider";
 import { Artist, Entity, Genre, Song } from "./data/models/entities";
 import { SeedRequest, SeedResponse } from "./data/models/seeds";
-
-const options: FirebaseOptions = {
-  apiKey: process.env.API_KEY,
-  appId: process.env.APP_ID,
-  authDomain: process.env.AUTH_DOMAIN,
-  databaseURL: process.env.DB_URL,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-};
-
-const app = initializeApp(options);
+import { db } from "./firebase";
 
 const seed = async (): Promise<void> => {
   try {
-    const db = getFirestore(app);
     const req: SeedRequest = {
       getGenres: (await getDocs(collection(db, "genres"))).empty,
       getArtists: (await getDocs(collection(db, "artists"))).empty,
@@ -34,16 +14,15 @@ const seed = async (): Promise<void> => {
 
     const res: SeedResponse = await getInitialData(req);
 
-    await Promise.all(createTasks<Genre>(db, res.genres, "genres"));
-    await Promise.all(createTasks<Artist>(db, res.artists, "artists"));
-    await Promise.all(createTasks<Song>(db, res.songs, "songs"));
+    await Promise.all(createTasks<Genre>(res.genres, "genres"));
+    await Promise.all(createTasks<Artist>(res.artists, "artists"));
+    await Promise.all(createTasks<Song>(res.songs, "songs"));
   } catch (error) {
     console.log(error);
   }
 };
 
 const createTasks = <T extends Entity>(
-  db: Firestore,
   entities: T[],
   collection: string
 ): Promise<void>[] => {
