@@ -8,7 +8,7 @@ declare namespace NodeJS {
     PROJECT_ID: string;
     STORAGE_BUCKET: string;
     MESSAGING_SENDER_ID: string;
-    TOP_SONGS_URL: string;
-    SONG_DETAILS_URL: string;
+    INITIAL_DATA_URL: string;
+    SONG_GENRE_ID_URL: string;
   }
 }

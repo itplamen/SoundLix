@@ -1,7 +1,20 @@
-export type Song = {
-  id: string;
+export interface Entity {
+  id: number;
+}
+
+export interface Genre extends Entity {
+  name: string;
+}
+
+export interface Artist extends Entity {
+  name: string;
+  pic: string;
+}
+
+export interface Song extends Entity {
   title: string;
-  artist: string;
-  lyrics: string;
-  url: string;
-};
+  artistId: number;
+  genreId: number;
+  time: string;
+  isFeatured: boolean;
+}
