@@ -27,8 +27,8 @@ const createTasks = <T extends Entity>(
   collection: string
 ): Promise<void>[] => {
   const seedTasks = entities.map((x: Entity) => {
-    const { id, ...rest }: Omit<Entity, "id"> = x;
-    return setDoc(doc(db, collection, x.id.toString()), rest);
+    const { id, ...rest } = x;
+    return setDoc(doc(db, collection, id.toString()), rest);
   });
 
   return seedTasks;
