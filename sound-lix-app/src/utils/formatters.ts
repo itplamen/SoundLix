@@ -1,4 +1,4 @@
-import { ApiRequest, BaseRequest } from "@/data/models/api";
+import { ApiRequest, BaseRequest } from "@/models/api";
 
 export const formatRequestUrl = <T extends BaseRequest>(
   request: ApiRequest<T>
