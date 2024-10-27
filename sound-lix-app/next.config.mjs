@@ -4,9 +4,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "img.youtube.com",
+        hostname: "api.jamendo.com",
         port: "",
-        pathname: "/vi/**",
+        pathname: "/v3.0/**",
+      },
+      {
+        protocol: "https",
+        hostname: "usercontent.jamendo.com",
       },
     ],
   },

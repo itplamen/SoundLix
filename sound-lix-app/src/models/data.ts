@@ -1,5 +1,20 @@
 export interface Entity {
   id: number;
+  name: string;
+}
+
+export interface Artist extends Entity {}
+
+export interface Song extends Entity {
+  duration: number;
+  released: Date;
+  audio: string;
+  downloadUrl: string;
+  image: string;
+  lyrics: string;
+  downloadAllowed: boolean;
+  genre?: Genre;
+  artist: Artist;
 }
 
 export const GenreType = {

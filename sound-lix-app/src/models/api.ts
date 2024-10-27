@@ -12,6 +12,7 @@ export interface SongRequest extends BaseRequest {
   imagesize: number;
   include: string;
   boost: string;
+  order: string;
 }
 
 export const StatusResponse = {
