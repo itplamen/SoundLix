@@ -9,7 +9,7 @@ import { fetchData } from "./apiDataProvider";
 
 const getSongs = async (genre?: Genre): Promise<Song[]> => {
   const request: ApiRequest<SongRequest> = {
-    baseUrl: "https://api.jamendo.com/v3.0/tracks/",
+    baseUrl: `${process.env.API_BASE_URL}/tracks`,
     queryParams: {
       client_id: process.env.CLIENT_ID,
       boost: "popularity_month",

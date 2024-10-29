@@ -9,5 +9,7 @@ declare namespace NodeJS {
     STORAGE_BUCKET: string;
     MESSAGING_SENDER_ID: string;
     CLIENT_ID: string;
+    API_BASE_URL: string;
+    USER_ID: number;
   }
 }
