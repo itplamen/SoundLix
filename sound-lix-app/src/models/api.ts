@@ -2,9 +2,41 @@ export interface BaseRequest {
   client_id: string;
 }
 
+export interface BaseResponse {
+  id: string;
+  name: string;
+}
+
 export interface ApiRequest<T extends BaseRequest> {
   baseUrl: string;
   queryParams: T;
+}
+
+export const StatusResponse = {
+  Success: "success",
+  Failed: "failed",
+} as const;
+type Statuskey = (typeof StatusResponse)[keyof typeof StatusResponse];
+
+export type ApiResponse<T extends BaseResponse> = {
+  headers: {
+    status: Statuskey;
+    code: number;
+    error_message: string;
+    results_count: number;
+  };
+  results: T[];
+};
+
+export interface PlaylistRequest extends BaseRequest {
+  user_id: number;
+  id?: number;
+}
+
+export interface PlaylistResponse extends BaseResponse {
+  creationdate: string;
+  zip: string;
+  tracks: SongResponse[];
 }
 
 export interface SongRequest extends BaseRequest {
@@ -15,23 +47,7 @@ export interface SongRequest extends BaseRequest {
   order: string;
 }
 
-export const StatusResponse = {
-  Success: "success",
-  Failed: "failed",
-} as const;
-
-type Statuskey = (typeof StatusResponse)[keyof typeof StatusResponse];
-export type ApiResponse<T> = {
-  headers: {
-    status: Statuskey;
-    code: number;
-    error_message: string;
-    results_count: number;
-  };
-  results: T[];
-};
-
-export type SongResponse = {
+export interface SongResponse extends BaseResponse {
   id: string;
   name: string;
   duration: number;
@@ -43,4 +59,4 @@ export type SongResponse = {
   image: string;
   lyrics: string;
   audiodownload_allowed: boolean;
-};
+}

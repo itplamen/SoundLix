@@ -3,6 +3,7 @@ import {
   ApiRequest,
   ApiResponse,
   BaseRequest,
+  BaseResponse,
   StatusResponse,
 } from "../models/api";
 import { formatRequestUrl } from "@/utils/formatters";
@@ -10,7 +11,7 @@ import { formatRequestUrl } from "@/utils/formatters";
 const OK_STATUS: number = 200;
 const BAD_REQUEST_STATUS: number = 400;
 
-const fetchData = async <U extends BaseRequest, T>(
+const fetchData = async <U extends BaseRequest, T extends BaseResponse>(
   request: ApiRequest<U>
 ): Promise<ApiResponse<T>> => {
   try {

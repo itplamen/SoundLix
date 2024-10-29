@@ -3,6 +3,11 @@ export interface Entity {
   name: string;
 }
 
+export interface Playlist extends Entity {
+  downloadUrl: string;
+  songs: Song[];
+}
+
 export interface Artist extends Entity {}
 
 export interface Song extends Entity {
@@ -13,7 +18,6 @@ export interface Song extends Entity {
   image: string;
   lyrics: string;
   downloadAllowed: boolean;
-  genre?: Genre;
   artist: Artist;
 }
 

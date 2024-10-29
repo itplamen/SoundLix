@@ -32,7 +32,6 @@ const getSongs = async (genre?: Genre): Promise<Song[]> => {
       image: response.image,
       lyrics: response.lyrics,
       downloadAllowed: response.audiodownload_allowed,
-      genre: genre,
       artist: {
         id: Number(response.artist_id),
         name: response.artist_name,
