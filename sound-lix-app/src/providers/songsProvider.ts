@@ -6,6 +6,7 @@ import {
   SongResponse,
 } from "../models/api";
 import { fetchData } from "./apiDataProvider";
+import { mapSong } from "@/utils/mappers";
 
 const getSongs = async (genre?: Genre): Promise<Song[]> => {
   const request: ApiRequest<SongRequest> = {
@@ -21,25 +22,7 @@ const getSongs = async (genre?: Genre): Promise<Song[]> => {
   };
   const response: ApiResponse<SongResponse> = await fetchData(request);
 
-  return response.results.map((response: SongResponse) => {
-    const song: Song = {
-      id: Number(response.id),
-      name: response.name,
-      duration: response.duration,
-      released: new Date(response.releasedate),
-      audio: response.audio,
-      downloadUrl: response.audiodownload,
-      image: response.image,
-      lyrics: response.lyrics,
-      downloadAllowed: response.audiodownload_allowed,
-      artist: {
-        id: Number(response.artist_id),
-        name: response.artist_name,
-      },
-    };
-
-    return song;
-  });
+  return response.results.map((response: SongResponse) => mapSong(response));
 };
 
 export { getSongs };
