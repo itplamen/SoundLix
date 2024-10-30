@@ -39,6 +39,18 @@ export interface PlaylistResponse extends BaseResponse {
   tracks: SongResponse[];
 }
 
+export interface ArtistRequest extends BaseRequest {
+  hasimage: boolean;
+  order: string;
+  limit: number;
+}
+
+export interface ArtistResponse extends BaseResponse {
+  website: string;
+  joindate: string;
+  image: string;
+}
+
 export interface SongRequest extends BaseRequest {
   tags: string;
   imagesize: number;

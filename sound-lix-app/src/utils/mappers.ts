@@ -1,5 +1,5 @@
-import { Playlist, Song } from "@/models/data";
-import { PlaylistResponse, SongResponse } from "@/models/api";
+import { Artist, Playlist, Song } from "@/models/data";
+import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
 
 const mapPlaylist = (from: PlaylistResponse): Playlist => {
   return {
@@ -7,6 +7,16 @@ const mapPlaylist = (from: PlaylistResponse): Playlist => {
     name: from.name,
     downloadUrl: from.zip,
     songs: from.tracks.map((track: SongResponse) => mapSong(track)),
+  };
+};
+
+const mapArtist = (from: ArtistResponse): Artist => {
+  return {
+    id: Number(from.id),
+    name: from.name,
+    image: from.image,
+    joindate: from.joindate,
+    website: from.website,
   };
 };
 
@@ -25,8 +35,11 @@ const mapSong = (from: SongResponse): Song => {
     artist: {
       id: Number(from.artist_id),
       name: from.artist_name,
+      website: "",
+      joindate: "",
+      image: "",
     },
   };
 };
 
-export { mapPlaylist, mapSong };
+export { mapPlaylist, mapArtist, mapSong };

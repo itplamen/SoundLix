@@ -8,7 +8,11 @@ export interface Playlist extends Entity {
   songs: Song[];
 }
 
-export interface Artist extends Entity {}
+export interface Artist extends Entity {
+  website: string;
+  joindate: string;
+  image: string;
+}
 
 export interface Song extends Entity {
   duration: number;
