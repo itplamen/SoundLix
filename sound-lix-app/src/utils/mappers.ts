@@ -17,6 +17,7 @@ const mapSong = (from: SongResponse): Song => {
     duration: from.duration,
     released: new Date(from.releasedate),
     audio: from.audio,
+    rank: from.position,
     downloadUrl: from.audiodownload,
     image: from.image,
     lyrics: from.lyrics,

@@ -53,6 +53,7 @@ export interface SongResponse extends BaseResponse {
   duration: number;
   artist_id: string;
   artist_name: string;
+  position: number;
   releasedate: string;
   audio: string;
   audiodownload: string;

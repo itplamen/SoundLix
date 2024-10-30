@@ -14,6 +14,7 @@ export interface Song extends Entity {
   duration: number;
   released: Date;
   audio: string;
+  rank: number;
   downloadUrl: string;
   image: string;
   lyrics: string;

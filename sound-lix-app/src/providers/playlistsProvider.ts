@@ -17,9 +17,12 @@ const getPlaylists = async (): Promise<Playlist[]> => {
   const playlists: PlaylistResponse[][] = await Promise.all(tasks);
 
   return playlists.flatMap((playlists: PlaylistResponse[]) => {
-    return playlists.flatMap((playlist: PlaylistResponse) =>
-      mapPlaylist(playlist)
-    );
+    return playlists.map((playlist: PlaylistResponse) => {
+      const mapped: Playlist = mapPlaylist(playlist);
+      mapped.songs.sort((a, b) => a.rank - b.rank);
+
+      return mapped;
+    });
   });
 };
 
