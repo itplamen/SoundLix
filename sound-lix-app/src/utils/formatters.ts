@@ -17,9 +17,20 @@ export const formatRequestUrl = <T extends BaseRequest>(
   return url;
 };
 
-export const formatSecondsToTime = (seconds: number): string => {
+export const formatSecondsToMinutes = (seconds: number): string => {
   const min = String(Math.floor(seconds / 60)).padStart(2, "0");
   const sec = String(seconds % 60).padStart(2, "0");
 
   return `${min}:${sec}`;
+};
+
+export const formatSecondsToHours = (seconds: number): string => {
+  const hours = Math.floor(seconds / 3600);
+  const min = Math.floor((seconds % 3600) / 60);
+
+  const formattedTime =
+    `${hours} hr${hours !== 1 ? "s" : ""} ` +
+    `${min} min${min !== 1 ? "s" : ""} `;
+
+  return formattedTime.trim();
 };
