@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Song } from "@/models/data";
 import { Tooltip } from "flowbite-react";
-import { formatSecondsToTime } from "@/utils/formatters";
+import { formatSecondsToMinutes } from "@/utils/formatters";
 
 type Props = {
   song: Song;
@@ -31,7 +31,7 @@ const SongItem = ({ song }: Props) => {
         <div className="flex items-center justify-between mb-4">
           <div className="flex space-x-4">
             <div className="font-bold text-xs">
-              {formatSecondsToTime(song.duration)}
+              {formatSecondsToMinutes(song.duration)}
             </div>
             <div className="w-4 h-4">
               <Tooltip
