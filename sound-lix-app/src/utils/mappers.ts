@@ -14,9 +14,10 @@ const mapArtist = (from: ArtistResponse): Artist => {
   return {
     id: Number(from.id),
     name: from.name,
-    image: from.image,
+    image: from.image || from.tracks?.find((x) => x.image)?.image || "",
     joindate: from.joindate,
     website: from.website,
+    songs: from.tracks.map((song: SongResponse) => mapSong(song)),
   };
 };
 
@@ -24,7 +25,7 @@ const mapSong = (from: SongResponse): Song => {
   return {
     id: Number(from.id),
     name: from.name,
-    duration: from.duration,
+    duration: Number(from.duration),
     released: new Date(from.releasedate),
     audio: from.audio,
     rank: from.position,

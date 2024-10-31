@@ -42,13 +42,13 @@ export interface PlaylistResponse extends BaseResponse {
 export interface ArtistRequest extends BaseRequest {
   hasimage: boolean;
   order: string;
-  limit: number;
 }
 
 export interface ArtistResponse extends BaseResponse {
   website: string;
   joindate: string;
   image: string;
+  tracks: SongResponse[];
 }
 
 export interface SongRequest extends BaseRequest {

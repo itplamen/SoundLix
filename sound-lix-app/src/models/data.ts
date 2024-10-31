@@ -12,6 +12,7 @@ export interface Artist extends Entity {
   website: string;
   joindate: string;
   image: string;
+  songs: Song[];
 }
 
 export interface Song extends Entity {
