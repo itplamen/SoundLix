@@ -1,5 +1,7 @@
 import { Artist, Playlist, Song } from "@/models/data";
 import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
+import { ItemDetailsView, SongItemDetailsView } from "@/models/views";
+import { formatSecondsToHours, formatSecondsToMinutes } from "./formatters";
 
 const mapPlaylist = (from: PlaylistResponse): Playlist => {
   return {
@@ -43,4 +45,30 @@ const mapSong = (from: SongResponse): Song => {
   };
 };
 
-export { mapPlaylist, mapArtist, mapSong };
+const mapSongView = (from: Song): SongItemDetailsView => {
+  return {
+    id: from.id,
+    name: from.name,
+    image: from.image,
+    subheading: from.artist.name,
+    downloadUrl: from.downloadUrl,
+    downloadAllowed: from.downloadAllowed,
+    formatInput: from.duration,
+    format: formatSecondsToMinutes,
+  };
+};
+
+const mapArtistView = (from: Artist): ItemDetailsView => {
+  return {
+    id: from.id,
+    name: from.name,
+    image: from.image,
+    subheading: `${from.songs.length} songs`,
+    formatInput: from.songs
+      .map((song: Song) => song.duration)
+      .reduce((prev, next) => prev + next, 0),
+    format: formatSecondsToHours,
+  };
+};
+
+export { mapPlaylist, mapArtist, mapSong, mapSongView, mapArtistView };
