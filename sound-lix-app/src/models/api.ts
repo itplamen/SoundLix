@@ -1,5 +1,6 @@
 export interface BaseRequest {
   client_id: string;
+  limit?: string;
 }
 
 export interface BaseResponse {

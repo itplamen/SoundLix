@@ -7,6 +7,8 @@ import {
   StatusResponse,
 } from "../models/api";
 import { formatRequestUrl } from "@/utils/formatters";
+import { ValidationResult } from "@/models/validation";
+import { validateApiRequest } from "@/utils/validators";
 
 const OK_STATUS: number = 200;
 const BAD_REQUEST_STATUS: number = 400;
@@ -15,16 +17,22 @@ const fetchData = async <U extends BaseRequest, T extends BaseResponse>(
   request: ApiRequest<U>
 ): Promise<ApiResponse<T>> => {
   try {
-    const url: string = formatRequestUrl(request);
-    const response = await axios.get(url, {
-      validateStatus: (status) =>
-        status >= OK_STATUS && status < BAD_REQUEST_STATUS,
-    });
+    const validation: ValidationResult = validateApiRequest(request);
 
-    return {
-      headers: response.data.headers,
-      results: response.data.results as T[],
-    };
+    if (validation.isValid) {
+      const url: string = formatRequestUrl(request);
+      const response = await axios.get(url, {
+        validateStatus: (status) =>
+          status >= OK_STATUS && status < BAD_REQUEST_STATUS,
+      });
+
+      return {
+        headers: response.data.headers,
+        results: response.data.results as T[],
+      };
+    }
+
+    throw new Error(validation.errorMsg);
   } catch (error: unknown) {
     let message: string;
 
