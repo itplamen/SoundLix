@@ -92,7 +92,7 @@ const Sidebar = () => {
   const items: Item[][] = getItems();
   return (
     <aside
-      className="fixed top-0 left-0 z-40 w-44 h-screen transition-transform -translate-x-full sm:translate-x-0"
+      className="fixed top-0 left-0 z-40 w-44 h-screen transition-transform sm:translate-x-0"
       aria-label="Sidebar"
     >
       <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
@@ -101,6 +101,9 @@ const Sidebar = () => {
             SoundLix
           </span>
         </a>
+        <span className="block p-3 mx-3 text-gray-400 text-xs uppercase font-bold">
+          Menu
+        </span>
         {items.map((arr: Item[], arrIndex: number) => (
           <ul key={`ul_${arrIndex}`} className="space-y-2 font-medium mb-14">
             {arr.map((item: Item, itemIndex: number) => (
