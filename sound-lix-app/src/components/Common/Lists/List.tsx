@@ -1,6 +1,3 @@
-import ListItem from "./ListItem";
-import { ItemDetailsView } from "@/models/views";
-
 type Props = {
   heading: string;
   children: React.ReactNode;

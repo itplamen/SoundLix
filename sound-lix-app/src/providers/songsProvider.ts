@@ -8,7 +8,11 @@ import {
 import { fetchData } from "./apiDataProvider";
 import { mapSong } from "@/utils/mappers";
 
-const getSongs = async (genre?: Genre): Promise<Song[]> => {
+const getSongs = async (
+  limit: number,
+  lyrics: boolean,
+  genre?: Genre
+): Promise<Song[]> => {
   const request: ApiRequest<SongRequest> = {
     baseUrl: `${process.env.API_BASE_URL}/tracks`,
     queryParams: {
@@ -16,8 +20,9 @@ const getSongs = async (genre?: Genre): Promise<Song[]> => {
       boost: "popularity_month",
       order: "popularity_month",
       imagesize: 300,
-      include: "lyrics",
+      include: lyrics ? "lyrics" : "",
       tags: genre ?? "",
+      limit: limit.toString(),
     },
   };
   const response: ApiResponse<SongResponse> = await fetchData(request);
