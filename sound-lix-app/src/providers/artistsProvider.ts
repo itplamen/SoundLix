@@ -21,4 +21,20 @@ const getArtists = async (): Promise<Artist[]> => {
   return response.results.map((artist: ArtistResponse) => mapArtist(artist));
 };
 
-export default getArtists;
+const getArtist = async (id: number): Promise<Artist> => {
+  const request: ApiRequest<ArtistRequest> = {
+    baseUrl: `${process.env.API_BASE_URL}/artists/tracks`,
+    queryParams: {
+      client_id: process.env.CLIENT_ID,
+      id: id,
+    },
+  };
+  const response: ApiResponse<ArtistResponse> = await fetchData(request);
+  const mapped: Artist[] = response.results.map((artist: ArtistResponse) =>
+    mapArtist(artist)
+  );
+
+  return mapped[0];
+};
+
+export { getArtists, getArtist };
