@@ -1,6 +1,5 @@
-import { Genre, Song } from "@/models/data";
+import { Song } from "@/models/data";
 import { SongItemDetailsView } from "@/models/views";
-import { getSongs } from "@/providers/songsProvider";
 import { mapSongView } from "@/utils/mappers";
 import List from "../Common/Lists/List";
 import ListItem from "../Common/Lists/ListItem";
@@ -13,24 +12,17 @@ import DownloadIconType, {
 } from "../Common/Icons/Types/DownloadIconType";
 
 type Props = {
-  limit: number;
-  lyrics?: boolean;
-  genre?: Genre;
+  heading: string;
+  songs: Song[];
+  includeRanking: boolean;
 };
-
-const SongList = async ({
-  limit,
-  lyrics = false,
-  genre = undefined,
-}: Props) => {
-  const songs: Song[] = await getSongs(limit, lyrics, genre);
-
+const SongList = async ({ heading, songs, includeRanking }: Props) => {
   return (
-    <List heading="Top Songs">
+    <List heading={heading}>
       {songs
         .map((song: Song) => mapSongView(song))
         .map((view: SongItemDetailsView) => (
-          <ListItem key={view.id} item={view}>
+          <ListItem key={view.id} item={view} includeRanking={includeRanking}>
             <Icon content={playlist}>
               <PlaylistIconType />
             </Icon>

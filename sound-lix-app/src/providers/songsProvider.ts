@@ -9,8 +9,8 @@ import { fetchData } from "./apiDataProvider";
 import { mapSong } from "@/utils/mappers";
 
 const getSongs = async (
-  limit: number,
-  lyrics: boolean,
+  limit: number = 10,
+  lyrics?: boolean,
   genre?: Genre
 ): Promise<Song[]> => {
   const request: ApiRequest<SongRequest> = {

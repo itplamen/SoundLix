@@ -5,12 +5,14 @@ import { ItemDetailsView } from "@/models/views";
 type Props = {
   item: ItemDetailsView;
   children: React.ReactNode;
+  includeRanking: boolean;
 };
-const ListItem = ({ item, children }: Props) => {
+const ListItem = ({ item, children, includeRanking }: Props) => {
   return (
     <li className="py-3 sm:py-4">
       <div className="flex items-center">
-        <div className="flex-shrink-0">
+        <div>{includeRanking && item.rank}</div>
+        <div className={`flex-shrink-0 ${includeRanking ? "ms-4" : ""}`}>
           <Image
             className="w-12 h-12 rounded-full"
             width={300}
