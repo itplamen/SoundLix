@@ -5,6 +5,8 @@ export interface Entity {
 
 export interface Playlist extends Entity {
   downloadUrl: string;
+  created: string;
+  image: string;
   songs: Song[];
 }
 

@@ -4,6 +4,7 @@ export interface ItemDetailsView {
   image: string;
   subheading: string;
   formatInput: number;
+  rank?: number;
   format: (seconds: number) => string;
 }
 

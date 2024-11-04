@@ -3,16 +3,21 @@ import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
 import { ItemDetailsView, SongItemDetailsView } from "@/models/views";
 import { formatSecondsToHours, formatSecondsToMinutes } from "./formatters";
 
-const mapPlaylist = (from: PlaylistResponse): Playlist => {
+export const mapPlaylist = (from: PlaylistResponse): Playlist => {
+  const tracks = from.tracks.sort(
+    (a: SongResponse, b: SongResponse) => a.position - b.position
+  );
   return {
     id: Number(from.id),
     name: from.name,
     downloadUrl: from.zip,
-    songs: from.tracks.map((track: SongResponse) => mapSong(track)),
+    created: from.creationdate,
+    image: tracks[0].image,
+    songs: tracks.map((track: SongResponse) => mapSong(track)),
   };
 };
 
-const mapArtist = (from: ArtistResponse): Artist => {
+export const mapArtist = (from: ArtistResponse): Artist => {
   return {
     id: Number(from.id),
     name: from.name,
@@ -23,7 +28,7 @@ const mapArtist = (from: ArtistResponse): Artist => {
   };
 };
 
-const mapSong = (from: SongResponse): Song => {
+export const mapSong = (from: SongResponse): Song => {
   return {
     id: Number(from.id),
     name: from.name,
@@ -45,10 +50,11 @@ const mapSong = (from: SongResponse): Song => {
   };
 };
 
-const mapSongView = (from: Song): SongItemDetailsView => {
+export const mapSongView = (from: Song): SongItemDetailsView => {
   return {
     id: from.id,
     name: from.name,
+    rank: from.rank,
     image: from.image,
     subheading: from.artist.name,
     downloadUrl: from.downloadUrl,
@@ -58,17 +64,19 @@ const mapSongView = (from: Song): SongItemDetailsView => {
   };
 };
 
-const mapArtistView = (from: Artist): ItemDetailsView => {
+export const mapArtistView = (from: Artist): ItemDetailsView => {
   return {
     id: from.id,
     name: from.name,
     image: from.image,
     subheading: `${from.songs.length} songs`,
-    formatInput: from.songs
-      .map((song: Song) => song.duration)
-      .reduce((prev, next) => prev + next, 0),
+    formatInput: mapTotalDuration(from.songs),
     format: formatSecondsToHours,
   };
 };
 
-export { mapPlaylist, mapArtist, mapSong, mapSongView, mapArtistView };
+export const mapTotalDuration = (songs: Song[]): number => {
+  return songs
+    .map((song: Song) => song.duration)
+    .reduce((prev, next) => prev + next, 0);
+};
