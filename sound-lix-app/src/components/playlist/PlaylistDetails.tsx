@@ -3,10 +3,10 @@ import Image from "next/image";
 import SongList from "../Songs/SongList";
 import { formatSecondsToHours } from "@/utils/formatters";
 import { mapTotalDuration } from "@/utils/mappers";
-import IndicatorList from "../Common/Lists/IndicatorList";
-import Button from "../Common/Buttons/Button";
-import PlayIconType from "../Common/Icons/Types/PlayIconType";
-import DownloadIconType from "../Common/Icons/Types/DownloadIconType";
+import IndicatorList from "../Lists/IndicatorList";
+import Button from "../Buttons/Button";
+import PlayIconType from "../Icons/Types/PlayIconType";
+import DownloadIconType from "../Icons/Types/DownloadIconType";
 
 const PlaylistDetails = ({ playlist }: { playlist: Playlist }) => {
   const items: string[] = [

@@ -1,15 +1,15 @@
 import { Song } from "@/models/data";
 import { SongItemDetailsView } from "@/models/views";
 import { mapSongView } from "@/utils/mappers";
-import List from "../Common/Lists/List";
-import ListItem from "../Common/Lists/ListItem";
-import Icon from "../Common/Icons/Icon";
+import List from "../Lists/List";
+import ListItem from "../Lists/ListItem";
+import Icon from "../Icons/Icon";
 import PlaylistIconType, {
   contnet as playlist,
-} from "../Common/Icons/Types/PlaylistIconType";
+} from "../Icons/Types/PlaylistIconType";
 import DownloadIconType, {
   contnet as download,
-} from "../Common/Icons/Types/DownloadIconType";
+} from "../Icons/Types/DownloadIconType";
 
 type Props = {
   heading: string;

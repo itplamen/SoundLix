@@ -1,13 +1,11 @@
 import { Artist } from "@/models/data";
 import { getArtists } from "@/providers/artistsProvider";
-import List from "../Common/Lists/List";
-import ListItem from "../Common/Lists/ListItem";
+import List from "../Lists/List";
+import ListItem from "../Lists/ListItem";
 import { ItemDetailsView } from "@/models/views";
 import { mapArtistView } from "@/utils/mappers";
-import Icon from "../Common/Icons/Icon";
-import WebsiteIconType, {
-  contnet,
-} from "../Common/Icons/Types/WebsiteIconType";
+import Icon from "../Icons/Icon";
+import WebsiteIconType, { contnet } from "../Icons/Types/WebsiteIconType";
 
 const ArtistList = async () => {
   const artists: Artist[] = await getArtists();

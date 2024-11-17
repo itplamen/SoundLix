@@ -2,9 +2,9 @@ import { Artist } from "@/models/data";
 import { formatSecondsToHours } from "@/utils/formatters";
 import { mapTotalDuration } from "@/utils/mappers";
 import Image from "next/image";
-import IndicatorList from "../Common/Lists/IndicatorList";
-import Button from "../Common/Buttons/Button";
-import PlayIconType from "../Common/Icons/Types/PlayIconType";
+import IndicatorList from "../Lists/IndicatorList";
+import Button from "../Buttons/Button";
+import PlayIconType from "../Icons/Types/PlayIconType";
 import SongList from "../Songs/SongList";
 
 const ArtistDetails = ({ artist }: { artist: Artist }) => {
