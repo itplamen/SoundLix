@@ -15,7 +15,7 @@ const ArtistList = async () => {
       {artists
         .map((artist: Artist) => mapArtistView(artist))
         .map((view: ItemDetailsView) => (
-          <ListItem key={view.id} item={view}>
+          <ListItem key={view.id} item={view} url="artist">
             <Icon content={contnet}>
               <WebsiteIconType />
             </Icon>

@@ -5,12 +5,13 @@ import Link from "next/link";
 
 type Props = {
   item: ItemDetailsView;
+  url: string;
   children: React.ReactNode;
   includeRanking: boolean;
 };
-const ListItem = ({ item, children, includeRanking }: Props) => {
+const ListItem = ({ item, url, children, includeRanking }: Props) => {
   return (
-    <Link href={"/artist/" + item.id}>
+    <Link href={`/${url}/${item.id}`}>
       <li className="p-4 py-3 sm:py-4 hover:bg-gray-200 hover:rounded-lg hover:cursor-pointer active:bg-green-700 relative group">
         <div className="flex items-center">
           <div>{includeRanking && item.rank}</div>
