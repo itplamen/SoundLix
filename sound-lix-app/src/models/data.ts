@@ -19,7 +19,7 @@ export interface Artist extends Entity {
 
 export interface Song extends Entity {
   duration: number;
-  released: Date;
+  released: string;
   audio: string;
   rank: number;
   downloadUrl: string;
@@ -27,6 +27,7 @@ export interface Song extends Entity {
   lyrics: string;
   downloadAllowed: boolean;
   artist: Artist;
+  genres: string[];
 }
 
 export const GenreType = {

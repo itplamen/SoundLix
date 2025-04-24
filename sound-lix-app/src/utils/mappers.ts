@@ -33,7 +33,7 @@ export const mapSong = (from: SongResponse): Song => {
     id: Number(from.id),
     name: from.name,
     duration: Number(from.duration),
-    released: new Date(from.releasedate),
+    released: from.releasedate,
     audio: from.audio,
     rank: from.position,
     downloadUrl: from.audiodownload,
@@ -47,6 +47,7 @@ export const mapSong = (from: SongResponse): Song => {
       joindate: "",
       image: "",
     },
+    genres: from.musicinfo?.tags?.genres ?? [],
   };
 };
 

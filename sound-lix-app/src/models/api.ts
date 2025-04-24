@@ -1,6 +1,7 @@
 export interface BaseRequest {
   client_id: string;
   limit?: string;
+  id?: number;
 }
 
 export interface BaseResponse {
@@ -31,7 +32,6 @@ export type ApiResponse<T extends BaseResponse> = {
 
 export interface PlaylistRequest extends BaseRequest {
   user_id: number;
-  id?: number;
 }
 
 export interface PlaylistResponse extends BaseResponse {
@@ -43,7 +43,6 @@ export interface PlaylistResponse extends BaseResponse {
 export interface ArtistRequest extends BaseRequest {
   hasimage?: boolean;
   order?: string;
-  id?: number;
 }
 
 export interface ArtistResponse extends BaseResponse {
@@ -54,11 +53,11 @@ export interface ArtistResponse extends BaseResponse {
 }
 
 export interface SongRequest extends BaseRequest {
-  tags: string;
   imagesize: number;
-  include: string;
-  boost: string;
-  order: string;
+  tags?: string;
+  include?: string;
+  boost?: string;
+  order?: string;
 }
 
 export interface SongResponse extends BaseResponse {
@@ -74,4 +73,9 @@ export interface SongResponse extends BaseResponse {
   image: string;
   lyrics: string;
   audiodownload_allowed: boolean;
+  musicinfo: {
+    tags: {
+      genres: [];
+    };
+  };
 }

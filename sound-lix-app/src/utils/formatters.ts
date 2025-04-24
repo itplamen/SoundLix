@@ -27,10 +27,12 @@ export const formatSecondsToMinutes = (seconds: number): string => {
 export const formatSecondsToHours = (seconds: number): string => {
   const hours = Math.floor(seconds / 3600);
   const min = Math.floor((seconds % 3600) / 60);
+  const sec = seconds % 60;
 
   const formattedTime =
-    `${hours} hr${hours !== 1 ? "s" : ""} ` +
-    `${min} min${min !== 1 ? "s" : ""} `;
+    `${hours > 0 ? `${hours} hr${hours !== 1 ? "s" : ""} ` : ""}` +
+    `${min} min${min !== 1 ? "s" : ""} ` +
+    `${sec} sec${sec !== 1 ? "s" : ""}`;
 
   return formattedTime.trim();
 };
