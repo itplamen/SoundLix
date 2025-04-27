@@ -54,3 +54,8 @@ export const GenreType = {
 
 type GenreKey = (typeof GenreType)[keyof typeof GenreType];
 export type Genre = GenreKey;
+
+export interface Radio extends Entity {
+  image: string;
+  stream: string;
+}
