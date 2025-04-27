@@ -1,5 +1,5 @@
 export interface ItemDetailsView {
-  id: number;
+  id: string;
   name: string;
   image: string;
   subheading: string;

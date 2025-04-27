@@ -8,7 +8,7 @@ export const mapPlaylist = (from: PlaylistResponse): Playlist => {
     (a: SongResponse, b: SongResponse) => a.position - b.position
   );
   return {
-    id: Number(from.id),
+    id: from.id,
     name: from.name,
     downloadUrl: from.zip,
     created: from.creationdate,
@@ -19,7 +19,7 @@ export const mapPlaylist = (from: PlaylistResponse): Playlist => {
 
 export const mapArtist = (from: ArtistResponse): Artist => {
   return {
-    id: Number(from.id),
+    id: from.id,
     name: from.name,
     image: from.image || from.tracks?.find((x) => x.image)?.image || "",
     joindate: from.joindate,
@@ -30,7 +30,7 @@ export const mapArtist = (from: ArtistResponse): Artist => {
 
 export const mapSong = (from: SongResponse): Song => {
   return {
-    id: Number(from.id),
+    id: from.id,
     name: from.name,
     duration: Number(from.duration),
     released: from.releasedate,
@@ -41,7 +41,7 @@ export const mapSong = (from: SongResponse): Song => {
     lyrics: from.lyrics,
     downloadAllowed: from.audiodownload_allowed,
     artist: {
-      id: Number(from.artist_id),
+      id: from.artist_id,
       name: from.artist_name,
       website: "",
       joindate: "",
