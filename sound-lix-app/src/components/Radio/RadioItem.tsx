@@ -6,10 +6,11 @@ type Props = {
 
 const RadioItem = ({ radio }: Props) => {
   return (
-    <div className="flex flex-col items-center gap-4">
-      <a className="hexagon-content" href='/catalog?genre=["ambient/new age"]'>
-        <div className="hexagon-box-shadow"></div>
-
+    <div className="flex flex-col items-center gap-4 relative">
+      <a
+        className="hexagon-content relative"
+        href='/catalog?genre=["ambient/new age"]'
+      >
         <svg width="168" height="186" viewBox="0 0 168 186" fill="none">
           <defs>
             <pattern
@@ -32,13 +33,10 @@ const RadioItem = ({ radio }: Props) => {
             fill={`url(#${radio.id})`}
           ></path>
         </svg>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-center text-sm pointer-events-none">
+          {radio.name}
+        </div>
       </a>
-      <div className="flex flex-col items-center">
-        <span className="text-md leading-5 font-semibold">{radio.name}</span>
-        <span className="text-sm leading-5 font-medium text-accentTertiary">
-          12219
-        </span>
-      </div>
     </div>
   );
 };
