@@ -12,6 +12,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "usercontent.jamendo.com",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.bensound.com",
+      },
     ],
   },
 };

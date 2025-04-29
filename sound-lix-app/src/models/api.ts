@@ -20,7 +20,7 @@ export const StatusResponse = {
 } as const;
 type Statuskey = (typeof StatusResponse)[keyof typeof StatusResponse];
 
-export type ApiResponse<T extends BaseResponse> = {
+export type ApiResponse<T extends BaseResponse | string> = {
   headers: {
     status: Statuskey;
     code: number;
@@ -78,4 +78,9 @@ export interface SongResponse extends BaseResponse {
       genres: [];
     };
   };
+}
+
+export interface RoyaltyFreeMusicRequest extends BaseRequest {
+  type?: string;
+  sort?: string;
 }

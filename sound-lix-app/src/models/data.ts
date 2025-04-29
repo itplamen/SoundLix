@@ -59,3 +59,12 @@ export interface Radio extends Entity {
   image: string;
   stream: string;
 }
+
+export interface RoyaltyFreeMusic extends Entity {
+  duration: string;
+  audio: string;
+  image: string;
+  composer: string;
+  description: string;
+  isNew: boolean;
+}

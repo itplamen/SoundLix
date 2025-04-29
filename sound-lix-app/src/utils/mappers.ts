@@ -1,4 +1,4 @@
-import { Artist, Playlist, Song } from "@/models/data";
+import { Artist, Playlist, RoyaltyFreeMusic, Song } from "@/models/data";
 import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
 import { ItemDetailsView, SongItemDetailsView } from "@/models/views";
 import { formatSecondsToHours, formatSecondsToMinutes } from "./formatters";
@@ -62,6 +62,17 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
     downloadAllowed: from.downloadAllowed,
     formatInput: from.duration,
     format: formatSecondsToMinutes,
+  };
+};
+
+export const mapRoyalty = (from: RoyaltyFreeMusic): ItemDetailsView => {
+  return {
+    id: from.id,
+    name: from.name,
+    image: from.image,
+    subheading: `2 songs`,
+    formatInput: 23,
+    format: formatSecondsToHours,
   };
 };
 

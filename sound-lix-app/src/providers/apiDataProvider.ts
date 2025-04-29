@@ -13,7 +13,10 @@ import { validateApiRequest } from "@/utils/validators";
 const OK_STATUS: number = 200;
 const BAD_REQUEST_STATUS: number = 400;
 
-const fetchData = async <U extends BaseRequest, T extends BaseResponse>(
+const fetchData = async <
+  U extends BaseRequest,
+  T extends BaseResponse | string
+>(
   request: ApiRequest<U>
 ): Promise<ApiResponse<T>> => {
   try {
@@ -28,7 +31,9 @@ const fetchData = async <U extends BaseRequest, T extends BaseResponse>(
 
       return {
         headers: response.data.headers,
-        results: response.data.results as T[],
+        results: response.data?.results
+          ? response.data.results
+          : ([response.data] as T[]),
       };
     }
 

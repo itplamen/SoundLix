@@ -10,6 +10,8 @@ declare namespace NodeJS {
     MESSAGING_SENDER_ID: string;
     CLIENT_ID: string;
     API_BASE_URL: string;
+    ROYALTY_FREE_MUSIC_URL: string;
+    ROYALTY_FREE_MUSIC_AUDIO_URL: string;
     USER_ID: number;
   }
 }

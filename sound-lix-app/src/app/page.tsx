@@ -1,4 +1,4 @@
-import { Playlist, Radio, Song } from "@/models/data";
+import { Playlist, Radio, RoyaltyFreeMusic, Song } from "@/models/data";
 import { getPlaylists } from "@/providers/playlistsProvider";
 import PlaylistItemList from "@/components/Playlist/PlaylistItemList";
 
@@ -9,11 +9,14 @@ import ArtistList from "@/components/Artists/ArtistList";
 import { getSongs } from "@/providers/songsProvider";
 import getRadioList from "@/providers/dbDataProvider";
 import RadioList from "@/components/Radio/RadioList";
+import { getRoyaltyFreeMusic } from "@/providers/royaltyFreeMusicProvider";
+import RoyaltyFreeMusicList from "@/components/RoyaltyFree/RoyaltyFreeMusicList";
 
 const Home = async () => {
   const playlists: Playlist[] = await getPlaylists();
   const songs: Song[] = await getSongs();
   const radios: Radio[] = await getRadioList();
+  const music: RoyaltyFreeMusic[] = await getRoyaltyFreeMusic();
 
   return (
     <>
@@ -21,6 +24,13 @@ const Home = async () => {
       <BestChart>
         <SongList heading={"Top Songs"} songs={songs} includeRanking={false} />
         <ArtistList />
+      </BestChart>
+
+      <BestChart>
+        <RoyaltyFreeMusicList
+          songs={music}
+          heading="Royalty Free Music for Videos"
+        />
       </BestChart>
       <RadioList radios={radios} />
     </>
