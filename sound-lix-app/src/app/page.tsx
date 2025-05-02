@@ -22,7 +22,7 @@ const Home = async () => {
     <>
       <PlaylistItemList playlists={playlists} />
       <BestChart>
-        <SongList heading={"Top Songs"} songs={songs} includeRanking={false} />
+        <SongList heading={"Top Songs"} songs={songs} />
         <ArtistList />
       </BestChart>
 

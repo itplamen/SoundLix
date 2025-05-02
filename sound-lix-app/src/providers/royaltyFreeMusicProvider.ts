@@ -40,7 +40,7 @@ const getRoyaltyFreeMusic = async (): Promise<RoyaltyFreeMusic[]> => {
   const music: RoyaltyFreeMusic[] = details.map((item: RoyaltyFreeMusic) => {
     return {
       ...item,
-      isNew: map.has(item.id),
+      isNew: Boolean(map.get(item.id)),
     };
   });
 

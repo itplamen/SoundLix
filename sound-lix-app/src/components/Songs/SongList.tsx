@@ -14,20 +14,14 @@ import DownloadIconType, {
 type Props = {
   heading: string;
   songs: Song[];
-  includeRanking: boolean;
 };
-const SongList = async ({ heading, songs, includeRanking }: Props) => {
+const SongList = async ({ heading, songs }: Props) => {
   return (
     <List heading={heading}>
       {songs
         .map((song: Song) => mapSongView(song))
         .map((view: SongItemDetailsView) => (
-          <ListItem
-            key={view.id}
-            item={view}
-            url="song"
-            includeRanking={includeRanking}
-          >
+          <ListItem key={view.id} item={view} url="song">
             <Icon content={playlist}>
               <PlaylistIconType />
             </Icon>

@@ -1,7 +1,15 @@
 import { Artist, Playlist, RoyaltyFreeMusic, Song } from "@/models/data";
 import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
-import { ItemDetailsView, SongItemDetailsView } from "@/models/views";
-import { formatSecondsToHours, formatSecondsToMinutes } from "./formatters";
+import {
+  ItemDetailsView,
+  RoyaltyFreeMusicView,
+  SongItemDetailsView,
+} from "@/models/views";
+import {
+  formatSecondsToHours,
+  formatSecondsToMinutes,
+  formatTime,
+} from "./formatters";
 
 export const mapPlaylist = (from: PlaylistResponse): Playlist => {
   const tracks = from.tracks.sort(
@@ -55,24 +63,27 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
   return {
     id: from.id,
     name: from.name,
-    rank: from.rank,
     image: from.image,
     subheading: from.artist.name,
     downloadUrl: from.downloadUrl,
     downloadAllowed: from.downloadAllowed,
-    formatInput: from.duration,
+    formatInput: from.duration.toString(),
     format: formatSecondsToMinutes,
   };
 };
 
-export const mapRoyalty = (from: RoyaltyFreeMusic): ItemDetailsView => {
+export const mapRoyalty = (from: RoyaltyFreeMusic): RoyaltyFreeMusicView => {
   return {
     id: from.id,
     name: from.name,
+    isNew: from.isNew,
     image: from.image,
-    subheading: `2 songs`,
-    formatInput: 23,
-    format: formatSecondsToHours,
+    subheading: from.composer,
+    formatInput: from.duration,
+    description: from.description,
+    downloadAllowed: true,
+    downloadUrl: from.audio,
+    format: formatTime,
   };
 };
 
@@ -87,8 +98,9 @@ export const mapArtistView = (from: Artist): ItemDetailsView => {
   };
 };
 
-export const mapTotalDuration = (songs: Song[]): number => {
+export const mapTotalDuration = (songs: Song[]): string => {
   return songs
     .map((song: Song) => song.duration)
-    .reduce((prev, next) => prev + next, 0);
+    .reduce((prev, next) => prev + next, 0)
+    .toString();
 };

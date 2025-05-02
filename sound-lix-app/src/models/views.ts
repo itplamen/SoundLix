@@ -3,14 +3,18 @@ export interface ItemDetailsView {
   name: string;
   image: string;
   subheading: string;
-  formatInput: number;
-  rank?: number;
-  format: (seconds: number) => string;
+  formatInput: string;
+  format: (seconds: string) => string;
 }
 
 export interface SongItemDetailsView extends ItemDetailsView {
   downloadUrl: string;
   downloadAllowed: boolean;
+}
+
+export interface RoyaltyFreeMusicView extends SongItemDetailsView {
+  isNew: boolean;
+  description: string;
 }
 
 export type IconTypeView = {

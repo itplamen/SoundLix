@@ -1,23 +1,22 @@
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { ItemDetailsView } from "@/models/views";
-import Link from "next/link";
 
 type Props = {
   item: ItemDetailsView;
   url: string;
+  description?: string;
+  badge?: React.ReactNode;
   children: React.ReactNode;
-  includeRanking: boolean;
 };
-const ListItem = ({ item, url, children, includeRanking }: Props) => {
+
+const ListItem = ({ item, url, description, badge, children }: Props) => {
   return (
     <Link href={`/${url}/${item.id}`}>
       <li className="p-4 py-3 sm:py-4 hover:bg-gray-200 hover:rounded-lg hover:cursor-pointer active:bg-green-700 relative group">
-        <div className="flex items-center">
-          <div>{includeRanking && item.rank}</div>
-          <div
-            className={`relative flex-shrink-0 ${includeRanking ? "ms-4" : ""}`}
-          >
+        <div className="flex items-center relative w-full">
+          <div className="relative flex-shrink-0">
             <Image
               className="w-24 rounded-full transition-transform duration-300 group-hover:scale-125 group-hover:opacity-70"
               width={300}
@@ -50,12 +49,20 @@ const ListItem = ({ item, url, children, includeRanking }: Props) => {
           </div>
           <div className="flex items-center justify-between mb-4">
             <div className="flex space-x-4">
+              {badge}
               <div className="font-bold text-xs">
                 {item.format(item.formatInput)}
               </div>
               {children}
             </div>
           </div>
+          {description && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-center px-4">
+              <p className="text-sm text-gray-500 dark:text-gray-400 overflow-hidden text-ellipsis line-clamp-2 w-96">
+                {description}
+              </p>
+            </div>
+          )}
         </div>
       </li>
     </Link>
