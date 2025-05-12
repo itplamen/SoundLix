@@ -5,7 +5,8 @@ import ListItem from "../Lists/ListItem";
 import { ItemDetailsView } from "@/models/views";
 import { mapArtistView } from "@/utils/mappers";
 import Icon from "../Icons/Icon";
-import WebsiteIconType, { contnet } from "../Icons/Types/WebsiteIconType";
+import WebsiteIconType from "../Icons/Types/WebsiteIconType";
+import { website } from "../Icons/Types/IconTypeContent";
 
 const ArtistList = async () => {
   const artists: Artist[] = await getArtists();
@@ -16,7 +17,7 @@ const ArtistList = async () => {
         .map((artist: Artist) => mapArtistView(artist))
         .map((view: ItemDetailsView) => (
           <ListItem key={view.id} item={view} url="artist">
-            <Icon content={contnet}>
+            <Icon content={website}>
               <WebsiteIconType />
             </Icon>
           </ListItem>

@@ -1,6 +1,3 @@
-import { IconTypeView } from "@/models/views";
-
-const contnet: IconTypeView = { heading: "Website" };
 const WebsiteIconType = () => {
   return (
     <path
@@ -11,5 +8,4 @@ const WebsiteIconType = () => {
   );
 };
 
-export { contnet };
 export default WebsiteIconType;

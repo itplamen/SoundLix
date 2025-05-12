@@ -4,12 +4,9 @@ import { mapSongView } from "@/utils/mappers";
 import List from "../Lists/List";
 import ListItem from "../Lists/ListItem";
 import Icon from "../Icons/Icon";
-import PlaylistIconType, {
-  contnet as playlist,
-} from "../Icons/Types/PlaylistIconType";
-import DownloadIconType, {
-  contnet as download,
-} from "../Icons/Types/DownloadIconType";
+import PlaylistIconType from "../Icons/Types/PlaylistIconType";
+import DownloadIconType from "../Icons/Types/DownloadIconType";
+import { playlist, download } from "../Icons/Types/IconTypeContent";
 
 type Props = {
   heading: string;

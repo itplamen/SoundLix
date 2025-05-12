@@ -1,6 +1,3 @@
-import { IconTypeView } from "@/models/views";
-
-const contnet: IconTypeView = { heading: "Download" };
 const DownloadIconType = () => {
   return (
     <>
@@ -18,5 +15,4 @@ const DownloadIconType = () => {
   );
 };
 
-export { contnet };
 export default DownloadIconType;
