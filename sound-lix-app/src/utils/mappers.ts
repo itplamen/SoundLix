@@ -63,6 +63,7 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
   return {
     id: from.id,
     name: from.name,
+    src: from.audio,
     image: from.image,
     subheading: from.artist.name,
     downloadUrl: from.downloadUrl,

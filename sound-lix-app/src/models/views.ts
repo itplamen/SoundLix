@@ -8,6 +8,7 @@ export interface ItemDetailsView {
 }
 
 export interface SongItemDetailsView extends ItemDetailsView {
+  src: string;
   downloadUrl: string;
   downloadAllowed: boolean;
 }
