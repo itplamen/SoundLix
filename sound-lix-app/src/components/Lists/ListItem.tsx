@@ -50,9 +50,7 @@ const ListItem = ({ item, url, description, badge, children }: Props) => {
           <div className="flex items-center justify-between mb-4">
             <div className="flex space-x-4">
               {badge}
-              <div className="font-bold text-xs">
-                {item.format(item.formatInput)}
-              </div>
+              <div className="font-bold text-xs">{item.formatInput}</div>
               {children}
             </div>
           </div>

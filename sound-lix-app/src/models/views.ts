@@ -4,7 +4,6 @@ export interface ItemDetailsView {
   image: string;
   subheading: string;
   formatInput: string;
-  format: (seconds: string) => string;
 }
 
 export interface SongItemDetailsView extends ItemDetailsView {

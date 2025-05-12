@@ -68,8 +68,7 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
     subheading: from.artist.name,
     downloadUrl: from.downloadUrl,
     downloadAllowed: from.downloadAllowed,
-    formatInput: from.duration.toString(),
-    format: formatSecondsToMinutes,
+    formatInput: formatSecondsToMinutes(from.duration.toString()),
   };
 };
 
@@ -80,11 +79,10 @@ export const mapRoyalty = (from: RoyaltyFreeMusic): RoyaltyFreeMusicView => {
     isNew: from.isNew,
     image: from.image,
     subheading: from.composer,
-    formatInput: from.duration,
+    formatInput: formatTime(from.duration),
     description: from.description,
     downloadAllowed: true,
     downloadUrl: from.audio,
-    format: formatTime,
   };
 };
 
@@ -94,8 +92,7 @@ export const mapArtistView = (from: Artist): ItemDetailsView => {
     name: from.name,
     image: from.image,
     subheading: `${from.songs.length} songs`,
-    formatInput: mapTotalDuration(from.songs),
-    format: formatSecondsToHours,
+    formatInput: formatSecondsToHours(mapTotalDuration(from.songs)),
   };
 };
 
