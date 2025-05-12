@@ -18,7 +18,7 @@ const ArtistById = async ({ params }: { params: { id: number } }) => {
       date={artist.joindate}
       image={artist.image}
     >
-      <SongList heading={"Songs"} songs={artist.songs} includeRanking={true} />
+      <SongList heading={"Songs"} songs={artist.songs} />
     </ItemDetails>
   );
 };

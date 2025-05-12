@@ -45,11 +45,7 @@ const PlaylistDetails = ({ playlist }: { playlist: Playlist }) => {
           </div>
         </div>
       </div>
-      <SongList
-        heading={"Songs"}
-        songs={playlist.songs}
-        includeRanking={true}
-      />
+      <SongList heading={"Songs"} songs={playlist.songs} />
     </>
   );
 };
