@@ -17,6 +17,7 @@ import {
   play,
   previous,
 } from "../Icons/Types/IconTypeContent";
+import CircleButton from "../Buttons/CircleButton";
 
 // Helper to format time (mm:ss)
 const formatTime = (time: number) => {
@@ -138,61 +139,35 @@ const AudioPlayer = () => {
         <div className="flex items-center justify-center gap-2 flex-1 w-1/3 p-2">
           {/* Loop Button */}
 
-          <button
-            type="button"
-            title="Previous"
-            disabled={!currentSong}
-            className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          >
+          <CircleButton>
             <Icon content={loop}>
               <LoopIconType />
             </Icon>
-          </button>
+          </CircleButton>
 
-          <button
-            type="button"
-            title="Previous"
-            disabled={!currentSong}
-            className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          >
+          <CircleButton>
             <Icon content={previous}>
               <PreviousIconType />
             </Icon>
-          </button>
+          </CircleButton>
 
-          {/* Play/Pause Button */}
-          <button
-            type="button"
-            title="Previous"
-            className="w-10 h-10 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          >
+          <CircleButton size={10}>
             <Icon content={play} size={6}>
               <PlayIconType />
             </Icon>
-          </button>
+          </CircleButton>
 
-          {/* Next Button */}
-          <button
-            type="button"
-            title="Next"
-            disabled={!currentSong}
-            className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          >
+          <CircleButton>
             <Icon content={next}>
               <NextIcontType />
             </Icon>
-          </button>
+          </CircleButton>
 
-          <button
-            type="button"
-            title="Next"
-            disabled={!currentSong}
-            className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-          >
+          <CircleButton>
             <Icon content={more}>
               <MoreIconType />
             </Icon>
-          </button>
+          </CircleButton>
         </div>
 
         {/* Right Side: Volume Control */}
