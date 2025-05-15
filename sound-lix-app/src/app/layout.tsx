@@ -4,6 +4,11 @@ import "./globals.css";
 
 import Sidebar from "@/components/layout/Sidebar";
 import Section from "@/components/layout/Section";
+const AudioPlayer = dynamic(() => import("@/components/Player/AudioPlayer"), {
+  ssr: false,
+});
+import ClientReduxProvider from "@/components/ClientReduxProvider";
+import dynamic from "next/dynamic";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +35,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Sidebar />
-        <Section>{children}</Section>
+        <ClientReduxProvider>
+          <Section>{children}</Section>
+          <AudioPlayer />
+        </ClientReduxProvider>
       </body>
     </html>
   );

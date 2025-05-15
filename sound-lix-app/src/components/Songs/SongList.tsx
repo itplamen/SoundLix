@@ -18,7 +18,7 @@ const SongList = async ({ heading, songs }: Props) => {
       {songs
         .map((song: Song) => mapSongView(song))
         .map((view: SongItemDetailsView) => (
-          <ListItem key={view.id} item={view} url="song">
+          <ListItem key={view.id} item={view} url="song" src={view.src}>
             <Icon content={playlist}>
               <PlaylistIconType />
             </Icon>

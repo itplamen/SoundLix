@@ -1,17 +1,36 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ItemDetailsView } from "@/models/views";
+import { useAppDispatch } from "@/app/state/hooks";
+import { play } from "@/app/state/slices/audioPlayerSlice";
 
 type Props = {
   item: ItemDetailsView;
   url: string;
+  src?: string;
   description?: string;
   badge?: React.ReactNode;
   children: React.ReactNode;
 };
 
-const ListItem = ({ item, url, description, badge, children }: Props) => {
+const ListItem = ({ item, url, src, description, badge, children }: Props) => {
+  const dispatch = useAppDispatch();
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    console.log("Ad");
+    dispatch(
+      play({
+        ...item,
+        src: src ?? "",
+        downloadUrl: "",
+        downloadAllowed: false,
+      })
+    );
+  };
+
   return (
     <Link href={`/${url}/${item.id}`}>
       <li className="p-4 py-3 sm:py-4 hover:bg-gray-200 hover:rounded-lg hover:cursor-pointer active:bg-green-700 relative group">
@@ -25,18 +44,20 @@ const ListItem = ({ item, url, description, badge, children }: Props) => {
               alt={`${item.name}`}
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <svg
-                stroke="currentColor"
-                fill="white"
-                strokeWidth="0"
-                viewBox="0 0 1024 1024"
-                height="40"
-                width="40"
-                xmlns="http://www.w3.org/2000/svg"
-                className="bg-black rounded-full"
-              >
-                <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm144.1 454.9L437.7 677.8a8.02 8.02 0 0 1-12.7-6.5V353.7a8 8 0 0 1 12.7-6.5L656.1 506a7.9 7.9 0 0 1 0 12.9z"></path>
-              </svg>
+              <button onClick={handleClick}>
+                <svg
+                  stroke="currentColor"
+                  fill="white"
+                  strokeWidth="0"
+                  viewBox="0 0 1024 1024"
+                  height="40"
+                  width="40"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="bg-black rounded-full"
+                >
+                  <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm144.1 454.9L437.7 677.8a8.02 8.02 0 0 1-12.7-6.5V353.7a8 8 0 0 1 12.7-6.5L656.1 506a7.9 7.9 0 0 1 0 12.9z"></path>
+                </svg>
+              </button>
             </div>
           </div>
           <div className="flex-1 min-w-0 ms-4">
