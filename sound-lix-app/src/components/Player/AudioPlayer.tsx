@@ -4,6 +4,11 @@ import { useAppSelector } from "@/app/state/hooks";
 import { SongItemDetailsView } from "@/models/views";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import LoopIconType from "../Icons/Types/LoopIconType";
+import PreviousIconType from "../Icons/Types/PreviousIconType";
+import PlayIconType from "../Icons/Types/PlayIconType";
+import NextIcontType from "../Icons/Types/NextIcontType";
+import MoreIconType from "../Icons/Types/MoreIconType";
 
 // Helper to format time (mm:ss)
 const formatTime = (time: number) => {
@@ -140,13 +145,7 @@ const AudioPlayer = () => {
               fill="none"
               viewBox="0 0 24 24"
             >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
-              />
+              <LoopIconType />
             </svg>
           </button>
 
@@ -165,11 +164,7 @@ const AudioPlayer = () => {
               fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                fill-rule="evenodd"
-                d="M7 6a1 1 0 0 1 2 0v4l6.4-4.8A1 1 0 0 1 17 6v12a1 1 0 0 1-1.6.8L9 14v4a1 1 0 1 1-2 0V6Z"
-                clip-rule="evenodd"
-              />
+              <PreviousIconType />
             </svg>
           </button>
 
@@ -188,11 +183,7 @@ const AudioPlayer = () => {
               fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                fill-rule="evenodd"
-                d="M8.6 5.2A1 1 0 0 0 7 6v12a1 1 0 0 0 1.6.8l8-6a1 1 0 0 0 0-1.6l-8-6Z"
-                clip-rule="evenodd"
-              />
+              <PlayIconType />
             </svg>
           </button>
 
@@ -212,11 +203,7 @@ const AudioPlayer = () => {
               fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                fill-rule="evenodd"
-                d="M17 6a1 1 0 1 0-2 0v4L8.6 5.2A1 1 0 0 0 7 6v12a1 1 0 0 0 1.6.8L15 14v4a1 1 0 1 0 2 0V6Z"
-                clip-rule="evenodd"
-              />
+              <NextIcontType />
             </svg>
           </button>
 
@@ -236,12 +223,7 @@ const AudioPlayer = () => {
               fill="none"
               viewBox="0 0 24 24"
             >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-width="2"
-                d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5"
-              />
+              <MoreIconType />
             </svg>
           </button>
         </div>
