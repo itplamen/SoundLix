@@ -9,6 +9,14 @@ import PreviousIconType from "../Icons/Types/PreviousIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
 import NextIcontType from "../Icons/Types/NextIcontType";
 import MoreIconType from "../Icons/Types/MoreIconType";
+import Icon from "../Icons/Icon";
+import {
+  loop,
+  more,
+  next,
+  play,
+  previous,
+} from "../Icons/Types/IconTypeContent";
 
 // Helper to format time (mm:ss)
 const formatTime = (time: number) => {
@@ -136,17 +144,9 @@ const AudioPlayer = () => {
             disabled={!currentSong}
             className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
-            <svg
-              className="w-4 h-4 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
+            <Icon content={loop}>
               <LoopIconType />
-            </svg>
+            </Icon>
           </button>
 
           <button
@@ -155,17 +155,9 @@ const AudioPlayer = () => {
             disabled={!currentSong}
             className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
-            <svg
-              className="w-4 h-4 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <Icon content={previous}>
               <PreviousIconType />
-            </svg>
+            </Icon>
           </button>
 
           {/* Play/Pause Button */}
@@ -174,17 +166,9 @@ const AudioPlayer = () => {
             title="Previous"
             className="w-10 h-10 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
-            <svg
-              className="w-6 h-6 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <Icon content={play} size={6}>
               <PlayIconType />
-            </svg>
+            </Icon>
           </button>
 
           {/* Next Button */}
@@ -194,37 +178,20 @@ const AudioPlayer = () => {
             disabled={!currentSong}
             className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
-            <svg
-              className="w-4 h-4 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <Icon content={next}>
               <NextIcontType />
-            </svg>
+            </Icon>
           </button>
 
-          {/* More Options Button */}
           <button
             type="button"
             title="Next"
             disabled={!currentSong}
             className="w-6 h-6 flex items-center justify-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
           >
-            <svg
-              className="w-4 h-4 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
+            <Icon content={more}>
               <MoreIconType />
-            </svg>
+            </Icon>
           </button>
         </div>
 
