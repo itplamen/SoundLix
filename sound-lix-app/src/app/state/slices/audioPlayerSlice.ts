@@ -11,11 +11,11 @@ const audioPlayerSlice = createSlice({
   name: "audioPlayer",
   initialState,
   reducers: {
-    play: (state, action: PayloadAction<SongItemDetailsView>) => {
-      state.currentSong = action.payload;
+    playSong: (state, action: PayloadAction<AudioPlayerState>) => {
+      state.currentSong = action.payload.currentSong;
     },
   },
 });
 
-export const { play } = audioPlayerSlice.actions;
+export const { playSong } = audioPlayerSlice.actions;
 export default audioPlayerSlice.reducer;

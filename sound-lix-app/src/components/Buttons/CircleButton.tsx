@@ -18,7 +18,7 @@ const CircleButton = ({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-${size} h-${size} flex items-center justify-center bg-gray-300 hover:bg-white rounded-full me-2 mb-2`}
+      className={`w-${size} h-${size} flex items-center justify-center bg-gray-300 hover:bg-white rounded-full`}
     >
       {children}
     </button>

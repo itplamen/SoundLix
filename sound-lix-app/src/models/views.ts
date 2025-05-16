@@ -10,6 +10,7 @@ export interface SongItemDetailsView extends ItemDetailsView {
   src: string;
   downloadUrl: string;
   downloadAllowed: boolean;
+  isPlaying: boolean;
 }
 
 export interface RoyaltyFreeMusicView extends SongItemDetailsView {

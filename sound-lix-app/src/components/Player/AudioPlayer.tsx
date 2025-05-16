@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppSelector } from "@/app/state/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
 import { SongItemDetailsView } from "@/models/views";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
@@ -20,6 +20,7 @@ import {
 } from "../Icons/Types/IconTypeContent";
 import CircleButton from "../Buttons/CircleButton";
 import PauseIconType from "../Icons/Types/PauseIconType";
+import { playSong } from "@/app/state/slices/audioPlayerSlice";
 
 // Helper to format time (mm:ss)
 const formatTime = (time: number) => {
@@ -29,12 +30,14 @@ const formatTime = (time: number) => {
 };
 
 const AudioPlayer = () => {
+  const dispatch = useAppDispatch();
+
   const currentSong: SongItemDetailsView = useAppSelector(
     (state) => state.audioPlayer.currentSong
   );
 
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -44,9 +47,13 @@ const AudioPlayer = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio && currentSong?.src) {
-      onPlay();
+      if (currentSong.isPlaying) {
+        onPlay();
+      } else {
+        onPause();
+      }
     }
-  }, [currentSong?.src]);
+  }, [currentSong?.src, currentSong.isPlaying]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -75,7 +82,14 @@ const AudioPlayer = () => {
     const audio = audioRef.current;
     if (audio && currentSong?.src) {
       audio.play();
-      setIsPlaying(true);
+      dispatch(
+        playSong({
+          currentSong: {
+            ...currentSong,
+            isPlaying: true,
+          },
+        })
+      );
     }
   };
 
@@ -83,7 +97,14 @@ const AudioPlayer = () => {
     const audio = audioRef.current;
     if (audio && currentSong?.src) {
       audio.pause();
-      setIsPlaying(false);
+      dispatch(
+        playSong({
+          currentSong: {
+            ...currentSong,
+            isPlaying: false,
+          },
+        })
+      );
     }
   };
 
@@ -156,9 +177,12 @@ const AudioPlayer = () => {
             </Icon>
           </CircleButton>
 
-          <CircleButton size={10} onClick={isPlaying ? onPause : onPlay}>
-            <Icon content={isPlaying ? pause : play} size={6}>
-              {isPlaying ? <PauseIconType /> : <PlayIconType />}
+          <CircleButton
+            size={10}
+            onClick={currentSong.isPlaying ? onPause : onPlay}
+          >
+            <Icon content={currentSong.isPlaying ? pause : play} size={6}>
+              {currentSong.isPlaying ? <PauseIconType /> : <PlayIconType />}
             </Icon>
           </CircleButton>
 
