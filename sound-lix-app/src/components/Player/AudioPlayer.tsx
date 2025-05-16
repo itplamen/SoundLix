@@ -14,10 +14,12 @@ import {
   loop,
   more,
   next,
+  pause,
   play,
   previous,
 } from "../Icons/Types/IconTypeContent";
 import CircleButton from "../Buttons/CircleButton";
+import PauseIconType from "../Icons/Types/PauseIconType";
 
 // Helper to format time (mm:ss)
 const formatTime = (time: number) => {
@@ -32,29 +34,20 @@ const AudioPlayer = () => {
   );
 
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLooping, setIsLooping] = useState(false);
   const [showOptionsMenu, setShowOptionsMenu] = useState(false);
 
-  // Load and play song
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio || !currentSong?.src) return;
-
-    audio.pause();
-    audio.load();
-    audio.volume = volume;
-    audio.loop = isLooping; // Enable looping if isLooping is true
-
-    if (isPlaying) {
-      audio.play().catch((err) => console.error("Playback error:", err));
+    if (audio && currentSong?.src) {
+      onPlay();
     }
-  }, [currentSong, isPlaying, isLooping]);
+  }, [currentSong?.src]);
 
-  // Volume change
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
@@ -76,10 +69,22 @@ const AudioPlayer = () => {
       audio.removeEventListener("timeupdate", updateTime);
       audio.removeEventListener("loadedmetadata", updateDuration);
     };
-  }, [currentSong]);
+  }, [currentSong?.src]);
 
-  const togglePlayPause = () => {
-    setIsPlaying((prev) => !prev);
+  const onPlay = () => {
+    const audio = audioRef.current;
+    if (audio && currentSong?.src) {
+      audio.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const onPause = () => {
+    const audio = audioRef.current;
+    if (audio && currentSong?.src) {
+      audio.pause();
+      setIsPlaying(false);
+    }
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,9 +156,9 @@ const AudioPlayer = () => {
             </Icon>
           </CircleButton>
 
-          <CircleButton size={10}>
-            <Icon content={play} size={6}>
-              <PlayIconType />
+          <CircleButton size={10} onClick={isPlaying ? onPause : onPlay}>
+            <Icon content={isPlaying ? pause : play} size={6}>
+              {isPlaying ? <PauseIconType /> : <PlayIconType />}
             </Icon>
           </CircleButton>
 
@@ -180,7 +185,7 @@ const AudioPlayer = () => {
             step="0.01"
             value={volume}
             onChange={handleVolumeChange}
-            className="w-24 h-1 bg-gray-600 rounded-full appearance-none accent-gray-500 ml-auto"
+            className="w-l h-1 bg-gray-600 rounded-full accent-gray-100 ml-auto"
             title="Volume"
             disabled={!currentSong}
           />
@@ -198,7 +203,7 @@ const AudioPlayer = () => {
             max={duration || 0}
             value={currentTime}
             onChange={handleSeek}
-            className="w-full h-1 bg-gray-600 rounded-full accent-gray-500"
+            className="w-full h-1 bg-gray-600 rounded-full accent-gray-100"
             disabled={!currentSong}
           />
         </div>
@@ -222,7 +227,6 @@ const AudioPlayer = () => {
         </div>
       )}
 
-      {/* Audio Element */}
       <audio ref={audioRef} src={currentSong?.src || ""} />
     </div>
   );
