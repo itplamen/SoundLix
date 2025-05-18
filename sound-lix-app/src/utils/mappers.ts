@@ -5,11 +5,7 @@ import {
   RoyaltyFreeMusicView,
   SongItemDetailsView,
 } from "@/models/views";
-import {
-  formatSecondsToHours,
-  formatSecondsToMinutes,
-  formatTime,
-} from "./formatters";
+import { formatSecondsToHours, formatTime } from "./formatters";
 
 export const mapPlaylist = (from: PlaylistResponse): Playlist => {
   const tracks = from.tracks.sort(
@@ -68,7 +64,7 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
     subheading: from.artist.name,
     downloadUrl: from.downloadUrl,
     downloadAllowed: from.downloadAllowed,
-    formatInput: formatSecondsToMinutes(from.duration.toString()),
+    formatInput: formatTime(from.duration),
   };
 };
 
@@ -79,7 +75,7 @@ export const mapRoyalty = (from: RoyaltyFreeMusic): RoyaltyFreeMusicView => {
     isNew: from.isNew,
     image: from.image,
     subheading: from.composer,
-    formatInput: formatTime(from.duration),
+    formatInput: from.duration,
     description: from.description,
     downloadAllowed: true,
     downloadUrl: from.audio,

@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
 import { SongItemDetailsView } from "@/models/views";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import LoopIconType from "../Icons/Types/LoopIconType";
 import PreviousIconType from "../Icons/Types/PreviousIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
@@ -13,21 +13,26 @@ import Icon from "../Icons/Icon";
 import {
   loop,
   more,
+  mute,
   next,
   pause,
   play,
   previous,
+  unmute,
 } from "../Icons/Types/IconTypeContent";
 import CircleButton from "../Buttons/CircleButton";
 import PauseIconType from "../Icons/Types/PauseIconType";
 import { playSong } from "@/app/state/slices/audioPlayerSlice";
+import VolumeUpIconType from "../Icons/Types/VolumeUpIconType";
+import VolumeDownIconType from "../Icons/Types/VolumeDownIconType";
+import VolumeMuteIconType from "../Icons/Types/VolumeMuteIconType";
+import { formatTime } from "@/utils/formatters";
 
-// Helper to format time (mm:ss)
-const formatTime = (time: number) => {
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60);
-  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
-};
+const VOLUME_CONFIG = {
+  MIN: 0,
+  MAX: 1,
+  STEP: 0.01,
+} as const;
 
 const AudioPlayer = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +42,6 @@ const AudioPlayer = () => {
   );
 
   const audioRef = useRef<HTMLAudioElement>(null);
-  // const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -108,6 +112,18 @@ const AudioPlayer = () => {
     }
   };
 
+  const handleSongEnded = () => {
+    // onPause or playlist
+  };
+
+  const handleVolume = (
+    value: number
+  ): MouseEventHandler<HTMLButtonElement> => {
+    return (e) => {
+      setVolume(value);
+    };
+  };
+
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVolume(parseFloat(e.target.value));
   };
@@ -118,14 +134,6 @@ const AudioPlayer = () => {
       audioRef.current.currentTime = time;
       setCurrentTime(time);
     }
-  };
-
-  const toggleLoop = () => {
-    setIsLooping((prev) => !prev);
-  };
-
-  const toggleOptionsMenu = () => {
-    setShowOptionsMenu((prev) => !prev);
   };
 
   return (
@@ -199,18 +207,33 @@ const AudioPlayer = () => {
           </CircleButton>
         </div>
 
-        {/* Right Side: Volume Control */}
-        <div className="items-center gap-4 flex justify-between w-1/3 p-2">
-          {/* Volume Control */}
+        <div className="flex items-center justify-end w-1/3 p-2 gap-2">
+          <CircleButton
+            onClick={handleVolume(
+              volume <= VOLUME_CONFIG.MIN
+                ? VOLUME_CONFIG.MAX
+                : VOLUME_CONFIG.MIN
+            )}
+          >
+            <Icon content={volume <= VOLUME_CONFIG.MIN ? unmute : mute}>
+              {volume <= VOLUME_CONFIG.MIN ? (
+                <VolumeMuteIconType />
+              ) : volume > VOLUME_CONFIG.MIN &&
+                volume < VOLUME_CONFIG.MAX / 2 ? (
+                <VolumeDownIconType />
+              ) : (
+                <VolumeUpIconType />
+              )}
+            </Icon>
+          </CircleButton>
           <input
             type="range"
-            min="0"
-            max="1"
-            step="0.01"
+            min={VOLUME_CONFIG.MIN}
+            max={VOLUME_CONFIG.MAX}
+            step={VOLUME_CONFIG.STEP}
             value={volume}
             onChange={handleVolumeChange}
-            className="w-l h-1 bg-gray-600 rounded-full accent-gray-100 ml-auto"
-            title="Volume"
+            className="w-24 h-1 bg-gray-600 rounded-full accent-gray-100"
             disabled={!currentSong}
           />
         </div>
@@ -251,7 +274,11 @@ const AudioPlayer = () => {
         </div>
       )}
 
-      <audio ref={audioRef} src={currentSong?.src || ""} />
+      <audio
+        ref={audioRef}
+        src={currentSong?.src || ""}
+        onEnded={handleSongEnded}
+      />
     </div>
   );
 };

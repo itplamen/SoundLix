@@ -9,3 +9,5 @@ export const next: IconTypeView = { heading: "Next" };
 export const play: IconTypeView = { heading: "Play" };
 export const pause: IconTypeView = { heading: "Pause" };
 export const previous: IconTypeView = { heading: "Previous" };
+export const mute: IconTypeView = { heading: "Mute" };
+export const unmute: IconTypeView = { heading: "Unmute" };

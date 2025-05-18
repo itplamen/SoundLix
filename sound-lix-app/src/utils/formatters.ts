@@ -17,11 +17,11 @@ export const formatRequestUrl = <T extends BaseRequest>(
   return url;
 };
 
-export const formatSecondsToMinutes = (seconds: string): string => {
-  const min = String(Math.floor(Number(seconds) / 60)).padStart(2, "0");
-  const sec = String(Number(seconds) % 60).padStart(2, "0");
+export const formatTime = (time: number): string => {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
 
-  return `${min}:${sec}`;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 };
 
 export const formatSecondsToHours = (seconds: string): string => {
@@ -35,11 +35,4 @@ export const formatSecondsToHours = (seconds: string): string => {
     `${sec} sec${sec !== 1 ? "s" : ""}`;
 
   return formattedTime.trim();
-};
-
-export const formatTime = (time: string): string => {
-  const [minutes, seconds] = time.split(":");
-  const paddedMinutes = minutes.padStart(2, "0");
-
-  return `${paddedMinutes}:${seconds}`;
 };
