@@ -22,7 +22,7 @@ import {
 } from "../Icons/Types/IconTypeContent";
 import CircleButton from "../Buttons/CircleButton";
 import PauseIconType from "../Icons/Types/PauseIconType";
-import { playSong } from "@/app/state/slices/audioPlayerSlice";
+import { getCurrentSong, playSong } from "@/app/state/slices/audioPlayerSlice";
 import VolumeUpIconType from "../Icons/Types/VolumeUpIconType";
 import VolumeDownIconType from "../Icons/Types/VolumeDownIconType";
 import VolumeMuteIconType from "../Icons/Types/VolumeMuteIconType";
@@ -37,9 +37,7 @@ const VOLUME_CONFIG = {
 const AudioPlayer = () => {
   const dispatch = useAppDispatch();
 
-  const currentSong: SongItemDetailsView = useAppSelector(
-    (state) => state.audioPlayer.currentSong
-  );
+  const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [volume, setVolume] = useState(1);
@@ -88,10 +86,12 @@ const AudioPlayer = () => {
       audio.play();
       dispatch(
         playSong({
-          currentSong: {
-            ...currentSong,
-            isPlaying: true,
-          },
+          songs: [
+            {
+              ...currentSong,
+              isPlaying: true,
+            },
+          ],
         })
       );
     }
@@ -103,10 +103,12 @@ const AudioPlayer = () => {
       audio.pause();
       dispatch(
         playSong({
-          currentSong: {
-            ...currentSong,
-            isPlaying: false,
-          },
+          songs: [
+            {
+              ...currentSong,
+              isPlaying: false,
+            },
+          ],
         })
       );
     }

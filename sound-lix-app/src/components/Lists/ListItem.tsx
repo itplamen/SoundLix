@@ -10,7 +10,7 @@ import Icon from "../Icons/Icon";
 import PauseIconType from "../Icons/Types/PauseIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
 import { pause, play } from "../Icons/Types/IconTypeContent";
-import { playSong } from "@/app/state/slices/audioPlayerSlice";
+import { getCurrentSong, playSong } from "@/app/state/slices/audioPlayerSlice";
 
 type Props = {
   item: ItemDetailsView;
@@ -22,23 +22,23 @@ type Props = {
 };
 
 const ListItem = ({ item, url, src, description, badge, children }: Props) => {
-  const currentSong: SongItemDetailsView = useAppSelector(
-    (state) => state.audioPlayer.currentSong
-  );
+  const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
 
   const dispatch = useAppDispatch();
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     dispatch(
       playSong({
-        currentSong: {
-          ...item,
-          src: src ?? "",
-          downloadUrl: "",
-          downloadAllowed: false,
-          isPlaying:
-            currentSong.isPlaying && item.id === currentSong.id ? false : true,
-        },
+        songs: [
+          {
+            ...item,
+            src: src ?? "",
+            downloadUrl: "",
+            downloadAllowed: false,
+            isPlaying: !currentSong.isPlaying,
+            isSelected: true,
+          },
+        ],
       })
     );
   };
