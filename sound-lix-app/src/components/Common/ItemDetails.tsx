@@ -71,12 +71,13 @@ const ItemDetails = ({
           </div>
           <div>
             <Button
+              text={BUTTON_TEXT.PLAY}
               size={{ width: 24, height: 10 }}
               rounded={"rounded-lg"}
               bgColor={"gray-800"}
               hoverColor={"gray-600"}
             >
-              <Icon content={BUTTON_TEXT.PLAY} size={6} color={"white"}>
+              <Icon size={6} color={"white"}>
                 <PlayIconType />
               </Icon>
             </Button>

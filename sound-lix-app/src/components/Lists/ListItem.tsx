@@ -57,21 +57,18 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <Button
+                text={
+                  currentSong.isPlaying && item.id === currentSong.id
+                    ? BUTTON_TEXT.PAUSE
+                    : BUTTON_TEXT.PLAY
+                }
                 bgColor={"gray-300"}
                 hoverColor={"white"}
                 rounded={"rounded-full"}
                 size={{ width: 10, height: 10 }}
                 onClick={handleClick}
               >
-                <Icon
-                  color={"gray-800"}
-                  content={
-                    currentSong.isPlaying && item.id === currentSong.id
-                      ? BUTTON_TEXT.PAUSE
-                      : BUTTON_TEXT.PLAY
-                  }
-                  size={6}
-                >
+                <Icon color={"gray-800"} size={6}>
                   {currentSong.isPlaying && item.id === currentSong.id ? (
                     <PauseIconType />
                   ) : (

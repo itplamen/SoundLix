@@ -167,64 +167,62 @@ const AudioPlayer = () => {
           {/* Loop Button */}
 
           <Button
+            text={BUTTON_TEXT.REPEAT}
             size={{ width: 6, height: 6 }}
             rounded={"rounded-full"}
             bgColor={"gray-300"}
             hoverColor={"white"}
           >
-            <Icon content={BUTTON_TEXT.REPEAT} color={"gray-800"}>
+            <Icon color={"gray-800"}>
               <LoopIconType />
             </Icon>
           </Button>
 
           <Button
+            text={BUTTON_TEXT.PREVIOUS}
             size={{ width: 6, height: 6 }}
             rounded={"rounded-full"}
             bgColor={"gray-300"}
             hoverColor={"white"}
           >
-            <Icon content={BUTTON_TEXT.PREVIOUS} color={"gray-800"}>
+            <Icon color={"gray-800"}>
               <PreviousIconType />
             </Icon>
           </Button>
 
           <Button
+            text={currentSong.isPlaying ? BUTTON_TEXT.PAUSE : BUTTON_TEXT.PLAY}
             rounded={"rounded-full"}
             size={{ width: 10, height: 10 }}
             bgColor={"gray-300"}
             hoverColor={"white"}
             onClick={currentSong.isPlaying ? onPause : onPlay}
           >
-            <Icon
-              color={"gray-800"}
-              hoverColor={"white"}
-              content={
-                currentSong.isPlaying ? BUTTON_TEXT.PAUSE : BUTTON_TEXT.PLAY
-              }
-              size={6}
-            >
+            <Icon color={"gray-800"} size={6}>
               {currentSong.isPlaying ? <PauseIconType /> : <PlayIconType />}
             </Icon>
           </Button>
 
           <Button
+            text={BUTTON_TEXT.NEXT}
             size={{ width: 6, height: 6 }}
             rounded={"rounded-full"}
             bgColor={"gray-300"}
             hoverColor={"white"}
           >
-            <Icon content={BUTTON_TEXT.NEXT} color={"gray-800"}>
+            <Icon color={"gray-800"}>
               <NextIcontType />
             </Icon>
           </Button>
 
           <Button
+            text={BUTTON_TEXT.MORE}
             size={{ width: 6, height: 6 }}
             rounded={"rounded-full"}
             bgColor={"gray-300"}
             hoverColor={"white"}
           >
-            <Icon content={BUTTON_TEXT.MORE} color={"gray-800"}>
+            <Icon color={"gray-800"}>
               <MoreIconType />
             </Icon>
           </Button>
@@ -232,6 +230,11 @@ const AudioPlayer = () => {
 
         <div className="flex items-center justify-end w-1/3 p-2 gap-2">
           <Button
+            text={
+              volume <= VOLUME_CONFIG.MIN
+                ? BUTTON_TEXT.UNMUTE
+                : BUTTON_TEXT.MUTE
+            }
             rounded={"rounded-full"}
             size={{ width: 6, height: 6 }}
             bgColor={"gray-300"}
@@ -242,14 +245,7 @@ const AudioPlayer = () => {
                 : VOLUME_CONFIG.MIN
             )}
           >
-            <Icon
-              color={"gray-800"}
-              content={
-                volume <= VOLUME_CONFIG.MIN
-                  ? BUTTON_TEXT.UNMUTE
-                  : BUTTON_TEXT.MUTE
-              }
-            >
+            <Icon color={"gray-800"}>
               {volume <= VOLUME_CONFIG.MIN ? (
                 <VolumeMuteIconType />
               ) : volume > VOLUME_CONFIG.MIN &&
