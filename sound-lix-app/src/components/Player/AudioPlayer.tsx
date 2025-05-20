@@ -17,7 +17,7 @@ import VolumeUpIconType from "../Icons/Types/VolumeUpIconType";
 import VolumeDownIconType from "../Icons/Types/VolumeDownIconType";
 import VolumeMuteIconType from "../Icons/Types/VolumeMuteIconType";
 import { formatTime } from "@/utils/formatters";
-import { BUTTON_TEXT } from "@/utils/constants";
+import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
 
 const VOLUME_CONFIG = {
   MIN: 0,
@@ -169,11 +169,11 @@ const AudioPlayer = () => {
           <Button
             text={BUTTON_TEXT.REPEAT}
             size={{ width: 6, height: 6 }}
-            rounded={"rounded-full"}
-            bgColor={"gray-300"}
-            hoverColor={"white"}
+            rounded={BUTTON_ROUND.MAX}
+            bgColor={COLOR.LIGHT_GRAY}
+            hoverColor={COLOR.WHITE}
           >
-            <Icon color={"gray-800"}>
+            <Icon color={COLOR.DARK_GRAY}>
               <LoopIconType />
             </Icon>
           </Button>
@@ -181,24 +181,26 @@ const AudioPlayer = () => {
           <Button
             text={BUTTON_TEXT.PREVIOUS}
             size={{ width: 6, height: 6 }}
-            rounded={"rounded-full"}
-            bgColor={"gray-300"}
-            hoverColor={"white"}
+            rounded={BUTTON_ROUND.MAX}
+            bgColor={COLOR.LIGHT_GRAY}
+            hoverColor={COLOR.WHITE}
           >
-            <Icon color={"gray-800"}>
+            <Icon color={COLOR.DARK_GRAY}>
               <PreviousIconType />
             </Icon>
           </Button>
 
           <Button
             text={currentSong.isPlaying ? BUTTON_TEXT.PAUSE : BUTTON_TEXT.PLAY}
-            rounded={"rounded-full"}
+            rounded={BUTTON_ROUND.MAX}
             size={{ width: 10, height: 10 }}
-            bgColor={"gray-300"}
-            hoverColor={"white"}
+            bgColor={`${
+              currentSong.isPlaying ? COLOR.WHITE : COLOR.LIGHT_GRAY
+            }`}
+            hoverColor={COLOR.WHITE}
             onClick={currentSong.isPlaying ? onPause : onPlay}
           >
-            <Icon color={"gray-800"} size={6}>
+            <Icon color={COLOR.DARK_GRAY} size={6}>
               {currentSong.isPlaying ? <PauseIconType /> : <PlayIconType />}
             </Icon>
           </Button>
@@ -206,11 +208,11 @@ const AudioPlayer = () => {
           <Button
             text={BUTTON_TEXT.NEXT}
             size={{ width: 6, height: 6 }}
-            rounded={"rounded-full"}
-            bgColor={"gray-300"}
-            hoverColor={"white"}
+            rounded={BUTTON_ROUND.MAX}
+            bgColor={COLOR.LIGHT_GRAY}
+            hoverColor={COLOR.WHITE}
           >
-            <Icon color={"gray-800"}>
+            <Icon color={COLOR.DARK_GRAY}>
               <NextIcontType />
             </Icon>
           </Button>
@@ -218,11 +220,11 @@ const AudioPlayer = () => {
           <Button
             text={BUTTON_TEXT.MORE}
             size={{ width: 6, height: 6 }}
-            rounded={"rounded-full"}
-            bgColor={"gray-300"}
-            hoverColor={"white"}
+            rounded={BUTTON_ROUND.MAX}
+            bgColor={COLOR.LIGHT_GRAY}
+            hoverColor={COLOR.WHITE}
           >
-            <Icon color={"gray-800"}>
+            <Icon color={COLOR.DARK_GRAY}>
               <MoreIconType />
             </Icon>
           </Button>
@@ -235,17 +237,18 @@ const AudioPlayer = () => {
                 ? BUTTON_TEXT.UNMUTE
                 : BUTTON_TEXT.MUTE
             }
-            rounded={"rounded-full"}
+            rounded={BUTTON_ROUND.MAX}
             size={{ width: 6, height: 6 }}
-            bgColor={"gray-300"}
-            hoverColor={"white"}
+            bgColor={`${
+              volume > VOLUME_CONFIG.MIN ? COLOR.WHITE : COLOR.LIGHT_GRAY
+            }`}
             onClick={handleVolume(
               volume <= VOLUME_CONFIG.MIN
                 ? VOLUME_CONFIG.MAX
                 : VOLUME_CONFIG.MIN
             )}
           >
-            <Icon color={"gray-800"}>
+            <Icon color={COLOR.DARK_GRAY}>
               {volume <= VOLUME_CONFIG.MIN ? (
                 <VolumeMuteIconType />
               ) : volume > VOLUME_CONFIG.MIN &&

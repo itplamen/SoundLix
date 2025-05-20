@@ -17,13 +17,14 @@ export const BUTTON_TEXT = {
   UNMUTE: "Unmute",
 } as const;
 
-const BUTTON_ROUND = {
+export const BUTTON_ROUND = {
   MAX: "rounded-full",
   LARGE: "rounded-lg",
 } as const;
 export type RoundedOption = (typeof BUTTON_ROUND)[keyof typeof BUTTON_ROUND];
 
-const COLOR = {
+export const COLOR = {
+  NONE: "",
   LIGHT_GRAY: "gray-300",
   MEDIUM_GRAY: "gray-600",
   DARK_GRAY: "gray-800",

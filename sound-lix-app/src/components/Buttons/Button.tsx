@@ -7,7 +7,7 @@ type Props = {
   text: string;
   size: { width: number; height: number };
   bgColor: ColorOption;
-  hoverColor: ColorOption;
+  hoverColor?: ColorOption;
   rounded?: RoundedOption;
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;

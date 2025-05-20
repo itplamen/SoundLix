@@ -7,7 +7,7 @@ import { Song } from "@/models/data";
 import Link from "next/link";
 import Button from "../Buttons/Button";
 import Icon from "../Icons/Icon";
-import { BUTTON_TEXT } from "@/utils/constants";
+import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
 
 type Props = {
   title: string;
@@ -73,11 +73,11 @@ const ItemDetails = ({
             <Button
               text={BUTTON_TEXT.PLAY}
               size={{ width: 24, height: 10 }}
-              rounded={"rounded-lg"}
-              bgColor={"gray-800"}
-              hoverColor={"gray-600"}
+              rounded={BUTTON_ROUND.LARGE}
+              bgColor={COLOR.DARK_GRAY}
+              hoverColor={COLOR.MEDIUM_GRAY}
             >
-              <Icon size={6} color={"white"}>
+              <Icon size={6} color={COLOR.WHITE}>
                 <PlayIconType />
               </Icon>
             </Button>

@@ -4,9 +4,12 @@ import SongList from "../Songs/SongList";
 import { formatSecondsToHours } from "@/utils/formatters";
 import { mapTotalDuration } from "@/utils/mappers";
 import IndicatorList from "../Lists/IndicatorList";
-import Button from "../Buttons/Button";
+
 import PlayIconType from "../Icons/Types/PlayIconType";
 import DownloadIconType from "../Icons/Types/DownloadIconType";
+import Button from "../Buttons/Button";
+import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
+import Icon from "../Icons/Icon";
 
 const PlaylistDetails = ({ playlist }: { playlist: Playlist }) => {
   const items: string[] = [
@@ -36,11 +39,27 @@ const PlaylistDetails = ({ playlist }: { playlist: Playlist }) => {
             <IndicatorList items={items} />
           </div>
           <div>
-            <Button text="Download">
-              <DownloadIconType />
+            <Button
+              text={BUTTON_TEXT.DOWNLOAD}
+              size={{ width: 24, height: 10 }}
+              rounded={BUTTON_ROUND.LARGE}
+              bgColor={COLOR.DARK_GRAY}
+              hoverColor={COLOR.MEDIUM_GRAY}
+            >
+              <Icon size={6} color={COLOR.WHITE}>
+                <DownloadIconType />
+              </Icon>
             </Button>
-            <Button text="Play">
-              <PlayIconType />
+            <Button
+              text={BUTTON_TEXT.PLAY}
+              size={{ width: 24, height: 10 }}
+              rounded={BUTTON_ROUND.LARGE}
+              bgColor={COLOR.DARK_GRAY}
+              hoverColor={COLOR.MEDIUM_GRAY}
+            >
+              <Icon size={6} color={COLOR.WHITE}>
+                <PlayIconType />
+              </Icon>
             </Button>
           </div>
         </div>

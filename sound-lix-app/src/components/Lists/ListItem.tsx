@@ -10,7 +10,7 @@ import Icon from "../Icons/Icon";
 import PauseIconType from "../Icons/Types/PauseIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
 import { getCurrentSong, playSong } from "@/app/state/slices/audioPlayerSlice";
-import { BUTTON_TEXT } from "@/utils/constants";
+import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
 
 type Props = {
   item: ItemDetailsView;
@@ -35,7 +35,8 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
             src: src ?? "",
             downloadUrl: "",
             downloadAllowed: false,
-            isPlaying: !currentSong.isPlaying,
+            isPlaying:
+              currentSong.id === item.id ? !currentSong.isPlaying : true,
             isSelected: true,
           },
         ],
@@ -62,13 +63,21 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
                     ? BUTTON_TEXT.PAUSE
                     : BUTTON_TEXT.PLAY
                 }
-                bgColor={"gray-300"}
-                hoverColor={"white"}
-                rounded={"rounded-full"}
+                bgColor={`${
+                  item.id === currentSong.id && currentSong.isPlaying
+                    ? COLOR.WHITE
+                    : COLOR.LIGHT_GRAY
+                }`}
+                hoverColor={`${
+                  item.id === currentSong.id && currentSong.isPlaying
+                    ? COLOR.NONE
+                    : COLOR.WHITE
+                }`}
+                rounded={BUTTON_ROUND.MAX}
                 size={{ width: 10, height: 10 }}
                 onClick={handleClick}
               >
-                <Icon color={"gray-800"} size={6}>
+                <Icon color={COLOR.DARK_GRAY} size={6}>
                   {currentSong.isPlaying && item.id === currentSong.id ? (
                     <PauseIconType />
                   ) : (
