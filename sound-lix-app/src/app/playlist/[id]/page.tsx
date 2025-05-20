@@ -1,11 +1,27 @@
-import PlaylistDetails from "@/components/Playlist/PlaylistDetails";
+import ItemDetails from "@/components/Common/ItemDetails";
+import SongList from "@/components/Songs/SongList";
 import { Playlist } from "@/models/data";
 import { getPlaylist } from "@/providers/playlistsProvider";
 
 const PlaylistById = async ({ params }: { params: { id: number } }) => {
   const playlist: Playlist = await getPlaylist(params.id);
+  const items: string[] = [`${playlist.songs.length} songs`];
 
-  return <PlaylistDetails playlist={playlist} />;
+  return (
+    <ItemDetails
+      title={"Playlist"}
+      heading={playlist.name}
+      subheading={{
+        value: "Singles",
+      }}
+      date={playlist.created}
+      additional={items.join(", ")}
+      image={playlist.image}
+      songs={playlist.songs}
+    >
+      <SongList heading={"Songs"} songs={playlist.songs} />
+    </ItemDetails>
+  );
 };
 
 export default PlaylistById;
