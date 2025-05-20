@@ -6,10 +6,15 @@ type Props = {
 
 const BestChart = ({ children }: Props) => {
   const childrenArray = React.Children.toArray(children);
+  const colCountClass =
+    {
+      1: "grid-cols-1",
+      2: "grid-cols-2",
+    }[childrenArray.length] || "grid-cols-1";
 
   return (
     <div
-      className={`grid rounded-lg dark:border-gray-700 grid-cols-${childrenArray.length} gap-4 mb-4`}
+      className={`grid rounded-lg dark:border-gray-700 ${colCountClass} gap-4 mb-4`}
     >
       {childrenArray.map((element: React.ReactNode, index: number) => (
         <div
