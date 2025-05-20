@@ -7,7 +7,7 @@ import Section from "@/components/layout/Section";
 const AudioPlayer = dynamic(() => import("@/components/Player/AudioPlayer"), {
   ssr: false,
 });
-import ClientReduxProvider from "@/components/ClientReduxProvider";
+import ReduxProvider from "@/components/ReduxProvider";
 import dynamic from "next/dynamic";
 
 const geistSans = localFont({
@@ -34,11 +34,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Sidebar />
-        <ClientReduxProvider>
+        <ReduxProvider>
+          <Sidebar />
           <Section>{children}</Section>
           <AudioPlayer />
-        </ClientReduxProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
