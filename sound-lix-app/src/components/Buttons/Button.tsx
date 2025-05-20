@@ -1,24 +1,33 @@
+import { ColorOption, RoundedOption } from "@/utils/constants";
+import { MouseEventHandler } from "react";
+
 type Props = {
-  text: string;
   children: React.ReactNode;
+  size: { width: number; height: number };
+  bgColor: ColorOption;
+  hoverColor: ColorOption;
+  rounded?: RoundedOption;
+  disabled?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const Button = ({ text, children }: Props) => {
+const Button = ({
+  children,
+  size,
+  bgColor,
+  hoverColor,
+  rounded,
+  disabled = false,
+  onClick,
+}: Props) => {
   return (
     <button
       type="button"
-      className="text-white bg-[#050708] hover:bg-[#050708]/90 focus:ring-4 focus:outline-none focus:ring-[#050708]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#050708]/50 dark:hover:bg-[#050708]/30 me-2 mb-2"
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-${size.width} h-${size.height} flex items-center justify-center bg-${bgColor} hover:bg-${hoverColor} ${rounded}`}
     >
-      <svg
-        className="w-5 h-5 me-2 -ms-1"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-      >
-        {children}
-      </svg>
-      {text}
+      {children}
     </button>
   );
 };

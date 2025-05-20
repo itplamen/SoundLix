@@ -2,10 +2,12 @@ import { formatSecondsToHours } from "@/utils/formatters";
 import { mapTotalDuration } from "@/utils/mappers";
 import Image from "next/image";
 import IndicatorList from "../Lists/IndicatorList";
-import Button from "../Buttons/Button";
 import PlayIconType from "../Icons/Types/PlayIconType";
 import { Song } from "@/models/data";
 import Link from "next/link";
+import Button from "../Buttons/Button";
+import Icon from "../Icons/Icon";
+import { BUTTON_TEXT } from "@/utils/constants";
 
 type Props = {
   title: string;
@@ -68,8 +70,15 @@ const ItemDetails = ({
             <IndicatorList items={items} />
           </div>
           <div>
-            <Button text="Play">
-              <PlayIconType />
+            <Button
+              size={{ width: 24, height: 10 }}
+              rounded={"rounded-lg"}
+              bgColor={"gray-800"}
+              hoverColor={"gray-600"}
+            >
+              <Icon content={BUTTON_TEXT.PLAY} size={6} color={"white"}>
+                <PlayIconType />
+              </Icon>
             </Button>
           </div>
         </div>

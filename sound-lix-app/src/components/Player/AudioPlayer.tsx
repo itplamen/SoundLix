@@ -10,23 +10,14 @@ import PlayIconType from "../Icons/Types/PlayIconType";
 import NextIcontType from "../Icons/Types/NextIcontType";
 import MoreIconType from "../Icons/Types/MoreIconType";
 import Icon from "../Icons/Icon";
-import {
-  loop,
-  more,
-  mute,
-  next,
-  pause,
-  play,
-  previous,
-  unmute,
-} from "../Icons/Types/IconTypeContent";
-import CircleButton from "../Buttons/CircleButton";
+import Button from "../Buttons/Button";
 import PauseIconType from "../Icons/Types/PauseIconType";
 import { getCurrentSong, playSong } from "@/app/state/slices/audioPlayerSlice";
 import VolumeUpIconType from "../Icons/Types/VolumeUpIconType";
 import VolumeDownIconType from "../Icons/Types/VolumeDownIconType";
 import VolumeMuteIconType from "../Icons/Types/VolumeMuteIconType";
 import { formatTime } from "@/utils/formatters";
+import { BUTTON_TEXT } from "@/utils/constants";
 
 const VOLUME_CONFIG = {
   MIN: 0,
@@ -175,49 +166,90 @@ const AudioPlayer = () => {
         <div className="flex items-center justify-center gap-2 flex-1 w-1/3 p-2">
           {/* Loop Button */}
 
-          <CircleButton>
-            <Icon content={loop}>
+          <Button
+            size={{ width: 6, height: 6 }}
+            rounded={"rounded-full"}
+            bgColor={"gray-300"}
+            hoverColor={"white"}
+          >
+            <Icon content={BUTTON_TEXT.REPEAT} color={"gray-800"}>
               <LoopIconType />
             </Icon>
-          </CircleButton>
+          </Button>
 
-          <CircleButton>
-            <Icon content={previous}>
+          <Button
+            size={{ width: 6, height: 6 }}
+            rounded={"rounded-full"}
+            bgColor={"gray-300"}
+            hoverColor={"white"}
+          >
+            <Icon content={BUTTON_TEXT.PREVIOUS} color={"gray-800"}>
               <PreviousIconType />
             </Icon>
-          </CircleButton>
+          </Button>
 
-          <CircleButton
-            size={10}
+          <Button
+            rounded={"rounded-full"}
+            size={{ width: 10, height: 10 }}
+            bgColor={"gray-300"}
+            hoverColor={"white"}
             onClick={currentSong.isPlaying ? onPause : onPlay}
           >
-            <Icon content={currentSong.isPlaying ? pause : play} size={6}>
+            <Icon
+              color={"gray-800"}
+              hoverColor={"white"}
+              content={
+                currentSong.isPlaying ? BUTTON_TEXT.PAUSE : BUTTON_TEXT.PLAY
+              }
+              size={6}
+            >
               {currentSong.isPlaying ? <PauseIconType /> : <PlayIconType />}
             </Icon>
-          </CircleButton>
+          </Button>
 
-          <CircleButton>
-            <Icon content={next}>
+          <Button
+            size={{ width: 6, height: 6 }}
+            rounded={"rounded-full"}
+            bgColor={"gray-300"}
+            hoverColor={"white"}
+          >
+            <Icon content={BUTTON_TEXT.NEXT} color={"gray-800"}>
               <NextIcontType />
             </Icon>
-          </CircleButton>
+          </Button>
 
-          <CircleButton>
-            <Icon content={more}>
+          <Button
+            size={{ width: 6, height: 6 }}
+            rounded={"rounded-full"}
+            bgColor={"gray-300"}
+            hoverColor={"white"}
+          >
+            <Icon content={BUTTON_TEXT.MORE} color={"gray-800"}>
               <MoreIconType />
             </Icon>
-          </CircleButton>
+          </Button>
         </div>
 
         <div className="flex items-center justify-end w-1/3 p-2 gap-2">
-          <CircleButton
+          <Button
+            rounded={"rounded-full"}
+            size={{ width: 6, height: 6 }}
+            bgColor={"gray-300"}
+            hoverColor={"white"}
             onClick={handleVolume(
               volume <= VOLUME_CONFIG.MIN
                 ? VOLUME_CONFIG.MAX
                 : VOLUME_CONFIG.MIN
             )}
           >
-            <Icon content={volume <= VOLUME_CONFIG.MIN ? unmute : mute}>
+            <Icon
+              color={"gray-800"}
+              content={
+                volume <= VOLUME_CONFIG.MIN
+                  ? BUTTON_TEXT.UNMUTE
+                  : BUTTON_TEXT.MUTE
+              }
+            >
               {volume <= VOLUME_CONFIG.MIN ? (
                 <VolumeMuteIconType />
               ) : volume > VOLUME_CONFIG.MIN &&
@@ -227,7 +259,7 @@ const AudioPlayer = () => {
                 <VolumeUpIconType />
               )}
             </Icon>
-          </CircleButton>
+          </Button>
           <input
             type="range"
             min={VOLUME_CONFIG.MIN}

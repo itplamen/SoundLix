@@ -6,7 +6,7 @@ import { ItemDetailsView } from "@/models/views";
 import { mapArtistView } from "@/utils/mappers";
 import Icon from "../Icons/Icon";
 import WebsiteIconType from "../Icons/Types/WebsiteIconType";
-import { website } from "../Icons/Types/IconTypeContent";
+import { BUTTON_TEXT } from "@/utils/constants";
 
 const ArtistList = async () => {
   const artists: Artist[] = await getArtists();
@@ -17,7 +17,7 @@ const ArtistList = async () => {
         .map((artist: Artist) => mapArtistView(artist))
         .map((view: ItemDetailsView) => (
           <ListItem key={view.id} item={view} url="artist">
-            <Icon content={website}>
+            <Icon content={BUTTON_TEXT.WEBSITE} color={"gray-800"}>
               <WebsiteIconType />
             </Icon>
           </ListItem>

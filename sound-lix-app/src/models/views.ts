@@ -18,7 +18,3 @@ export interface RoyaltyFreeMusicView extends SongItemDetailsView {
   isNew: boolean;
   description: string;
 }
-
-export type IconTypeView = {
-  heading: string;
-};

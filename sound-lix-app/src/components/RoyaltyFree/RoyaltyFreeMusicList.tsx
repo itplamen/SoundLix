@@ -5,8 +5,9 @@ import ListItem from "../Lists/ListItem";
 import Icon from "../Icons/Icon";
 import PlaylistIconType from "../Icons/Types/PlaylistIconType";
 import DownloadIconType from "../Icons/Types/DownloadIconType";
-import { playlist, download } from "../Icons/Types/IconTypeContent";
+
 import { RoyaltyFreeMusic } from "@/models/data";
+import { BUTTON_TEXT } from "@/utils/constants";
 
 type Props = {
   heading: string;
@@ -31,10 +32,14 @@ const RoyaltyFreeMusicList = async ({ heading, songs }: Props) => {
             }
             description={view.description}
           >
-            <Icon content={playlist}>
+            <Icon content={BUTTON_TEXT.PLAYLIST} color={"gray-800"}>
               <PlaylistIconType />
             </Icon>
-            <Icon content={download} display={view.downloadAllowed}>
+            <Icon
+              content={BUTTON_TEXT.DOWNLOAD}
+              display={view.downloadAllowed}
+              color={"gray-800"}
+            >
               <DownloadIconType />
             </Icon>
           </ListItem>

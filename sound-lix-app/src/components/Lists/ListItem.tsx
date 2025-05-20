@@ -5,12 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { ItemDetailsView, SongItemDetailsView } from "@/models/views";
 import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
-import CircleButton from "../Buttons/CircleButton";
+import Button from "../Buttons/Button";
 import Icon from "../Icons/Icon";
 import PauseIconType from "../Icons/Types/PauseIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
-import { pause, play } from "../Icons/Types/IconTypeContent";
 import { getCurrentSong, playSong } from "@/app/state/slices/audioPlayerSlice";
+import { BUTTON_TEXT } from "@/utils/constants";
 
 type Props = {
   item: ItemDetailsView;
@@ -56,12 +56,19 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
               alt={`${item.name}`}
             />
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <CircleButton size={10} onClick={handleClick}>
+              <Button
+                bgColor={"gray-300"}
+                hoverColor={"white"}
+                rounded={"rounded-full"}
+                size={{ width: 10, height: 10 }}
+                onClick={handleClick}
+              >
                 <Icon
+                  color={"gray-800"}
                   content={
                     currentSong.isPlaying && item.id === currentSong.id
-                      ? pause
-                      : play
+                      ? BUTTON_TEXT.PAUSE
+                      : BUTTON_TEXT.PLAY
                   }
                   size={6}
                 >
@@ -71,7 +78,7 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
                     <PlayIconType />
                   )}
                 </Icon>
-              </CircleButton>
+              </Button>
             </div>
           </div>
           <div className="flex-1 min-w-0 ms-4">
