@@ -25,23 +25,9 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
   const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
 
   const dispatch = useAppDispatch();
-  const handleClick = (e: React.MouseEvent) => {
+  const handleTogglePlay = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(
-      playSong({
-        songs: [
-          {
-            ...item,
-            src: src ?? "",
-            downloadUrl: "",
-            downloadAllowed: false,
-            isPlaying:
-              currentSong.id === item.id ? !currentSong.isPlaying : true,
-            isSelected: true,
-          },
-        ],
-      })
-    );
+    dispatch(playSong([item as SongItemDetailsView]));
   };
 
   return (
@@ -75,7 +61,7 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
                 }`}
                 rounded={BUTTON_ROUND.MAX}
                 size={{ width: 10, height: 10 }}
-                onClick={handleClick}
+                onClick={handleTogglePlay}
               >
                 <Icon color={COLOR.DARK_GRAY} size={6}>
                   {currentSong.isPlaying && item.id === currentSong.id ? (

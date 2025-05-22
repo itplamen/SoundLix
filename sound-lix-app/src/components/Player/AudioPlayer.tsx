@@ -12,7 +12,13 @@ import MoreIconType from "../Icons/Types/MoreIconType";
 import Icon from "../Icons/Icon";
 import Button from "../Buttons/Button";
 import PauseIconType from "../Icons/Types/PauseIconType";
-import { getCurrentSong, playSong } from "@/app/state/slices/audioPlayerSlice";
+import {
+  getCurrentSong,
+  pauseSong,
+  playNextSong,
+  playPrevSong,
+  playSong,
+} from "@/app/state/slices/audioPlayerSlice";
 import VolumeUpIconType from "../Icons/Types/VolumeUpIconType";
 import VolumeDownIconType from "../Icons/Types/VolumeDownIconType";
 import VolumeMuteIconType from "../Icons/Types/VolumeMuteIconType";
@@ -29,24 +35,26 @@ const AudioPlayer = () => {
   const dispatch = useAppDispatch();
 
   const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
+  const songQueue: SongItemDetailsView[] = useAppSelector(
+    (state) => state.audioPlayer.songs
+  );
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const [volume, setVolume] = useState(1);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [isLooping, setIsLooping] = useState(false);
   const [showOptionsMenu, setShowOptionsMenu] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
-    if (audio && currentSong?.src) {
-      if (currentSong.isPlaying) {
-        onPlay();
-      } else {
-        onPause();
-      }
+    if (!audio || !currentSong?.src) return;
+
+    if (currentSong.isPlaying) {
+      audio.play();
+    } else {
+      audio.pause();
     }
-  }, [currentSong?.src, currentSong.isPlaying]);
+  }, [currentSong?.src, currentSong?.isPlaying]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -70,40 +78,6 @@ const AudioPlayer = () => {
       audio.removeEventListener("loadedmetadata", updateDuration);
     };
   }, [currentSong?.src]);
-
-  const onPlay = () => {
-    const audio = audioRef.current;
-    if (audio && currentSong?.src) {
-      audio.play();
-      dispatch(
-        playSong({
-          songs: [
-            {
-              ...currentSong,
-              isPlaying: true,
-            },
-          ],
-        })
-      );
-    }
-  };
-
-  const onPause = () => {
-    const audio = audioRef.current;
-    if (audio && currentSong?.src) {
-      audio.pause();
-      dispatch(
-        playSong({
-          songs: [
-            {
-              ...currentSong,
-              isPlaying: false,
-            },
-          ],
-        })
-      );
-    }
-  };
 
   const handleSongEnded = () => {
     // onPause or playlist
@@ -184,6 +158,7 @@ const AudioPlayer = () => {
             rounded={BUTTON_ROUND.MAX}
             bgColor={COLOR.LIGHT_GRAY}
             hoverColor={COLOR.WHITE}
+            onClick={() => dispatch(playPrevSong())}
           >
             <Icon color={COLOR.DARK_GRAY}>
               <PreviousIconType />
@@ -198,7 +173,9 @@ const AudioPlayer = () => {
               currentSong.isPlaying ? COLOR.WHITE : COLOR.LIGHT_GRAY
             }`}
             hoverColor={COLOR.WHITE}
-            onClick={currentSong.isPlaying ? onPause : onPlay}
+            onClick={() =>
+              dispatch(currentSong.isPlaying ? pauseSong() : playSong())
+            }
           >
             <Icon color={COLOR.DARK_GRAY} size={6}>
               {currentSong.isPlaying ? <PauseIconType /> : <PlayIconType />}
@@ -211,6 +188,7 @@ const AudioPlayer = () => {
             rounded={BUTTON_ROUND.MAX}
             bgColor={COLOR.LIGHT_GRAY}
             hoverColor={COLOR.WHITE}
+            onClick={() => dispatch(playNextSong())}
           >
             <Icon color={COLOR.DARK_GRAY}>
               <NextIcontType />

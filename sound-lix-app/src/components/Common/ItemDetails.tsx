@@ -1,5 +1,7 @@
+"use client";
+
 import { formatSecondsToHours } from "@/utils/formatters";
-import { mapTotalDuration } from "@/utils/mappers";
+import { mapSongView, mapTotalDuration } from "@/utils/mappers";
 import Image from "next/image";
 import IndicatorList from "../Lists/IndicatorList";
 import PlayIconType from "../Icons/Types/PlayIconType";
@@ -8,6 +10,9 @@ import Link from "next/link";
 import Button from "../Buttons/Button";
 import Icon from "../Icons/Icon";
 import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
+import { useAppDispatch } from "@/app/state/hooks";
+import { playSong } from "@/app/state/slices/audioPlayerSlice";
+import { SongItemDetailsView } from "@/models/views";
 
 type Props = {
   title: string;
@@ -38,6 +43,7 @@ const ItemDetails = ({
     additional,
     formatSecondsToHours(mapTotalDuration(songs)),
   ];
+  const dispatch = useAppDispatch();
 
   return (
     <>
@@ -76,6 +82,15 @@ const ItemDetails = ({
               rounded={BUTTON_ROUND.LARGE}
               bgColor={COLOR.DARK_GRAY}
               hoverColor={COLOR.MEDIUM_GRAY}
+              onClick={() =>
+                dispatch(
+                  playSong(
+                    songs.map((song: Song) => {
+                      return mapSongView(song);
+                    })
+                  )
+                )
+              }
             >
               <Icon size={6} color={COLOR.WHITE}>
                 <PlayIconType />
