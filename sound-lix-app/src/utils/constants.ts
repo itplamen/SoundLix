@@ -3,11 +3,18 @@ export const API = {
   MAX_RESULTS_LIMIT: 200,
 } as const;
 
+export const VOLUME_CONFIG = {
+  MIN: 0,
+  MAX: 1,
+  STEP: 0.01,
+} as const;
+
 export const BUTTON_TEXT = {
   PLAYLIST: "Add To Playlist",
   DOWNLOAD: "Download",
   WEBSITE: "Website",
-  REPEAT: "Repeat",
+  ENABLE_REPEAT: "Enable repeat",
+  DISABLE_REPEAT: "Disable repeat",
   MORE: "More",
   NEXT: "Next",
   PLAY: "Play",

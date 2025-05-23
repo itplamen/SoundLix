@@ -3,7 +3,7 @@
 import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
 import { SongItemDetailsView } from "@/models/views";
 import Image from "next/image";
-import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoopIconType from "../Icons/Types/LoopIconType";
 import PreviousIconType from "../Icons/Types/PreviousIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
@@ -13,36 +13,36 @@ import Icon from "../Icons/Icon";
 import Button from "../Buttons/Button";
 import PauseIconType from "../Icons/Types/PauseIconType";
 import {
+  changeTime,
+  changeVolume,
   getCurrentSong,
   pauseSong,
   playNextSong,
   playPrevSong,
   playSong,
+  toggleRepeatSong,
 } from "@/app/state/slices/audioPlayerSlice";
 import VolumeUpIconType from "../Icons/Types/VolumeUpIconType";
 import VolumeDownIconType from "../Icons/Types/VolumeDownIconType";
 import VolumeMuteIconType from "../Icons/Types/VolumeMuteIconType";
 import { formatTime } from "@/utils/formatters";
-import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
-
-const VOLUME_CONFIG = {
-  MIN: 0,
-  MAX: 1,
-  STEP: 0.01,
-} as const;
+import {
+  BUTTON_ROUND,
+  BUTTON_TEXT,
+  COLOR,
+  VOLUME_CONFIG,
+} from "@/utils/constants";
 
 const AudioPlayer = () => {
   const dispatch = useAppDispatch();
-
-  const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
-  const songQueue: SongItemDetailsView[] = useAppSelector(
-    (state) => state.audioPlayer.songs
-  );
+  const currentSong = useAppSelector(getCurrentSong);
+  const songQueue = useAppSelector((state) => state.audioPlayer.songs);
+  const repeat = useAppSelector((state) => state.audioPlayer.repeatSong);
+  const volume = useAppSelector((state) => state.audioPlayer.volume);
+  const time = useAppSelector((state) => state.audioPlayer.time);
 
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [volume, setVolume] = useState(1);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+
   const [showOptionsMenu, setShowOptionsMenu] = useState(false);
 
   useEffect(() => {
@@ -62,44 +62,38 @@ const AudioPlayer = () => {
     }
   }, [volume]);
 
-  // Time tracking
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration);
-
-    audio.addEventListener("timeupdate", updateTime);
-    audio.addEventListener("loadedmetadata", updateDuration);
+    audioRef.current.currentTime = time.currentTime;
+    const changeSongTime = () => {
+      dispatch(
+        changeTime({ duration: audio.duration, currentTime: audio.currentTime })
+      );
+    };
+    audio.addEventListener("timeupdate", changeSongTime);
+    audio.addEventListener("loadedmetadata", changeSongTime);
 
     return () => {
-      audio.removeEventListener("timeupdate", updateTime);
-      audio.removeEventListener("loadedmetadata", updateDuration);
+      audio.removeEventListener("timeupdate", changeSongTime);
+      audio.removeEventListener("loadedmetadata", changeSongTime);
     };
   }, [currentSong?.src]);
 
   const handleSongEnded = () => {
-    // onPause or playlist
-  };
-
-  const handleVolume = (
-    value: number
-  ): MouseEventHandler<HTMLButtonElement> => {
-    return (e) => {
-      setVolume(value);
-    };
-  };
-
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume(parseFloat(e.target.value));
+    if (songQueue.length > 1) {
+      dispatch(playNextSong());
+    } else {
+      dispatch(pauseSong());
+    }
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = parseFloat(e.target.value);
+    const songTime = parseFloat(e.target.value);
     if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      setCurrentTime(time);
+      audioRef.current.currentTime = songTime;
+      dispatch(changeTime({ currentTime: songTime, duration: time.duration }));
     }
   };
 
@@ -141,11 +135,14 @@ const AudioPlayer = () => {
           {/* Loop Button */}
 
           <Button
-            text={BUTTON_TEXT.REPEAT}
+            text={
+              repeat ? BUTTON_TEXT.DISABLE_REPEAT : BUTTON_TEXT.ENABLE_REPEAT
+            }
             size={{ width: 6, height: 6 }}
             rounded={BUTTON_ROUND.MAX}
-            bgColor={COLOR.LIGHT_GRAY}
+            bgColor={repeat ? COLOR.WHITE : COLOR.LIGHT_GRAY}
             hoverColor={COLOR.WHITE}
+            onClick={() => dispatch(toggleRepeatSong())}
           >
             <Icon color={COLOR.DARK_GRAY}>
               <LoopIconType />
@@ -220,11 +217,15 @@ const AudioPlayer = () => {
             bgColor={`${
               volume > VOLUME_CONFIG.MIN ? COLOR.WHITE : COLOR.LIGHT_GRAY
             }`}
-            onClick={handleVolume(
-              volume <= VOLUME_CONFIG.MIN
-                ? VOLUME_CONFIG.MAX
-                : VOLUME_CONFIG.MIN
-            )}
+            onClick={() =>
+              dispatch(
+                changeVolume(
+                  volume <= VOLUME_CONFIG.MIN
+                    ? VOLUME_CONFIG.MAX
+                    : VOLUME_CONFIG.MIN
+                )
+              )
+            }
           >
             <Icon color={COLOR.DARK_GRAY}>
               {volume <= VOLUME_CONFIG.MIN ? (
@@ -243,7 +244,7 @@ const AudioPlayer = () => {
             max={VOLUME_CONFIG.MAX}
             step={VOLUME_CONFIG.STEP}
             value={volume}
-            onChange={handleVolumeChange}
+            onChange={(e) => dispatch(changeVolume(parseFloat(e.target.value)))}
             className="w-24 h-1 bg-gray-600 rounded-full accent-gray-100"
             disabled={!currentSong}
           />
@@ -253,19 +254,19 @@ const AudioPlayer = () => {
       {/* Center: Controls and Progress Bar */}
       <div className="flex items-center w-full text-xs text-gray-400 mt-1">
         {/* Progress Bar and Time */}
-        <span className="mr-2">{formatTime(currentTime)}</span>
+        <span className="mr-2">{formatTime(time.currentTime)}</span>
         <div className="w-full mx-2">
           <input
             type="range"
             min={0}
-            max={duration || 0}
-            value={currentTime}
+            max={time.duration || 0}
+            value={time.currentTime}
             onChange={handleSeek}
             className="w-full h-1 bg-gray-600 rounded-full accent-gray-100"
             disabled={!currentSong}
           />
         </div>
-        <span className="ml-2">{formatTime(duration)}</span>
+        <span className="ml-2">{formatTime(time.duration)}</span>
       </div>
 
       {/* Options Menu */}
@@ -288,6 +289,7 @@ const AudioPlayer = () => {
       <audio
         ref={audioRef}
         src={currentSong?.src || ""}
+        loop={repeat}
         onEnded={handleSongEnded}
       />
     </div>

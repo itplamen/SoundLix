@@ -1,11 +1,29 @@
 import { SongItemDetailsView } from "@/models/views";
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
+import { VOLUME_CONFIG } from "@/utils/constants";
 
 interface AudioPlayerState {
   songs: SongItemDetailsView[];
   currentIndex: number;
+  repeatSong: boolean;
+  volume: number;
+  time: {
+    duration: number;
+    currentTime: number;
+  };
 }
+
+const initialState: AudioPlayerState = {
+  songs: [],
+  currentIndex: -1,
+  repeatSong: false,
+  volume: VOLUME_CONFIG.MAX,
+  time: {
+    duration: 0,
+    currentTime: 0,
+  },
+};
 
 const changeSong = (state: AudioPlayerState, direction: "next" | "prev") => {
   if (state.currentIndex === -1) return;
@@ -21,8 +39,6 @@ const changeSong = (state: AudioPlayerState, direction: "next" | "prev") => {
     }));
   }
 };
-
-const initialState: AudioPlayerState = { songs: [], currentIndex: -1 };
 
 const audioPlayerSlice = createSlice({
   name: "audioPlayer",
@@ -52,11 +68,33 @@ const audioPlayerSlice = createSlice({
     playPrevSong: (state) => {
       changeSong(state, "prev");
     },
+    toggleRepeatSong: (state) => {
+      state.repeatSong = !state.repeatSong;
+    },
+    changeVolume: (state, action: PayloadAction<number>) => {
+      state.volume = action.payload;
+    },
+    changeTime: (
+      state,
+      action: PayloadAction<{
+        duration: number;
+        currentTime: number;
+      }>
+    ) => {
+      state.time = action.payload;
+    },
   },
 });
 
-export const { playSong, pauseSong, playNextSong, playPrevSong } =
-  audioPlayerSlice.actions;
+export const {
+  playSong,
+  pauseSong,
+  playNextSong,
+  playPrevSong,
+  toggleRepeatSong,
+  changeVolume,
+  changeTime,
+} = audioPlayerSlice.actions;
 export const getCurrentSong = createSelector(
   (state: RootState) => state.audioPlayer,
   (audioPlayer) =>
