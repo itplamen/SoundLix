@@ -9,25 +9,65 @@ import Button from "../Buttons/Button";
 import Icon from "../Icons/Icon";
 import PauseIconType from "../Icons/Types/PauseIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
-import { getCurrentSong, playSong } from "@/app/state/slices/audioPlayerSlice";
+import {
+  getCurrentSong,
+  pauseSong,
+  playSong,
+} from "@/app/state/slices/audioPlayerSlice";
 import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+
+const haveSameIds = (
+  first: SongItemDetailsView[],
+  second: SongItemDetailsView[]
+): boolean => {
+  if (first.length !== first.length) return false;
+
+  const firstIds = first.map((x) => x.id).sort();
+  const secondIds = second.map((x) => x.id).sort();
+
+  return firstIds.every((id, i) => id === secondIds[i]);
+};
 
 type Props = {
   item: ItemDetailsView;
   url: string;
-  src?: string;
   description?: string;
   badge?: React.ReactNode;
+  songs: SongItemDetailsView[];
   children: React.ReactNode;
 };
 
-const ListItem = ({ item, url, src, description, badge, children }: Props) => {
-  const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
-
+const ListItem = ({
+  item,
+  url,
+  description,
+  badge,
+  songs,
+  children,
+}: Props) => {
   const dispatch = useAppDispatch();
+  const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
+  const songQueue = useAppSelector((state) => state.audioPlayer.songs);
+  const shouldPause =
+    currentSong.isPlaying &&
+    (item.id === currentSong.id || songs?.some((x) => x.id === currentSong.id));
+
   const handleTogglePlay = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(playSong([item as SongItemDetailsView]));
+
+    if (!shouldPause && songs.length > 1 && !haveSameIds(songs, songQueue)) {
+      toast(`${songs.length} songs added to the queue`, {
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: COLOR.WHITE,
+        },
+      });
+    }
+
+    dispatch(shouldPause ? pauseSong() : playSong(songs));
   };
 
   return (
@@ -64,11 +104,7 @@ const ListItem = ({ item, url, src, description, badge, children }: Props) => {
                 onClick={handleTogglePlay}
               >
                 <Icon color={COLOR.DARK_GRAY} size={6}>
-                  {currentSong.isPlaying && item.id === currentSong.id ? (
-                    <PauseIconType />
-                  ) : (
-                    <PlayIconType />
-                  )}
+                  {shouldPause ? <PauseIconType /> : <PlayIconType />}
                 </Icon>
               </Button>
             </div>

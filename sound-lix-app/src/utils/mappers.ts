@@ -1,7 +1,7 @@
 import { Artist, Playlist, RoyaltyFreeMusic, Song } from "@/models/data";
 import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
 import {
-  ItemDetailsView,
+  ArtistItemDetailsView,
   RoyaltyFreeMusicView,
   SongItemDetailsView,
 } from "@/models/views";
@@ -61,6 +61,7 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
     name: from.name,
     src: from.audio,
     image: from.image,
+    isPlaying: false,
     subheading: from.artist.name,
     downloadUrl: from.downloadUrl,
     downloadAllowed: from.downloadAllowed,
@@ -82,13 +83,16 @@ export const mapRoyalty = (from: RoyaltyFreeMusic): RoyaltyFreeMusicView => {
   };
 };
 
-export const mapArtistView = (from: Artist): ItemDetailsView => {
+export const mapArtistView = (from: Artist): ArtistItemDetailsView => {
   return {
     id: from.id,
     name: from.name,
     image: from.image,
     subheading: `${from.songs.length} songs`,
     formatInput: formatSecondsToHours(mapTotalDuration(from.songs)),
+    songs: from.songs.map((song: Song) => {
+      return mapSongView(song);
+    }),
   };
 };
 

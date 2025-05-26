@@ -11,6 +11,7 @@ import getRadioList from "@/providers/dbDataProvider";
 import RadioList from "@/components/Radio/RadioList";
 import { getRoyaltyFreeMusic } from "@/providers/royaltyFreeMusicProvider";
 import RoyaltyFreeMusicList from "@/components/RoyaltyFree/RoyaltyFreeMusicList";
+import { Toaster } from "react-hot-toast";
 
 const Home = async () => {
   const playlists: Playlist[] = await getPlaylists();
@@ -20,6 +21,7 @@ const Home = async () => {
 
   return (
     <>
+      <Toaster position="top-right" reverseOrder={false} />
       <PlaylistItemList playlists={playlists} />
       <BestChart>
         <SongList heading={"Top Songs"} songs={songs} />

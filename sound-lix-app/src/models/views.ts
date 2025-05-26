@@ -6,6 +6,10 @@ export interface ItemDetailsView {
   formatInput: string;
 }
 
+export interface ArtistItemDetailsView extends ItemDetailsView {
+  songs: SongItemDetailsView[];
+}
+
 export interface SongItemDetailsView extends ItemDetailsView {
   src: string;
   downloadUrl: string;

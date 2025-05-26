@@ -2,11 +2,12 @@ import { Artist } from "@/models/data";
 import { getArtists } from "@/providers/artistsProvider";
 import List from "../Lists/List";
 import ListItem from "../Lists/ListItem";
-import { ItemDetailsView } from "@/models/views";
+import { ArtistItemDetailsView } from "@/models/views";
 import { mapArtistView } from "@/utils/mappers";
 import Icon from "../Icons/Icon";
 import WebsiteIconType from "../Icons/Types/WebsiteIconType";
-import { BUTTON_TEXT } from "@/utils/constants";
+import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
+import Button from "../Buttons/Button";
 
 const ArtistList = async () => {
   const artists: Artist[] = await getArtists();
@@ -15,11 +16,18 @@ const ArtistList = async () => {
     <List heading="Hot Artists">
       {artists
         .map((artist: Artist) => mapArtistView(artist))
-        .map((view: ItemDetailsView) => (
-          <ListItem key={view.id} item={view} url="artist">
-            <Icon content={BUTTON_TEXT.WEBSITE} color={"gray-800"}>
-              <WebsiteIconType />
-            </Icon>
+        .map((view: ArtistItemDetailsView) => (
+          <ListItem key={view.id} item={view} url="artist" songs={view.songs}>
+            <Button
+              text={BUTTON_TEXT.WEBSITE}
+              rounded={BUTTON_ROUND.LARGE}
+              size={{ width: 6, height: 6 }}
+              bgColor={COLOR.WHITE}
+            >
+              <Icon color={COLOR.DARK_GRAY}>
+                <WebsiteIconType />
+              </Icon>
+            </Button>
           </ListItem>
         ))}
     </List>

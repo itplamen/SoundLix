@@ -6,7 +6,8 @@ import ListItem from "../Lists/ListItem";
 import Icon from "../Icons/Icon";
 import PlaylistIconType from "../Icons/Types/PlaylistIconType";
 import DownloadIconType from "../Icons/Types/DownloadIconType";
-import { BUTTON_TEXT } from "@/utils/constants";
+import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
+import Button from "../Buttons/Button";
 
 type Props = {
   heading: string;
@@ -18,17 +19,27 @@ const SongList = async ({ heading, songs }: Props) => {
       {songs
         .map((song: Song) => mapSongView(song))
         .map((view: SongItemDetailsView) => (
-          <ListItem key={view.id} item={view} url="song" src={view.src}>
-            <Icon content={BUTTON_TEXT.PLAYLIST} color={"gray-800"}>
-              <PlaylistIconType />
-            </Icon>
-            <Icon
-              content={BUTTON_TEXT.DOWNLOAD}
-              display={view.downloadAllowed}
-              color={"gray-800"}
+          <ListItem key={view.id} item={view} url="song" songs={[view]}>
+            <Button
+              text={BUTTON_TEXT.PLAYLIST}
+              rounded={BUTTON_ROUND.LARGE}
+              size={{ width: 6, height: 6 }}
+              bgColor={COLOR.WHITE}
             >
-              <DownloadIconType />
-            </Icon>
+              <Icon color={COLOR.DARK_GRAY}>
+                <PlaylistIconType />
+              </Icon>
+            </Button>
+            <Button
+              text={BUTTON_TEXT.DOWNLOAD}
+              rounded={BUTTON_ROUND.LARGE}
+              size={{ width: 6, height: 6 }}
+              bgColor={COLOR.WHITE}
+            >
+              <Icon color={COLOR.DARK_GRAY}>
+                <DownloadIconType />
+              </Icon>
+            </Button>
           </ListItem>
         ))}
     </List>

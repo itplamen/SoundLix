@@ -49,6 +49,12 @@ const audioPlayerSlice = createSlice({
       action: PayloadAction<SongItemDetailsView[] | undefined>
     ) => {
       state.currentIndex = 0;
+      if (action?.payload) {
+        state.time = {
+          currentTime: 0,
+          duration: 0,
+        };
+      }
       state.songs = (action?.payload || state.songs).map(
         (song: SongItemDetailsView, index: number) => ({
           ...song,
