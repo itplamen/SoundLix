@@ -16,7 +16,6 @@ import {
 } from "@/app/state/slices/audioPlayerSlice";
 import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 
 const haveSameIds = (
   first: SongItemDetailsView[],
@@ -67,7 +66,7 @@ const ListItem = ({
       });
     }
 
-    dispatch(shouldPause ? pauseSong() : playSong(songs));
+    dispatch(shouldPause ? pauseSong() : playSong({ id: item.id, songs }));
   };
 
   return (
@@ -82,6 +81,7 @@ const ListItem = ({
               src={item.image}
               alt={`${item.name}`}
             />
+
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <Button
                 text={

@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { SongItemDetailsView } from "@/models/views";
 
@@ -9,13 +7,14 @@ type Props = {
     img: number;
     text: number;
   };
+  children?: React.ReactNode;
 };
 
-const SongInfo = ({ song, size }: Props) => {
+const SongInfo = ({ song, size, children }: Props) => {
   return (
     <>
       <div
-        className={`w-${size.img}} h-${size.img} rounded-md overflow-hidden bg-gray-700 shadow-md flex-shrink-0`}
+        className={`relative w-${size.img} h-${size.img} rounded-md overflow-hidden bg-gray-700 shadow-md flex-shrink-0 group`}
       >
         {song?.image ? (
           <Image
@@ -30,7 +29,10 @@ const SongInfo = ({ song, size }: Props) => {
             <span className="text-white text-xs">No Image</span>
           </div>
         )}
+
+        {children}
       </div>
+
       <div className="flex flex-col flex-1 overflow-hidden">
         <p
           className={`text-[${size.text}px] font-semibold text-white truncate`}

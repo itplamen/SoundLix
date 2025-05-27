@@ -45,7 +45,7 @@ const AudioPlayer = () => {
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const [showOptionsMenu, setShowOptionsMenu] = useState(false);
+  const [showOptionsMenu, setShowOptionsMenu] = useState(true);
 
   useEffect(() => {
     const audio = audioRef.current;

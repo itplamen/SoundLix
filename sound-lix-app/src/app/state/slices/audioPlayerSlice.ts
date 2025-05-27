@@ -4,6 +4,7 @@ import { RootState } from "../store";
 import { VOLUME_CONFIG } from "@/utils/constants";
 
 interface AudioPlayerState {
+  id: string;
   songs: SongItemDetailsView[];
   currentIndex: number;
   repeatSong: boolean;
@@ -15,6 +16,7 @@ interface AudioPlayerState {
 }
 
 const initialState: AudioPlayerState = {
+  id: "",
   songs: [],
   currentIndex: -1,
   repeatSong: false,
@@ -25,14 +27,24 @@ const initialState: AudioPlayerState = {
   },
 };
 
-const changeSong = (state: AudioPlayerState, direction: "next" | "prev") => {
+const changeSong = (
+  state: AudioPlayerState,
+  direction: "next" | "prev",
+  payload?: SongItemDetailsView | undefined
+) => {
   if (state.currentIndex === -1) return;
 
   const offset = direction === "next" ? 1 : -1;
-  const newIndex = state.currentIndex + offset;
+  const newIndex = payload
+    ? state.songs.findIndex((x) => x.id === payload?.id)
+    : state.currentIndex + offset;
 
   if (newIndex >= 0 && newIndex < state.songs.length) {
     state.currentIndex = newIndex;
+    state.time = {
+      currentTime: 0,
+      duration: 0,
+    };
     state.songs = state.songs.map((song, index) => ({
       ...song,
       isPlaying: state.currentIndex === index,
@@ -46,16 +58,26 @@ const audioPlayerSlice = createSlice({
   reducers: {
     playSong: (
       state,
-      action: PayloadAction<SongItemDetailsView[] | undefined>
+      action: PayloadAction<
+        { id: string; songs: SongItemDetailsView[] } | undefined
+      >
     ) => {
-      state.currentIndex = 0;
-      if (action?.payload) {
+      if (
+        action?.payload &&
+        !action.payload.songs.some(
+          (x) => x.id === state.songs[state.currentIndex].id
+        )
+      ) {
         state.time = {
           currentTime: 0,
           duration: 0,
         };
       }
-      state.songs = (action?.payload || state.songs).map(
+
+      state.currentIndex =
+        state.id === action.payload?.id ? state.currentIndex : 0;
+      state.id = action.payload?.id ?? "";
+      state.songs = (action?.payload?.songs || state.songs).map(
         (song: SongItemDetailsView, index: number) => ({
           ...song,
           isPlaying: state.currentIndex === index,
@@ -68,8 +90,11 @@ const audioPlayerSlice = createSlice({
         isPlaying: false,
       }));
     },
-    playNextSong: (state) => {
-      changeSong(state, "next");
+    playNextSong: (
+      state,
+      action: PayloadAction<SongItemDetailsView | undefined>
+    ) => {
+      changeSong(state, "next", action.payload);
     },
     playPrevSong: (state) => {
       changeSong(state, "prev");
