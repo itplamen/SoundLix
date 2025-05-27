@@ -22,13 +22,26 @@ export const mapPlaylist = (from: PlaylistResponse): Playlist => {
 };
 
 export const mapArtist = (from: ArtistResponse): Artist => {
-  return {
+  const artist: Artist = {
     id: from.id,
     name: from.name,
     image: from.image || from.tracks?.find((x) => x.image)?.image || "",
     joindate: from.joindate,
     website: from.website,
-    songs: from.tracks.map((song: SongResponse) => mapSong(song)),
+    songs: [],
+  };
+
+  const songs: Song[] = from.tracks.map((song: SongResponse) => {
+    return {
+      ...mapSong(song),
+      artist: {
+        ...artist,
+      },
+    };
+  });
+  return {
+    ...artist,
+    songs,
   };
 };
 

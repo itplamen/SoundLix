@@ -32,11 +32,13 @@ import {
   COLOR,
   VOLUME_CONFIG,
 } from "@/utils/constants";
+import Queue from "./Queue";
+import SongInfo from "./SongInfo";
 
 const AudioPlayer = () => {
   const dispatch = useAppDispatch();
   const currentSong = useAppSelector(getCurrentSong);
-  const songQueue = useAppSelector((state) => state.audioPlayer.songs);
+  const queue = useAppSelector((state) => state.audioPlayer.songs);
   const repeat = useAppSelector((state) => state.audioPlayer.repeatSong);
   const volume = useAppSelector((state) => state.audioPlayer.volume);
   const time = useAppSelector((state) => state.audioPlayer.time);
@@ -82,7 +84,7 @@ const AudioPlayer = () => {
   }, [currentSong?.src]);
 
   const handleSongEnded = () => {
-    if (songQueue.length > 1) {
+    if (queue.length > 1) {
       dispatch(playNextSong());
     } else {
       dispatch(pauseSong());
@@ -100,34 +102,8 @@ const AudioPlayer = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 w-full bg-gray-800 p-3 rounded-t-lg shadow-lg">
       <div className="flex items-center w-full">
-        {/* Left Side: Image and Title */}
         <div className="flex items-center gap-4 flex-shrink-0 w-1/3 p-2">
-          {/* Cover Image */}
-          <div className="w-16 h-16 rounded-md overflow-hidden bg-gray-700 shadow-md flex-shrink-0">
-            {currentSong?.image ? (
-              <Image
-                src={currentSong.image}
-                alt="Track Cover"
-                width={300}
-                height={300}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="w-full h-full bg-gray-600 flex items-center justify-center">
-                <span className="text-white text-xs">No Song</span>
-              </div>
-            )}
-          </div>
-
-          {/* Song Info */}
-          <div className="flex flex-col max-w-[200px] overflow-hidden">
-            <p className="text-sm font-semibold text-white truncate">
-              {currentSong?.name || "No song selected"}
-            </p>
-            <small className="text-xs text-gray-400 truncate">
-              {currentSong?.subheading || "Select a song to play"}
-            </small>
-          </div>
+          <SongInfo song={currentSong} size={{ img: 16, text: 14 }} />
         </div>
 
         {/* Centered Buttons Section */}
@@ -196,13 +172,16 @@ const AudioPlayer = () => {
             text={BUTTON_TEXT.MORE}
             size={{ width: 6, height: 6 }}
             rounded={BUTTON_ROUND.MAX}
-            bgColor={COLOR.LIGHT_GRAY}
+            bgColor={showOptionsMenu ? COLOR.WHITE : COLOR.LIGHT_GRAY}
             hoverColor={COLOR.WHITE}
+            onClick={() => setShowOptionsMenu((prev) => !prev)}
           >
             <Icon color={COLOR.DARK_GRAY}>
               <MoreIconType />
             </Icon>
           </Button>
+
+          {showOptionsMenu && <Queue currentSong={currentSong} queue={queue} />}
         </div>
 
         <div className="flex items-center justify-end w-1/3 p-2 gap-2">
@@ -268,23 +247,6 @@ const AudioPlayer = () => {
         </div>
         <span className="ml-2">{formatTime(time.duration)}</span>
       </div>
-
-      {/* Options Menu */}
-      {showOptionsMenu && (
-        <div className="absolute top-0 right-0 mt-2 w-48 bg-gray-800 text-white p-2 rounded-lg shadow-md">
-          <ul>
-            <li className="py-1 text-sm cursor-pointer hover:bg-gray-700 px-2">
-              Shuffle
-            </li>
-            <li className="py-1 text-sm cursor-pointer hover:bg-gray-700 px-2">
-              Equalizer
-            </li>
-            <li className="py-1 text-sm cursor-pointer hover:bg-gray-700 px-2">
-              Settings
-            </li>
-          </ul>
-        </div>
-      )}
 
       <audio
         ref={audioRef}
