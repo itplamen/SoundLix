@@ -17,7 +17,15 @@ export const mapPlaylist = (from: PlaylistResponse): Playlist => {
     downloadUrl: from.zip,
     created: from.creationdate,
     image: tracks[0].image,
-    songs: tracks.map((track: SongResponse) => mapSong(track)),
+    songs: tracks.map((track: SongResponse) => {
+      return {
+        ...mapSong(track),
+        owner: {
+          id: from.id,
+          name: from.name,
+        },
+      };
+    }),
   };
 };
 
@@ -31,14 +39,17 @@ export const mapArtist = (from: ArtistResponse): Artist => {
     songs: [],
   };
 
-  const songs: Song[] = from.tracks.map((song: SongResponse) => {
-    return {
-      ...mapSong(song),
-      artist: {
-        ...artist,
-      },
-    };
-  });
+  const songs: Song[] = from.tracks
+    .map((song: SongResponse) => {
+      return {
+        ...mapSong(song),
+        artist: {
+          id: artist.id,
+          name: artist.name,
+        },
+      };
+    })
+    .sort((a: Song, b: Song) => a.id.localeCompare(b.id));
   return {
     ...artist,
     songs,
@@ -52,18 +63,15 @@ export const mapSong = (from: SongResponse): Song => {
     duration: Number(from.duration),
     released: from.releasedate,
     audio: from.audio,
-    rank: from.position,
     downloadUrl: from.audiodownload,
     image: from.image,
     lyrics: from.lyrics,
     downloadAllowed: from.audiodownload_allowed,
-    artist: {
+    owner: {
       id: from.artist_id,
       name: from.artist_name,
-      website: "",
-      joindate: "",
-      image: "",
     },
+
     genres: from.musicinfo?.tags?.genres ?? [],
   };
 };
@@ -75,7 +83,9 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
     src: from.audio,
     image: from.image,
     isPlaying: false,
-    subheading: from.artist.name,
+    subheading: from.owner.name,
+    ownerId: from.owner.id,
+    ownerName: from.owner.name,
     downloadUrl: from.downloadUrl,
     downloadAllowed: from.downloadAllowed,
     formatInput: formatTime(from.duration),
@@ -89,6 +99,8 @@ export const mapRoyalty = (from: RoyaltyFreeMusic): RoyaltyFreeMusicView => {
     isNew: from.isNew,
     image: from.image,
     subheading: from.composer,
+    ownerId: "",
+    ownerName: "",
     formatInput: from.duration,
     description: from.description,
     downloadAllowed: true,
@@ -104,7 +116,11 @@ export const mapArtistView = (from: Artist): ArtistItemDetailsView => {
     subheading: `${from.songs.length} songs`,
     formatInput: formatSecondsToHours(mapTotalDuration(from.songs)),
     songs: from.songs.map((song: Song) => {
-      return mapSongView(song);
+      return {
+        ...mapSongView(song),
+        ownerId: from.id,
+        ownerName: from.name,
+      };
     }),
   };
 };

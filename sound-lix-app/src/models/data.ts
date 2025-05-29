@@ -25,7 +25,7 @@ export interface Song extends Entity {
   image: string;
   lyrics: string;
   downloadAllowed: boolean;
-  artist: Artist;
+  owner: Entity;
   genres: string[];
 }
 

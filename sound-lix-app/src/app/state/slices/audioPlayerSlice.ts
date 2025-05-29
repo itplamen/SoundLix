@@ -2,9 +2,10 @@ import { SongItemDetailsView } from "@/models/views";
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { VOLUME_CONFIG } from "@/utils/constants";
+import { Entity } from "@/models/data";
 
 interface AudioPlayerState {
-  id: string;
+  owner: Entity;
   songs: SongItemDetailsView[];
   currentIndex: number;
   repeatSong: boolean;
@@ -16,9 +17,9 @@ interface AudioPlayerState {
 }
 
 const initialState: AudioPlayerState = {
-  id: "",
+  owner: {} as Entity,
   songs: [],
-  currentIndex: -1,
+  currentIndex: 0,
   repeatSong: false,
   volume: VOLUME_CONFIG.MAX,
   time: {
@@ -32,23 +33,24 @@ const changeSong = (
   direction: "next" | "prev",
   payload?: SongItemDetailsView | undefined
 ) => {
-  if (state.currentIndex === -1) return;
-
   const offset = direction === "next" ? 1 : -1;
   const newIndex = payload
     ? state.songs.findIndex((x) => x.id === payload?.id)
     : state.currentIndex + offset;
 
   if (newIndex >= 0 && newIndex < state.songs.length) {
-    state.currentIndex = newIndex;
+    state.songs = state.songs
+      .map((song, index) => ({
+        ...song,
+        isPlaying: newIndex === index,
+      }))
+      .filter((song, index) => index !== state.currentIndex);
+
     state.time = {
       currentTime: 0,
       duration: 0,
     };
-    state.songs = state.songs.map((song, index) => ({
-      ...song,
-      isPlaying: state.currentIndex === index,
-    }));
+    state.currentIndex = state.songs.findIndex((song) => song.isPlaying);
   }
 };
 
@@ -56,33 +58,32 @@ const audioPlayerSlice = createSlice({
   name: "audioPlayer",
   initialState,
   reducers: {
-    playSong: (
-      state,
-      action: PayloadAction<
-        { id: string; songs: SongItemDetailsView[] } | undefined
-      >
-    ) => {
+    playSong: (state, action: PayloadAction<SongItemDetailsView[]>) => {
       if (
-        action?.payload &&
-        !action.payload.songs.some(
-          (x) => x.id === state.songs[state.currentIndex].id
+        !action.payload.some(
+          (x) => x.id === state.songs[state.currentIndex]?.id
         )
       ) {
         state.time = {
           currentTime: 0,
           duration: 0,
         };
+        state.currentIndex = 0;
       }
 
-      state.currentIndex =
-        state.id === action.payload?.id ? state.currentIndex : 0;
-      state.id = action.payload?.id ?? "";
-      state.songs = (action?.payload?.songs || state.songs).map(
-        (song: SongItemDetailsView, index: number) => ({
-          ...song,
-          isPlaying: state.currentIndex === index,
-        })
-      );
+      state.songs = (
+        action.payload[0].ownerId !== state.owner.id
+          ? action.payload
+          : state.songs
+      ).map((song: SongItemDetailsView, index: number) => ({
+        ...song,
+        isPlaying: state.currentIndex === index,
+      }));
+
+      state.owner = {
+        id: action.payload[0].ownerId,
+        name: action.payload[0].name,
+      };
     },
     pauseSong: (state) => {
       state.songs = state.songs.map((song: SongItemDetailsView) => ({

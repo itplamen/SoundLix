@@ -25,34 +25,36 @@ const Queue = ({ currentSong, queue }: Props) => {
           <h3 className="font-semibold text-gray-200 dark:text-white">Queue</h3>
         </div>
 
-        <ul className="max-h-64 overflow-y-auto max-w-md scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800">
+        <div className="max-h-64 overflow-y-auto max-w-md scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-gray-800">
           <Separator text="Now playing" />
-          <li key={currentSong.id} className="group">
+          <div key={currentSong.id} className="group">
             <QueueItem
               currentSong={currentSong}
               song={currentSong}
               onClick={() =>
-                dispatch(
-                  currentSong.isPlaying
-                    ? pauseSong()
-                    : playSong({ id: currentSong.id, songs: queue })
-                )
+                dispatch(currentSong.isPlaying ? pauseSong() : playSong(queue))
               }
             />
-          </li>
-          <Separator text="Next from" />
-          {queue
-            .filter((x) => x.id !== currentSong.id)
-            .map((song) => (
-              <li key={song.id} className="group">
-                <QueueItem
-                  currentSong={currentSong}
-                  song={song}
-                  onClick={() => dispatch(playNextSong(song))}
-                />
-              </li>
-            ))}
-        </ul>
+          </div>
+          {queue.length > 1 && (
+            <>
+              <Separator text={`Next from ${currentSong.ownerName}`} />
+              <ul>
+                {queue
+                  .filter((x) => x.id !== currentSong.id)
+                  .map((song) => (
+                    <li key={song.id} className="group">
+                      <QueueItem
+                        currentSong={currentSong}
+                        song={song}
+                        onClick={() => dispatch(playNextSong(song))}
+                      />
+                    </li>
+                  ))}
+              </ul>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

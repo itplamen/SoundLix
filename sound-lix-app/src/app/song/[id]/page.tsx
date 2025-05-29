@@ -10,8 +10,8 @@ const SongById = async ({ params }: { params: { id: number } }) => {
       title={"Song"}
       heading={song.name}
       subheading={{
-        url: `/artist/${song.artist.id}`,
-        value: song.artist.name,
+        url: `/artist/${song.owner.id}`,
+        value: song.owner.name,
       }}
       date={song.released}
       additional={song.genres.join(", ")}

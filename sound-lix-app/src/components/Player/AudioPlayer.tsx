@@ -45,7 +45,7 @@ const AudioPlayer = () => {
 
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  const [showOptionsMenu, setShowOptionsMenu] = useState(true);
+  const [showOptionsMenu, setShowOptionsMenu] = useState(false);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -147,7 +147,9 @@ const AudioPlayer = () => {
             }`}
             hoverColor={COLOR.WHITE}
             onClick={() =>
-              dispatch(currentSong.isPlaying ? pauseSong() : playSong())
+              dispatch(
+                currentSong.isPlaying ? pauseSong() : playSong([currentSong])
+              )
             }
           >
             <Icon color={COLOR.DARK_GRAY} size={6}>

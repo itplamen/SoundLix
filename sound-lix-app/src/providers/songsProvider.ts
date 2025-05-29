@@ -22,7 +22,9 @@ const getSongs = async (limit: number = 10, genre?: Genre): Promise<Song[]> => {
   };
   const response: ApiResponse<SongResponse> = await fetchData(request);
 
-  return response.results.map((response: SongResponse) => mapSong(response));
+  return response.results
+    .map((response: SongResponse) => mapSong(response))
+    .sort((a: Song, b: Song) => a.id.localeCompare(b.id));
 };
 
 const getSong = async (id: number): Promise<Song> => {

@@ -66,7 +66,7 @@ const ListItem = ({
       });
     }
 
-    dispatch(shouldPause ? pauseSong() : playSong({ id: item.id, songs }));
+    dispatch(shouldPause ? pauseSong() : playSong(songs));
   };
 
   return (

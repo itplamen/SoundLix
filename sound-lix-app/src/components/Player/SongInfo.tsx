@@ -29,7 +29,6 @@ const SongInfo = ({ song, size, children }: Props) => {
             <span className="text-white text-xs">No Image</span>
           </div>
         )}
-
         {children}
       </div>
 
@@ -40,7 +39,7 @@ const SongInfo = ({ song, size, children }: Props) => {
           {song.name || "No song selected"}
         </p>
         <small className="text-xs text-gray-400 truncate">
-          {song.subheading || "Select a song to play"}
+          {song.ownerName || "Select a song to play"}
         </small>
       </div>
     </>
