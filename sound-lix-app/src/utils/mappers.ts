@@ -99,12 +99,14 @@ export const mapRoyalty = (from: RoyaltyFreeMusic): RoyaltyFreeMusicView => {
     isNew: from.isNew,
     image: from.image,
     subheading: from.composer,
-    ownerId: "",
-    ownerName: "",
+    ownerId: from.id,
+    ownerName: from.composer,
+    src: from.audio,
     formatInput: from.duration,
     description: from.description,
     downloadAllowed: true,
     downloadUrl: from.audio,
+    isPlaying: false,
   };
 };
 

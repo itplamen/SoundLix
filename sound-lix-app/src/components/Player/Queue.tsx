@@ -3,7 +3,7 @@
 import { SongItemDetailsView } from "@/models/views";
 import QueueItem from "./QueueItem";
 import Separator from "../Common/Separator";
-import { useAppDispatch } from "@/app/state/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
 import {
   pauseSong,
   playNextSong,
@@ -17,6 +17,9 @@ type Props = {
 
 const Queue = ({ currentSong, queue }: Props) => {
   const dispatch = useAppDispatch();
+  const currentIndex = useAppSelector(
+    (state) => state.audioPlayer.currentIndex
+  );
 
   return (
     <div className="absolute">
@@ -32,7 +35,9 @@ const Queue = ({ currentSong, queue }: Props) => {
               currentSong={currentSong}
               song={currentSong}
               onClick={() =>
-                dispatch(currentSong.isPlaying ? pauseSong() : playSong(queue))
+                dispatch(
+                  currentSong.isPlaying ? pauseSong() : playSong([currentSong])
+                )
               }
             />
           </div>
@@ -41,7 +46,10 @@ const Queue = ({ currentSong, queue }: Props) => {
               <Separator text={`Next from ${currentSong.ownerName}`} />
               <ul>
                 {queue
-                  .filter((x) => x.id !== currentSong.id)
+                  .filter(
+                    (song, index) =>
+                      song.id !== currentSong.id && index > currentIndex
+                  )
                   .map((song) => (
                     <li key={song.id} className="group">
                       <QueueItem

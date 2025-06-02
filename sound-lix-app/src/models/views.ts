@@ -17,6 +17,7 @@ export interface SongItemDetailsView extends ItemDetailsView {
   isPlaying: boolean;
   ownerId: string;
   ownerName: string;
+  playedAt?: Date;
 }
 
 export interface RoyaltyFreeMusicView extends SongItemDetailsView {

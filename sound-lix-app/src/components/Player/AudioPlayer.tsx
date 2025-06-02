@@ -81,7 +81,7 @@ const AudioPlayer = () => {
       audio.removeEventListener("timeupdate", changeSongTime);
       audio.removeEventListener("loadedmetadata", changeSongTime);
     };
-  }, [currentSong?.src]);
+  }, [currentSong.src, currentSong.playedAt]);
 
   const handleSongEnded = () => {
     if (queue.length > 1) {
