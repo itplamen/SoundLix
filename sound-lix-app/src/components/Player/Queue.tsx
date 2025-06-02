@@ -41,7 +41,7 @@ const Queue = ({ currentSong, queue }: Props) => {
               }
             />
           </div>
-          {queue.length > 1 && (
+          {queue.length - 1 > currentIndex && (
             <>
               <Separator text={`Next from ${currentSong.ownerName}`} />
               <ul>
