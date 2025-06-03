@@ -6,7 +6,7 @@ import {
 } from "@/models/api";
 import { Artist } from "@/models/data";
 import { mapArtist } from "@/utils/mappers";
-import { fetchData } from "./apiDataProvider";
+import { fetchData } from "../api/fetchApi";
 
 const getArtists = async (): Promise<Artist[]> => {
   const request: ApiRequest<ArtistRequest> = {

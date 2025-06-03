@@ -5,7 +5,7 @@ import {
   PlaylistResponse,
 } from "@/models/api";
 import { Playlist } from "@/models/data";
-import { fetchData } from "./apiDataProvider";
+import { fetchData } from "../api/fetchApi";
 import { mapPlaylist } from "@/utils/mappers";
 
 const getPlaylists = async (): Promise<Playlist[]> => {

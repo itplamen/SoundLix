@@ -1,7 +1,7 @@
 import ItemDetails from "@/components/Common/ItemDetails";
 import SongList from "@/components/Songs/SongList";
 import { Artist } from "@/models/data";
-import { getArtist } from "@/providers/artistsProvider";
+import { getArtist } from "@/services/artistsService";
 
 const ArtistById = async ({ params }: { params: { id: number } }) => {
   const artist: Artist = await getArtist(params.id);

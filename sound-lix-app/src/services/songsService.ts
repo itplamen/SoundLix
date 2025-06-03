@@ -5,7 +5,7 @@ import {
   SongRequest,
   SongResponse,
 } from "../models/api";
-import { fetchData } from "./apiDataProvider";
+import { fetchData } from "../api/fetchApi";
 import { mapSong } from "@/utils/mappers";
 
 const getSongs = async (limit: number = 10, genre?: Genre): Promise<Song[]> => {
