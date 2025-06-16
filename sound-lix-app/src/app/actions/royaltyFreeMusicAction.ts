@@ -1,7 +1,8 @@
 import * as cheerio from "cheerio";
-import { fetchData } from "../api/fetchApi";
+
 import { ApiRequest, ApiResponse, RoyaltyFreeMusicRequest } from "@/models/api";
 import { RoyaltyFreeMusic } from "@/models/data";
+import { fetchData } from "@/api/fetchApi";
 
 const getRoyaltyFreeMusic = async (): Promise<RoyaltyFreeMusic[]> => {
   const request: ApiRequest<RoyaltyFreeMusicRequest> = {

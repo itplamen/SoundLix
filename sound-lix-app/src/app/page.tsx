@@ -1,17 +1,20 @@
 import { Playlist, Radio, RoyaltyFreeMusic, Song } from "@/models/data";
-import { getPlaylists } from "@/services/playlistsService";
+
 import PlaylistItemList from "@/components/Playlist/PlaylistItemList";
 
 import BestChart from "@/components/Charts/BestChart";
 
 import SongList from "@/components/Songs/SongList";
 import ArtistList from "@/components/Artists/ArtistList";
-import { getSongs } from "@/services/songsService";
-import { getRadioList } from "@/services/dbService";
+
 import RadioList from "@/components/Radio/RadioList";
-import { getRoyaltyFreeMusic } from "@/services/royaltyFreeMusicService";
+
 import RoyaltyFreeMusicList from "@/components/RoyaltyFree/RoyaltyFreeMusicList";
 import { Toaster } from "react-hot-toast";
+import { getPlaylists } from "./actions/playlistsAction";
+import { getSongs } from "./actions/songsAction";
+import { getRadioList } from "./actions/dbAction";
+import { getRoyaltyFreeMusic } from "./actions/royaltyFreeMusicAction";
 
 const Home = async () => {
   const playlists: Playlist[] = await getPlaylists();

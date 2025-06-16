@@ -1,5 +1,5 @@
 import { Artist } from "@/models/data";
-import { getArtists } from "@/providers/artistsProvider";
+import { getArtists } from "@/app/actions/artistsAction";
 import List from "../Lists/List";
 import ListItem from "../Lists/ListItem";
 import { ArtistItemDetailsView } from "@/models/views";

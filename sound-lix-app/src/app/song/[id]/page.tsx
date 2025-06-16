@@ -1,6 +1,6 @@
+import { getSong } from "@/app/actions/songsAction";
 import ItemDetails from "@/components/Common/ItemDetails";
 import { Song } from "@/models/data";
-import { getSong } from "@/services/songsService";
 
 const SongById = async ({ params }: { params: { id: number } }) => {
   const song: Song = await getSong(params.id);
