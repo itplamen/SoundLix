@@ -7,11 +7,12 @@ import Button from "../Buttons/Button";
 import Image from "next/image";
 
 type Props = {
+  text: string;
   imgage: string;
   onClose: () => void;
 };
 
-const AuthModal = ({ imgage, onClose }: Props) => {
+const AuthModal = ({ text, imgage, onClose }: Props) => {
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
@@ -39,9 +40,7 @@ const AuthModal = ({ imgage, onClose }: Props) => {
             />
           </div>
 
-          <h3 className="text-xl font-bold mb-4">
-            Log in to create your favorite playlists
-          </h3>
+          <h3 className="text-xl font-bold mb-4">{text}</h3>
 
           <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full font-semibold text-sm mb-3">
             Sign up for free

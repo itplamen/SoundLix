@@ -21,10 +21,14 @@ const SongList = ({ heading, songs }: Props) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.authentication.user);
 
-  const handleClick = (e: React.MouseEvent, image: string) => {
+  const handleClick = (
+    e: React.MouseEvent,
+    image: string,
+    isDownload: boolean
+  ) => {
     e.preventDefault();
     if (user.role === "Guest") {
-      dispatch(setAuthModal({ show: true, image }));
+      dispatch(setAuthModal({ show: true, image, isDownload }));
     }
   };
 
@@ -39,7 +43,7 @@ const SongList = ({ heading, songs }: Props) => {
               rounded={BUTTON_ROUND.LARGE}
               size={{ width: 6, height: 6 }}
               bgColor={COLOR.WHITE}
-              onClick={(e) => handleClick(e, view.image)}
+              onClick={(e) => handleClick(e, view.image, false)}
             >
               <Icon color={COLOR.DARK_GRAY}>
                 <PlaylistIconType />
@@ -50,6 +54,7 @@ const SongList = ({ heading, songs }: Props) => {
               rounded={BUTTON_ROUND.LARGE}
               size={{ width: 6, height: 6 }}
               bgColor={COLOR.WHITE}
+              onClick={(e) => handleClick(e, view.image, true)}
             >
               <Icon color={COLOR.DARK_GRAY}>
                 <DownloadIconType />

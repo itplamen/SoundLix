@@ -59,7 +59,7 @@ const audioPlayerSlice = createSlice({
     playSong: (state, action: PayloadAction<SongItemDetailsView[]>) => {
       if (
         action.payload.length === 1 &&
-        action.payload[0].id === state.songs[state.currentIndex].id
+        action.payload[0].id === state.songs[state.currentIndex]?.id
       ) {
         state.songs[state.currentIndex].isPlaying = true;
         state.songs[state.currentIndex].playedAt = new Date();

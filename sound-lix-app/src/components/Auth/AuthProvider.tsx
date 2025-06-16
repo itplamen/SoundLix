@@ -36,8 +36,17 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <>
       {isOpen && (
         <AuthModal
+          text={
+            authModal.isDownload
+              ? "Log in to download songs for free"
+              : "Log in to create your favorite playlists"
+          }
           imgage={authModal.image}
-          onClose={() => dispatch(setAuthModal({ show: false, image: "" }))}
+          onClose={() =>
+            dispatch(
+              setAuthModal({ show: false, image: "", isDownload: false })
+            )
+          }
         />
       )}
       {children}
