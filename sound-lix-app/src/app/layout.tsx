@@ -9,6 +9,7 @@ const AudioPlayer = dynamic(() => import("@/components/Player/AudioPlayer"), {
 });
 import ReduxProvider from "@/components/ReduxProvider";
 import dynamic from "next/dynamic";
+import AuthProvider from "@/components/Auth/AuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,9 +36,11 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ReduxProvider>
-          <Sidebar />
-          <Section>{children}</Section>
-          <AudioPlayer />
+          <AuthProvider>
+            <Sidebar />
+            <Section>{children}</Section>
+            <AudioPlayer />
+          </AuthProvider>
         </ReduxProvider>
       </body>
     </html>

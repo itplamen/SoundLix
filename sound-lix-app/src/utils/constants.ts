@@ -3,6 +3,12 @@ export const API = {
   MAX_RESULTS_LIMIT: 200,
 } as const;
 
+export const USER_ROLE = {
+  USER: "User",
+  GUEST: "Guest",
+} as const;
+export type UserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];
+
 export const VOLUME_CONFIG = {
   MIN: 0,
   MAX: 1,
@@ -32,7 +38,7 @@ export type RoundedOption = (typeof BUTTON_ROUND)[keyof typeof BUTTON_ROUND];
 
 export const COLOR = {
   NONE: "",
-  LIGHT_GRAY: "gray-300",
+  LIGHT_GRAY: "gray-200",
   MEDIUM_GRAY: "gray-600",
   DARK_GRAY: "gray-800",
   WHITE: "white",

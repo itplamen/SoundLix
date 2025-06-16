@@ -1,3 +1,5 @@
+"use client";
+
 import { Song } from "@/models/data";
 import { SongItemDetailsView } from "@/models/views";
 import { mapSongView } from "@/utils/mappers";
@@ -8,12 +10,24 @@ import PlaylistIconType from "../Icons/Types/PlaylistIconType";
 import DownloadIconType from "../Icons/Types/DownloadIconType";
 import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
 import Button from "../Buttons/Button";
+import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
+import { setAuthModal } from "@/app/state/slices/notificationSlice";
 
 type Props = {
   heading: string;
   songs: Song[];
 };
-const SongList = async ({ heading, songs }: Props) => {
+const SongList = ({ heading, songs }: Props) => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.authentication.user);
+
+  const handleClick = (e: React.MouseEvent, image: string) => {
+    e.preventDefault();
+    if (user.role === "Guest") {
+      dispatch(setAuthModal({ show: true, image }));
+    }
+  };
+
   return (
     <List heading={heading}>
       {songs
@@ -25,6 +39,7 @@ const SongList = async ({ heading, songs }: Props) => {
               rounded={BUTTON_ROUND.LARGE}
               size={{ width: 6, height: 6 }}
               bgColor={COLOR.WHITE}
+              onClick={(e) => handleClick(e, view.image)}
             >
               <Icon color={COLOR.DARK_GRAY}>
                 <PlaylistIconType />

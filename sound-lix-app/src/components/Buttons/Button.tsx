@@ -4,7 +4,7 @@ import { MouseEventHandler } from "react";
 
 type Props = {
   children: React.ReactNode;
-  text: string;
+  text?: string;
   size: { width: number; height: number };
   bgColor: ColorOption;
   hoverColor?: ColorOption;
@@ -23,17 +23,23 @@ const Button = ({
   disabled = false,
   onClick,
 }: Props) => {
-  return (
+  const button = (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={`w-${size.width} h-${size.height} flex items-center justify-center bg-${bgColor} hover:bg-${hoverColor} ${rounded}   `}
+    >
+      {children}
+    </button>
+  );
+
+  return text ? (
     <Tooltip content={text} placement="top" className="text-xs">
-      <button
-        type="button"
-        onClick={onClick}
-        disabled={disabled}
-        className={`w-${size.width} h-${size.height} flex items-center justify-center bg-${bgColor} hover:bg-${hoverColor} ${rounded}`}
-      >
-        {children}
-      </button>
+      {button}
     </Tooltip>
+  ) : (
+    button
   );
 };
 

@@ -1,6 +1,14 @@
+import { UserRole } from "@/utils/constants";
+
 export interface Entity {
   id: string;
   name: string;
+}
+
+export interface User extends Entity {
+  email: string;
+  role: UserRole;
+  created: Date;
 }
 
 export interface Playlist extends Entity {

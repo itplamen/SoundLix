@@ -1,4 +1,6 @@
-import { COLOR } from "@/utils/constants";
+"use client";
+
+import { COLOR, USER_ROLE, UserRole } from "@/utils/constants";
 import Icon from "../Icons/Icon";
 import HomeIconType from "../Icons/Types/HomeIconType";
 import ProfileIconType from "../Icons/Types/ProfileIconType";
@@ -6,10 +8,12 @@ import GitHubIconType from "../Icons/Types/GitHubIconType";
 import SignInIconType from "../Icons/Types/SignInIconType";
 import RadioIconType from "../Icons/Types/RadioIconType";
 import SongIconType from "../Icons/Types/SongIconType";
+import { useAppSelector } from "@/app/state/hooks";
 
 type Item = {
-  name: string;
   url: string;
+  name: string;
+  roles: UserRole[];
   icon: JSX.Element;
 };
 
@@ -19,34 +23,41 @@ const getItems = (): Item[][] => {
       {
         name: "Home",
         url: "/",
+        roles: [USER_ROLE.USER, USER_ROLE.GUEST],
         icon: <HomeIconType />,
       },
       {
-        name: "Songs",
-        url: "#",
+        name: "Explore",
+        url: "/explore",
+        roles: [USER_ROLE.USER],
         icon: <SongIconType />,
       },
       {
         name: "Radio",
         url: "#",
+        roles: [USER_ROLE.USER],
         icon: <RadioIconType />,
       },
     ],
     [
       {
         name: "Sign In",
-        url: "#",
+        url: "/auth",
+        roles: [USER_ROLE.GUEST],
         icon: <SignInIconType />,
       },
       {
         name: "Sign Up",
-        url: "#",
+        url: "/auth",
+        roles: [USER_ROLE.GUEST],
+        icon: <ProfileIconType />,
       },
     ],
     [
       {
         name: "GitHub",
         url: "https://github.com/itplamen/SoundLix",
+        roles: [USER_ROLE.USER, USER_ROLE.GUEST],
         icon: <GitHubIconType />,
       },
     ],
@@ -54,6 +65,8 @@ const getItems = (): Item[][] => {
 };
 
 const Sidebar = () => {
+  const user = useAppSelector((state) => state.authentication.user);
+
   const items: Item[][] = getItems();
   return (
     <aside
@@ -71,21 +84,23 @@ const Sidebar = () => {
         </span>
         {items.map((arr: Item[], arrIndex: number) => (
           <ul key={`ul_${arrIndex}`} className="space-y-2 font-medium mb-14">
-            {arr.map((item: Item, itemIndex: number) => (
-              <li key={`li_${itemIndex}`}>
-                <a
-                  href={item.url}
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <Icon size={25} color={COLOR.DARK_GRAY}>
-                    {item.icon}
-                  </Icon>
-                  <span className="flex-1 ms-3 whitespace-nowrap">
-                    {item.name}
-                  </span>
-                </a>
-              </li>
-            ))}
+            {arr
+              .filter((item: Item) => item.roles.includes(user.role))
+              .map((item: Item, itemIndex: number) => (
+                <li key={`li_${itemIndex}`}>
+                  <a
+                    href={item.url}
+                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  >
+                    <Icon size={25} color={COLOR.DARK_GRAY}>
+                      {item.icon}
+                    </Icon>
+                    <span className="flex-1 ms-3 whitespace-nowrap">
+                      {item.name}
+                    </span>
+                  </a>
+                </li>
+              ))}
           </ul>
         ))}
       </div>

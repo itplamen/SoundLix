@@ -23,11 +23,6 @@ const QueueItem = ({ currentSong, song, onClick }: Props) => {
           <SongInfo song={song} size={{ img: 12, text: 12 }}>
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <Button
-                text={
-                  currentSong.isPlaying && song.id === currentSong.id
-                    ? BUTTON_TEXT.PAUSE
-                    : BUTTON_TEXT.PLAY
-                }
                 bgColor={`${
                   song.id === currentSong.id && currentSong.isPlaying
                     ? COLOR.WHITE
