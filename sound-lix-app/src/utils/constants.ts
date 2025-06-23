@@ -44,3 +44,10 @@ export const COLOR = {
   WHITE: "white",
 } as const;
 export type ColorOption = (typeof COLOR)[keyof typeof COLOR];
+
+export const MSG_TYPE = {
+  WARNING: "Warning",
+  DANGER: "Danger",
+  ERROR: "Error",
+} as const;
+export type MsgOption = (typeof MSG_TYPE)[keyof typeof MSG_TYPE];

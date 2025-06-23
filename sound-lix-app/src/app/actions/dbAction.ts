@@ -10,21 +10,31 @@ import {
   where,
 } from "firebase/firestore";
 
-const createUser = async (id: string, username: string): Promise<void> => {
+type FilterParams = {
+  filter: string;
+  value: string;
+};
+
+const createUser = async (
+  id: string,
+  email: string,
+  username: string
+): Promise<void> => {
   await setDoc(doc(db, "users", id), {
     id,
+    email,
     username,
     created: new Date(),
     role: USER_ROLE.USER,
   });
 };
 
-const getUser = async (id: string): Promise<User> => {
-  const getQuery = query(collection(db, "users"), where("id", "==", id));
+const getUser = async ({ filter, value }: FilterParams): Promise<User> => {
+  const getQuery = query(collection(db, "users"), where(filter, "==", value));
   const snapshot = await getDocs(getQuery);
 
   if (snapshot.empty) {
-    throw new Error("Could not retrieve user!");
+    return {} as User;
   }
 
   return snapshot.docs[0].data() as User;
