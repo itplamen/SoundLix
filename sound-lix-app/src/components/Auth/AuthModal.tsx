@@ -5,6 +5,7 @@ import Icon from "../Icons/Icon";
 import CloseIconType from "../Icons/Types/CloseIconType";
 import Button from "../Buttons/Button";
 import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
   text: string;
@@ -48,9 +49,9 @@ const AuthModal = ({ text, imgage, onClose }: Props) => {
 
           <p className="text-sm text-gray-600">
             Already have an account?{" "}
-            <a href="/login" className="text-blue-600 underline">
+            <Link href="signin" className="text-blue-600 underline">
               Log in
-            </a>
+            </Link>
           </p>
         </div>
       </div>

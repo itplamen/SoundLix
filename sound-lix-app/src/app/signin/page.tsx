@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useAppDispatch } from "../state/hooks";
 import TextField from "@/components/Common/TextField";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import Checkbox from "@/components/Common/Checkbox";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type State = {
   email: string;
@@ -14,7 +15,7 @@ type State = {
 };
 
 const SignIn = () => {
-  const dispatch = useAppDispatch();
+  const router = useRouter();
   const [details, setDetails] = useState<State>({
     email: "",
     password: "",
@@ -24,6 +25,8 @@ const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await signInWithEmailAndPassword(auth, details.email, details.password);
+
+    router.push("/");
   };
 
   return (
@@ -91,12 +94,12 @@ const SignIn = () => {
 
           <div className="text-sm text-center text-gray-600 dark:text-gray-300">
             Not registered?{" "}
-            <a
+            <Link
               href="/signup"
               className="text-blue-700 hover:underline dark:text-blue-400"
             >
               Create account
-            </a>
+            </Link>
           </div>
         </form>
       </div>

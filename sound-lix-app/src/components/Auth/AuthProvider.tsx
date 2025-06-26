@@ -1,7 +1,7 @@
 "use client";
 
 import { auth } from "@/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
@@ -19,9 +19,19 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
       if (authUser) {
-        const user: User = await getUser(authUser.uid);
-        dispatch(setSignIn(user));
-        setIsOpen(false); // Close modal after sign-in
+        const tokenResult = await authUser.getIdTokenResult();
+        const nowUTC = new Date().getTime();
+        const expTime = new Date(tokenResult.expirationTime).getTime();
+        if (expTime < nowUTC) {
+          await signOut(auth);
+        } else {
+          const user: User = await getUser({
+            filter: "id",
+            value: authUser.uid,
+          });
+          dispatch(setSignIn(user));
+          setIsOpen(false);
+        }
       }
     });
 
