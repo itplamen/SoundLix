@@ -1,4 +1,4 @@
-const HidePasswordType = () => {
+const HidePasswordIconType = () => {
   return (
     <>
       <path
@@ -12,4 +12,4 @@ const HidePasswordType = () => {
   );
 };
 
-export default HidePasswordType;
+export default HidePasswordIconType;

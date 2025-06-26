@@ -9,15 +9,24 @@ import SignInIconType from "../Icons/Types/SignInIconType";
 import RadioIconType from "../Icons/Types/RadioIconType";
 import SongIconType from "../Icons/Types/SongIconType";
 import { useAppSelector } from "@/app/state/hooks";
+import SignOutIconType from "../Icons/Types/SignOutIconType";
+import Link from "next/link";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase";
 
 type Item = {
   url: string;
   name: string;
   roles: UserRole[];
   icon: JSX.Element;
+  onClick?: () => void;
 };
 
 const getItems = (): Item[][] => {
+  const handleSingOut = async () => {
+    await signOut(auth);
+  };
+
   return [
     [
       {
@@ -61,6 +70,15 @@ const getItems = (): Item[][] => {
         icon: <GitHubIconType />,
       },
     ],
+    [
+      {
+        name: "Sign Out",
+        url: "#",
+        roles: [USER_ROLE.USER],
+        icon: <SignOutIconType />,
+        onClick: handleSingOut,
+      },
+    ],
   ];
 };
 
@@ -88,9 +106,10 @@ const Sidebar = () => {
               .filter((item: Item) => item.roles.includes(user.role))
               .map((item: Item, itemIndex: number) => (
                 <li key={`li_${itemIndex}`}>
-                  <a
+                  <Link
                     href={item.url}
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    onClick={item.onClick}
                   >
                     <Icon size={25} color={COLOR.DARK_GRAY}>
                       {item.icon}
@@ -98,7 +117,7 @@ const Sidebar = () => {
                     <span className="flex-1 ms-3 whitespace-nowrap">
                       {item.name}
                     </span>
-                  </a>
+                  </Link>
                 </li>
               ))}
           </ul>

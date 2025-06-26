@@ -7,12 +7,13 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
 import { getUser } from "@/app/actions/dbAction";
 import { User } from "@/models/data";
-import { setSignIn } from "@/app/state/slices/authSlice";
+import { setSignIn, setSignOut } from "@/app/state/slices/authSlice";
 import AuthModal from "./AuthModal";
 import { setAuthModal } from "@/app/state/slices/notificationSlice";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const authModal = useAppSelector((state) => state.notification.authModal);
+  const user = useAppSelector((state) => state.authentication.user);
   const [isOpen, setIsOpen] = useState(true);
   const dispatch = useAppDispatch();
 
@@ -32,6 +33,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           dispatch(setSignIn(user));
           setIsOpen(false);
         }
+      } else if (user.role === "User") {
+        dispatch(setSignOut());
       }
     });
 

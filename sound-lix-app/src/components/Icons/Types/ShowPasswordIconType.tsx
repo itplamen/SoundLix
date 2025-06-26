@@ -1,4 +1,4 @@
-const ShowPasswordType = () => {
+const ShowPasswordIconType = () => {
   return (
     <>
       <path
@@ -15,4 +15,4 @@ const ShowPasswordType = () => {
   );
 };
 
-export default ShowPasswordType;
+export default ShowPasswordIconType;
