@@ -42,13 +42,13 @@ const getItems = (): Item[][] => {
     [
       {
         name: "Sign In",
-        url: "/auth",
+        url: "/signin",
         roles: [USER_ROLE.GUEST],
         icon: <SignInIconType />,
       },
       {
         name: "Sign Up",
-        url: "/auth",
+        url: "/signup",
         roles: [USER_ROLE.GUEST],
         icon: <ProfileIconType />,
       },

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { createUser, getUser } from "@/app/actions/dbAction";
-import TextField from "../Common/TextField";
+import TextField from "@/components/Common/TextField";
 
 type State = {
   email: { value: string };
@@ -53,19 +53,26 @@ const SignUp = () => {
   }, [state.password.value]);
 
   const nextStep = async () => {
-    if (!validateCurrentStep()) return;
+    try {
+      if (!validateCurrentStep()) return;
 
-    if (step === 0) {
-      const user = await getUser({ filter: "email", value: state.email.value });
-      if (user.id) {
-        setError("This email is already linked to an existing account.");
-        return;
+      if (step === 0) {
+        const user = await getUser({
+          filter: "email",
+          value: state.email.value,
+        });
+        if (user.id) {
+          setError("This email is already linked to an existing account.");
+          return;
+        }
       }
-    }
 
-    if (step < steps.length - 1) {
-      setStep(step + 1);
-      setError("");
+      if (step < steps.length - 1) {
+        setStep(step + 1);
+        setError("");
+      }
+    } catch (error) {
+      const d = 1;
     }
   };
 
