@@ -6,6 +6,7 @@ type Props = {
   size?: number;
   display?: boolean;
   viewBox?: number;
+  fill?: boolean;
 };
 const Icon = ({
   children,
@@ -13,6 +14,7 @@ const Icon = ({
   size = 4,
   display = true,
   viewBox = 24,
+  fill = true,
 }: Props) => {
   return (
     <>
@@ -20,7 +22,7 @@ const Icon = ({
         <svg
           className={`w-${size} h-${size} text-${color} dark:text-white cursor-pointer`}
           xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
+          fill={fill ? "currentColor" : "none"}
           viewBox={`0 0 ${viewBox} ${viewBox}`}
           width="24"
           height="24"
