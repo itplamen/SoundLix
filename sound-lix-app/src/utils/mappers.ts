@@ -1,4 +1,4 @@
-import { Artist, Playlist, RoyaltyFreeMusic, Song } from "@/models/data";
+import { Artist, Playlist, Radio, RoyaltyFreeMusic, Song } from "@/models/data";
 import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
 import {
   ArtistItemDetailsView,
@@ -132,4 +132,20 @@ export const mapTotalDuration = (songs: Song[]): string => {
     .map((song: Song) => song.duration)
     .reduce((prev, next) => prev + next, 0)
     .toString();
+};
+
+export const mapRadioView = (from: Radio): SongItemDetailsView => {
+  return {
+    id: from.id,
+    name: from.name,
+    src: from.stream,
+    image: from.image,
+    isPlaying: false,
+    subheading: from.name,
+    ownerId: from.id,
+    ownerName: from.name,
+    downloadUrl: "",
+    downloadAllowed: false,
+    formatInput: formatTime(0),
+  };
 };

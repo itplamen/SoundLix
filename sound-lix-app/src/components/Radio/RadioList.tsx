@@ -1,5 +1,7 @@
 import { Radio } from "@/models/data";
 import RadioItem from "./RadioItem";
+import { mapRadioView } from "@/utils/mappers";
+import { SongItemDetailsView } from "@/models/views";
 
 type Props = {
   radios: Radio[];
@@ -20,9 +22,11 @@ const RadioList = ({ radios }: Props) => {
           </p>
           <hr className="h-px my-4 w-1/3 bg-gray-200 border-0 dark:bg-gray-700" />
           <div className="grid rounded-lg dark:border-gray-700 grid-cols-7 gap-4 mb-4">
-            {radios.map((x) => (
-              <RadioItem key={x.id} radio={x} />
-            ))}
+            {radios
+              .map((x: Radio) => mapRadioView(x))
+              .map((view: SongItemDetailsView) => (
+                <RadioItem key={view.id} radio={view} />
+              ))}
           </div>
         </div>
       </div>
