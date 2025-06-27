@@ -33,12 +33,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className="h-full">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} h-full flex flex-col`}
+      >
         <ReduxProvider>
           <AuthProvider>
             <Sidebar />
-            <Section>{children}</Section>
+            <main className="flex-1 flex flex-col">
+              <Section>{children}</Section>
+            </main>
             <AudioPlayer />
           </AuthProvider>
         </ReduxProvider>
