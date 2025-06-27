@@ -25,7 +25,7 @@ const ListItem = ({
 }: Props) => {
   return (
     <Link href={`/${url}/${item.id}`}>
-      <li className="p-4 py-3 sm:py-4 hover:bg-gray-200 hover:rounded-lg hover:cursor-pointer active:bg-green-700 relative group">
+      <li className="p-4 py-3 sm:py-4 hover:bg-gray-200 hover:rounded-lg hover:cursor-pointer relative group">
         <div className="flex items-center relative w-full">
           <div className="relative flex-shrink-0">
             <Image
@@ -35,7 +35,7 @@ const ListItem = ({
               src={item.image}
               alt={`${item.name}`}
             />
-            <PlayItem item={item} songs={songs} />
+            <PlayItem id={item.id} songs={songs} />
           </div>
           <div className="flex-1 min-w-0 ms-4">
             <p className="text-sm font-medium text-gray-900 truncate dark:text-white">

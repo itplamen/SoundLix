@@ -13,17 +13,17 @@ import PauseIconType from "../Icons/Types/PauseIconType";
 import PlayIconType from "../Icons/Types/PlayIconType";
 
 type Props = {
-  item: ItemDetailsView;
+  id: string;
   songs: SongItemDetailsView[];
 };
 
-const PlayItem = ({ item, songs }: Props) => {
+const PlayItem = ({ id, songs }: Props) => {
   const dispatch = useAppDispatch();
   const currentSong: SongItemDetailsView = useAppSelector(getCurrentSong);
   const songQueue = useAppSelector((state) => state.audioPlayer.songs);
   const shouldPause =
     currentSong.isPlaying &&
-    (item.id === currentSong.id || songs?.some((x) => x.id === currentSong.id));
+    (id === currentSong.id || songs?.some((x) => x.id === currentSong.id));
 
   const handleTogglePlay = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -57,17 +57,17 @@ const PlayItem = ({ item, songs }: Props) => {
     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
       <Button
         text={
-          currentSong.isPlaying && item.id === currentSong.id
+          currentSong.isPlaying && id === currentSong.id
             ? BUTTON_TEXT.PAUSE
             : BUTTON_TEXT.PLAY
         }
         bgColor={`${
-          item.id === currentSong.id && currentSong.isPlaying
+          id === currentSong.id && currentSong.isPlaying
             ? COLOR.WHITE
             : COLOR.LIGHT_GRAY
         }`}
         hoverColor={`${
-          item.id === currentSong.id && currentSong.isPlaying
+          id === currentSong.id && currentSong.isPlaying
             ? COLOR.NONE
             : COLOR.WHITE
         }`}

@@ -43,7 +43,7 @@ const RadioItem = ({ radio }: Props) => {
           />
         </svg>
 
-        <PlayItem item={radio} songs={[radio]} />
+        <PlayItem id={radio.id} songs={[radio]} />
 
         <div className="absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-center text-sm pointer-events-none group-hover:opacity-0 transition-opacity duration-300">
           {radio.name}
