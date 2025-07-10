@@ -34,10 +34,23 @@ const SongList = ({ heading, songs }: Props) => {
 
   return (
     <List heading={heading}>
-      {songs
-        .map((song: Song) => mapSongView(song))
-        .map((view: SongItemDetailsView) => (
-          <ListItem key={view.id} item={view} url="song" songs={[view]}>
+      {songs.map((song: Song) => {
+        const view = mapSongView(song);
+        return (
+          <ListItem
+            key={view.id}
+            item={view}
+            url="song"
+            songs={[song]}
+            badge={
+              view.isNew && (
+                <span className="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-full me-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                  NEW
+                </span>
+              )
+            }
+            description={view.description}
+          >
             <Button
               text={BUTTON_TEXT.PLAYLIST}
               rounded={BUTTON_ROUND.LARGE}
@@ -61,7 +74,8 @@ const SongList = ({ heading, songs }: Props) => {
               </Icon>
             </Button>
           </ListItem>
-        ))}
+        );
+      })}
     </List>
   );
 };

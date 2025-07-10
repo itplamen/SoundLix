@@ -1,10 +1,11 @@
 import * as cheerio from "cheerio";
 
 import { ApiRequest, ApiResponse, RoyaltyFreeMusicRequest } from "@/models/api";
-import { RoyaltyFreeMusic } from "@/models/data";
-import { fetchData } from "@/api/fetchApi";
 
-const getRoyaltyFreeMusic = async (): Promise<RoyaltyFreeMusic[]> => {
+import { fetchData } from "@/api/fetchApi";
+import { Song } from "@/models/data";
+
+const getRoyaltyFreeMusic = async (): Promise<Song[]> => {
   const request: ApiRequest<RoyaltyFreeMusicRequest> = {
     baseUrl: process.env.ROYALTY_FREE_MUSIC_URL,
     queryParams: {
@@ -31,14 +32,12 @@ const getRoyaltyFreeMusic = async (): Promise<RoyaltyFreeMusic[]> => {
     }
   });
 
-  const tasks: Promise<RoyaltyFreeMusic>[] = Array.from(map.keys()).map(
-    (id: string) => {
-      return getDetails(id);
-    }
-  );
+  const tasks: Promise<Song>[] = Array.from(map.keys()).map((id: string) => {
+    return getDetails(id);
+  });
 
-  const details: RoyaltyFreeMusic[] = await Promise.all(tasks);
-  const music: RoyaltyFreeMusic[] = details.map((item: RoyaltyFreeMusic) => {
+  const details: Song[] = await Promise.all(tasks);
+  const music: Song[] = details.map((item: Song) => {
     return {
       ...item,
       isNew: Boolean(map.get(item.id)),
@@ -48,7 +47,7 @@ const getRoyaltyFreeMusic = async (): Promise<RoyaltyFreeMusic[]> => {
   return music;
 };
 
-const getDetails = async (id: string): Promise<RoyaltyFreeMusic> => {
+const getDetails = async (id: string): Promise<Song> => {
   const request: ApiRequest<RoyaltyFreeMusicRequest> = {
     baseUrl: `${process.env.ROYALTY_FREE_MUSIC_URL}\track\\${id}`,
     queryParams: {
@@ -71,9 +70,17 @@ const getDetails = async (id: string): Promise<RoyaltyFreeMusic> => {
       "div#music-download"
     ).attr("data-model")}.mp3`,
     image: $("div#product-picture").first().find("img").attr("src") ?? "",
-    composer: $("div#music-download").attr("data-composer-name") ?? "",
+    owner: {
+      id: "",
+      name: $("div#music-download").attr("data-composer-name") ?? "",
+    },
     description: $("div.is-hidden-mobile.description").first().text().trim(),
-    isNew: false,
+    isNew: true, // TODO:
+    released: "",
+    downloadUrl: "",
+    downloadAllowed: true,
+    lyrics: "",
+    genres: [],
   };
 };
 

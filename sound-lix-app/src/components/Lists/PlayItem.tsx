@@ -4,8 +4,8 @@ import {
   pauseSong,
   playSong,
 } from "@/app/state/slices/audioPlayerSlice";
-import { ItemDetailsView, SongItemDetailsView } from "@/models/views";
-import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
+import { SongItemDetailsView } from "@/models/views";
+import { BUTTON_ROUND, COLOR } from "@/utils/constants";
 import toast from "react-hot-toast";
 import Button from "../Buttons/Button";
 import Icon from "../Icons/Icon";
@@ -56,11 +56,6 @@ const PlayItem = ({ id, songs }: Props) => {
   return (
     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
       <Button
-        text={
-          currentSong.isPlaying && id === currentSong.id
-            ? BUTTON_TEXT.PAUSE
-            : BUTTON_TEXT.PLAY
-        }
         bgColor={`${
           id === currentSong.id && currentSong.isPlaying
             ? COLOR.WHITE

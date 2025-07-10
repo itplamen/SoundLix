@@ -26,7 +26,7 @@ export interface Artist extends Entity {
 }
 
 export interface Song extends Entity {
-  duration: number;
+  duration: number | string;
   released: string;
   audio: string;
   downloadUrl: string;
@@ -35,6 +35,8 @@ export interface Song extends Entity {
   downloadAllowed: boolean;
   owner: Entity;
   genres: string[];
+  description?: string;
+  isNew?: boolean;
 }
 
 export const GenreType = {
@@ -65,13 +67,4 @@ export type Genre = GenreKey;
 export interface Radio extends Entity {
   image: string;
   stream: string;
-}
-
-export interface RoyaltyFreeMusic extends Entity {
-  duration: string;
-  audio: string;
-  image: string;
-  composer: string;
-  description: string;
-  isNew: boolean;
 }

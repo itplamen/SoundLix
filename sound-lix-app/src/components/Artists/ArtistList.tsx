@@ -1,5 +1,4 @@
 import { Artist } from "@/models/data";
-import { getArtists } from "@/app/actions/artistsAction";
 import List from "../Lists/List";
 import ListItem from "../Lists/ListItem";
 import { ArtistItemDetailsView } from "@/models/views";
@@ -9,11 +8,14 @@ import WebsiteIconType from "../Icons/Types/WebsiteIconType";
 import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
 import Button from "../Buttons/Button";
 
-const ArtistList = async () => {
-  const artists: Artist[] = await getArtists();
+type Props = {
+  heading: string;
+  artists: Artist[];
+};
 
+const ArtistList = async ({ heading, artists }: Props) => {
   return (
-    <List heading="Hot Artists">
+    <List heading={heading}>
       {artists
         .map((artist: Artist) => mapArtistView(artist))
         .map((view: ArtistItemDetailsView) => (

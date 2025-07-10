@@ -3,15 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ItemDetailsView, SongItemDetailsView } from "@/models/views";
+import { ItemDetailsView } from "@/models/views";
+import { Song } from "@/models/data";
 import PlayItem from "./PlayItem";
+import { mapSongView } from "@/utils/mappers";
 
 type Props = {
   item: ItemDetailsView;
   url: string;
   description?: string;
   badge?: React.ReactNode;
-  songs: SongItemDetailsView[];
+  songs: Song[];
   children: React.ReactNode;
 };
 
@@ -23,21 +25,26 @@ const ListItem = ({
   songs,
   children,
 }: Props) => {
+  const songViews = songs.map(mapSongView);
+
   return (
-    <Link href={`/${url}/${item.id}`}>
-      <li className="p-4 py-3 sm:py-4 hover:bg-gray-200 hover:rounded-lg hover:cursor-pointer relative group">
-        <div className="flex items-center relative w-full">
-          <div className="relative flex-shrink-0">
+    <li className="p-4 py-3 sm:py-4 list-none group">
+      <Link href={`/${url}/${item.id}`} className="block">
+        <div className="flex items-center w-full gap-4 relative">
+          <div className="relative w-24 h-24 shrink-0 transition-transform duration-300 group-hover:scale-110 group-hover:opacity-70">
             <Image
-              className="w-24 rounded-full transition-transform duration-300 group-hover:scale-125 group-hover:opacity-70"
-              width={300}
-              height={300}
+              className="rounded-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
               src={item.image}
-              alt={`${item.name}`}
+              alt={item.name}
+              fill
+              sizes="96px"
             />
-            <PlayItem id={item.id} songs={songs} />
+            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10">
+              <PlayItem id={item.id} songs={songViews} />
+            </div>
           </div>
-          <div className="flex-1 min-w-0 ms-4">
+
+          <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
               {item.name}
             </p>
@@ -45,13 +52,13 @@ const ListItem = ({
               {item.subheading}
             </p>
           </div>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex space-x-4">
-              {badge}
-              <div className="font-bold text-xs">{item.formatInput}</div>
-              {children}
-            </div>
+
+          <div className="flex items-center space-x-4 shrink-0">
+            {badge}
+            <div className="font-bold text-xs">{item.formatInput}</div>
+            {children}
           </div>
+
           {description && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-center px-4">
               <p className="text-sm text-gray-500 dark:text-gray-400 overflow-hidden text-ellipsis line-clamp-2 w-96">
@@ -60,8 +67,8 @@ const ListItem = ({
             </div>
           )}
         </div>
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 };
 

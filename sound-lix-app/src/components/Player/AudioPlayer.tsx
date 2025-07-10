@@ -1,8 +1,6 @@
 "use client";
 
 import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
-import { SongItemDetailsView } from "@/models/views";
-import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import LoopIconType from "../Icons/Types/LoopIconType";
 import PreviousIconType from "../Icons/Types/PreviousIconType";

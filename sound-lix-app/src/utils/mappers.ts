@@ -1,10 +1,6 @@
-import { Artist, Playlist, Radio, RoyaltyFreeMusic, Song } from "@/models/data";
+import { Artist, Playlist, Radio, Song } from "@/models/data";
 import { ArtistResponse, PlaylistResponse, SongResponse } from "@/models/api";
-import {
-  ArtistItemDetailsView,
-  RoyaltyFreeMusicView,
-  SongItemDetailsView,
-} from "@/models/views";
+import { ArtistItemDetailsView, SongItemDetailsView } from "@/models/views";
 import { formatSecondsToHours, formatTime } from "./formatters";
 
 export const mapPlaylist = (from: PlaylistResponse): Playlist => {
@@ -88,25 +84,12 @@ export const mapSongView = (from: Song): SongItemDetailsView => {
     ownerName: from.owner.name,
     downloadUrl: from.downloadUrl,
     downloadAllowed: from.downloadAllowed,
-    formatInput: formatTime(from.duration),
-  };
-};
-
-export const mapRoyalty = (from: RoyaltyFreeMusic): RoyaltyFreeMusicView => {
-  return {
-    id: from.id,
-    name: from.name,
-    isNew: from.isNew,
-    image: from.image,
-    subheading: from.composer,
-    ownerId: from.id,
-    ownerName: from.composer,
-    src: from.audio,
-    formatInput: from.duration,
     description: from.description,
-    downloadAllowed: true,
-    downloadUrl: from.audio,
-    isPlaying: false,
+    isNew: from.isNew,
+    formatInput:
+      typeof from.duration === "string"
+        ? from.duration
+        : formatTime(from.duration),
   };
 };
 
@@ -117,13 +100,7 @@ export const mapArtistView = (from: Artist): ArtistItemDetailsView => {
     image: from.image,
     subheading: `${from.songs.length} songs`,
     formatInput: formatSecondsToHours(mapTotalDuration(from.songs)),
-    songs: from.songs.map((song: Song) => {
-      return {
-        ...mapSongView(song),
-        ownerId: from.id,
-        ownerName: from.name,
-      };
-    }),
+    songs: from.songs,
   };
 };
 

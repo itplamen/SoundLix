@@ -1,3 +1,5 @@
+import { Song } from "./data";
+
 export interface ItemDetailsView {
   id: string;
   name: string;
@@ -7,7 +9,7 @@ export interface ItemDetailsView {
 }
 
 export interface ArtistItemDetailsView extends ItemDetailsView {
-  songs: SongItemDetailsView[];
+  songs: Song[];
 }
 
 export interface SongItemDetailsView extends ItemDetailsView {
@@ -18,9 +20,6 @@ export interface SongItemDetailsView extends ItemDetailsView {
   ownerId: string;
   ownerName: string;
   playedAt?: Date;
-}
-
-export interface RoyaltyFreeMusicView extends SongItemDetailsView {
-  isNew: boolean;
-  description: string;
+  isNew?: boolean;
+  description?: string;
 }
