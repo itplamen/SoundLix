@@ -1,14 +1,19 @@
 "use client";
 
 import { Song } from "@/models/data";
-import { SongItemDetailsView } from "@/models/views";
 import { mapSongView } from "@/utils/mappers";
 import List from "../Lists/List";
 import ListItem from "../Lists/ListItem";
 import Icon from "../Icons/Icon";
 import PlaylistIconType from "../Icons/Types/PlaylistIconType";
 import DownloadIconType from "../Icons/Types/DownloadIconType";
-import { BUTTON_ROUND, BUTTON_TEXT, COLOR } from "@/utils/constants";
+import {
+  AUTH_MODAL_TYPE,
+  AuthModalTypeOption,
+  BUTTON_ROUND,
+  BUTTON_TEXT,
+  COLOR,
+} from "@/utils/constants";
 import Button from "../Buttons/Button";
 import { useAppDispatch, useAppSelector } from "@/app/state/hooks";
 import { setAuthModal } from "@/app/state/slices/notificationSlice";
@@ -24,11 +29,11 @@ const SongList = ({ heading, songs }: Props) => {
   const handleClick = (
     e: React.MouseEvent,
     image: string,
-    isDownload: boolean
+    type: AuthModalTypeOption
   ) => {
     e.preventDefault();
     if (user.role === "Guest") {
-      dispatch(setAuthModal({ show: true, image, isDownload }));
+      dispatch(setAuthModal({ show: true, image, type }));
     }
   };
 
@@ -56,7 +61,9 @@ const SongList = ({ heading, songs }: Props) => {
               rounded={BUTTON_ROUND.LARGE}
               size={{ width: 6, height: 6 }}
               bgColor={COLOR.WHITE}
-              onClick={(e) => handleClick(e, view.image, false)}
+              onClick={(e) =>
+                handleClick(e, view.image, AUTH_MODAL_TYPE.PLATLIST)
+              }
             >
               <Icon color={COLOR.DARK_GRAY}>
                 <PlaylistIconType />
@@ -67,7 +74,9 @@ const SongList = ({ heading, songs }: Props) => {
               rounded={BUTTON_ROUND.LARGE}
               size={{ width: 6, height: 6 }}
               bgColor={COLOR.WHITE}
-              onClick={(e) => handleClick(e, view.image, true)}
+              onClick={(e) =>
+                handleClick(e, view.image, AUTH_MODAL_TYPE.DOWNLOAD)
+              }
             >
               <Icon color={COLOR.DARK_GRAY}>
                 <DownloadIconType />

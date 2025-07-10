@@ -1,10 +1,11 @@
+import { AuthModalTypeOption } from "@/utils/constants";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   authModal: {
     show: boolean;
     image: string;
-    isDownload: boolean;
+    type: AuthModalTypeOption;
   };
 }
 
@@ -12,7 +13,7 @@ const initialState: AuthState = {
   authModal: {
     show: false,
     image: "",
-    isDownload: false,
+    type: {} as AuthModalTypeOption,
   },
 };
 
@@ -25,7 +26,7 @@ const notificationSlice = createSlice({
       action: PayloadAction<{
         show: boolean;
         image: string;
-        isDownload: boolean;
+        type: AuthModalTypeOption;
       }>
     ) => {
       state.authModal = action.payload;

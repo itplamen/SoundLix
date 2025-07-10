@@ -6,10 +6,8 @@ import BestChart from "@/components/Charts/BestChart";
 
 import SongList from "@/components/Songs/SongList";
 import ArtistList from "@/components/Artists/ArtistList";
-
 import RadioList from "@/components/Radio/RadioList";
 
-import RoyaltyFreeMusicList from "@/components/RoyaltyFree/RoyaltyFreeMusicList";
 import { Toaster } from "react-hot-toast";
 import { getPlaylists } from "./actions/playlistsAction";
 import { getSongs } from "./actions/songsAction";

@@ -10,6 +10,7 @@ import { User } from "@/models/data";
 import { setSignIn, setSignOut } from "@/app/state/slices/authSlice";
 import AuthModal from "./AuthModal";
 import { setAuthModal } from "@/app/state/slices/notificationSlice";
+import { AUTH_MODAL_MSG } from "@/utils/constants";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const authModal = useAppSelector((state) => state.notification.authModal);
@@ -49,11 +50,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <>
       {isOpen && (
         <AuthModal
-          text={
-            authModal.isDownload
-              ? "Log in to download songs for free"
-              : "Log in to create your favorite playlists"
-          }
+          text={AUTH_MODAL_MSG[authModal.type]}
           imgage={authModal.image}
           onClose={() =>
             dispatch(

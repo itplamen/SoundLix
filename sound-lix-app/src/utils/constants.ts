@@ -51,3 +51,17 @@ export const MSG_TYPE = {
   ERROR: "Error",
 } as const;
 export type MsgOption = (typeof MSG_TYPE)[keyof typeof MSG_TYPE];
+
+export const AUTH_MODAL_TYPE = {
+  DOWNLOAD: "Download",
+  PLATLIST: "Playlist",
+  DETAILS: "Details",
+} as const;
+export type AuthModalTypeOption =
+  (typeof AUTH_MODAL_TYPE)[keyof typeof AUTH_MODAL_TYPE];
+
+export const AUTH_MODAL_MSG: Record<AuthModalTypeOption, string> = {
+  Download: "Log in to download songs for free",
+  Playlist: "Log in to create your favorite playlists",
+  Details: "Log in to view song and artist details",
+};
